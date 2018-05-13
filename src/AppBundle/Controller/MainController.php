@@ -187,6 +187,7 @@ class MainController extends Controller
         $file = 'Seller_Data_'.time().'.csv';
         $entity = $em->getRepository('AppBundle:SellerData')->findAll();
         $data = array();
+
         if($entity){
             for($x = 0; $x < count($entity); $x++){
                 $data[] = array(

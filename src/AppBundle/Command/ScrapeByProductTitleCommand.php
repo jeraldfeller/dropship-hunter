@@ -28,7 +28,7 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('execute:scrape-by-title')
+            ->setName('execute:scrape-by-title-list')
 
             // the short description shown while running "php bin/console list"
             ->setDescription('search for product title in ebay')
@@ -96,19 +96,25 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
                         $productList = $html->find('.lvtitle');
                         if($productList){
                             for($i = 0; $i < $matchCount; $i++){
-                                $titleContainer = $productList[$i]->find('a', 0);
-                                if($titleContainer){
-                                    $title = strtolower(trim($titleContainer->plaintext));
-                                    if($title == $productTitle){
-                                        $titleLink = $titleContainer->getAttribute('href');
+                                if(isset($productList[$i])){
+                                    $titleContainer = $productList[$i]->find('a', 0);
+                                    if($titleContainer){
+                                        $title = strtolower(trim($titleContainer->plaintext));
 
-                                        $productListLinksEntity = new ProductListLinks();
-                                        $productListLinksEntity->setProductListId($productListId);
-                                        $productListLinksEntity->setProductUrl($titleLink);
-                                        $productListLinksEntity->setStatus('active');
-                                        $em->persist($productListLinksEntity);
-                                        $em->flush();
-                                        $output->writeln([$title]);
+                                        if($title == $productTitle){
+                                            $titleLink = $titleContainer->getAttribute('href');
+
+                                            $productListLinksEntity = new ProductListLinks();
+                                            $productListLinksEntity->setProductListId($productListId);
+                                            $productListLinksEntity->setProductUrl($titleLink);
+                                            $productListLinksEntity->setStatus('active');
+                                            $em->persist($productListLinksEntity);
+                                            $em->flush();
+                                            $output->writeln([$title]);
+                                            $output->writeln(['match']);
+                                        }else{
+                                            $output->writeln(['notmatch']);
+                                        }
                                     }
                                 }
                             }

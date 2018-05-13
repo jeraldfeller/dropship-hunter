@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c81426f0-0fad-4302-97eb-5d63f840fed5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/export/csv-template.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/app_dev.php" afterPath="$PROJECT_DIR$/web/app_dev.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/ajax/main.js" afterPath="$PROJECT_DIR$/web/assets/ajax/main.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,8 +22,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/assets/ajax/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
+            <state relative-caret-position="357">
+              <caret line="26" column="11" lean-forward="false" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -36,14 +32,14 @@
       <file leaf-file-name="MainController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="192" column="66" lean-forward="false" selection-start-line="192" selection-start-column="66" selection-end-line="192" selection-end-column="66" />
+            <state relative-caret-position="248">
+              <caret line="50" column="51" lean-forward="true" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
               <folding>
                 <element signature="e#129#175#0#PHP" expanded="true" />
-                <marker date="1526247643238" expanded="true" signature="2715:2756" ph="DELETE FROM " />
-                <marker date="1526247643238" expanded="true" signature="2841:2887" ph="DELETE FROM " />
-                <marker date="1526247643238" expanded="true" signature="2972:3012" ph="DELETE FROM " />
-                <marker date="1526247643238" expanded="true" signature="4862:4901" ph="DELETE FROM " />
+                <marker date="1526249443667" expanded="true" signature="2715:2756" ph="DELETE FROM " />
+                <marker date="1526249443667" expanded="true" signature="2841:2887" ph="DELETE FROM " />
+                <marker date="1526249443667" expanded="true" signature="2972:3012" ph="DELETE FROM " />
+                <marker date="1526249443667" expanded="true" signature="4862:4901" ph="DELETE FROM " />
               </folding>
             </state>
           </provider>
@@ -62,8 +58,8 @@
       <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="22" column="75" lean-forward="false" selection-start-line="22" selection-start-column="75" selection-end-line="22" selection-end-column="75" />
+            <state relative-caret-position="-544">
+              <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
               <folding>
                 <element signature="n#style#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -85,13 +81,13 @@
       <file leaf-file-name="ScrapeByProductTitleCommand.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="127" column="9" lean-forward="false" selection-start-line="127" selection-start-column="9" selection-end-line="127" selection-end-column="9" />
+            <state relative-caret-position="1090">
+              <caret line="93" column="25" lean-forward="true" selection-start-line="93" selection-start-column="25" selection-end-line="93" selection-end-column="25" />
               <folding>
                 <element signature="e#125#190#0#PHP" expanded="true" />
-                <marker date="1526248337220" expanded="true" signature="6079:6155" ph="SELECT p FRO... AppBundle" />
-                <marker date="1526248337220" expanded="true" signature="6079:6188" ph="SELECT p FRO... AppBundle" />
-                <marker date="1526248337220" expanded="true" signature="6912:6963" ph="SELECT p FRO... AppBundle" />
+                <marker date="1526250776293" expanded="true" signature="6432:6508" ph="SELECT p FRO... AppBundle" />
+                <marker date="1526250776293" expanded="true" signature="6432:6541" ph="SELECT p FRO... AppBundle" />
+                <marker date="1526250776293" expanded="true" signature="7265:7316" ph="SELECT p FRO... AppBundle" />
               </folding>
             </state>
           </provider>
@@ -100,8 +96,8 @@
       <file leaf-file-name="ScrapeBySellerCommand.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="83" column="9" lean-forward="false" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
+            <state relative-caret-position="397">
+              <caret line="50" column="26" lean-forward="true" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
               <folding>
                 <element signature="e#125#190#0#PHP" expanded="true" />
                 <marker date="1526248344473" expanded="true" signature="4094:4208" ph="SELECT p FRO... AppBundle" />
@@ -111,25 +107,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScrapeSellerDataCommand.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ScrapeSellerDataCommand.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="166" column="8" lean-forward="false" selection-start-line="166" selection-start-column="8" selection-end-line="166" selection-end-column="8" />
+            <state relative-caret-position="383">
+              <caret line="86" column="30" lean-forward="true" selection-start-line="86" selection-start-column="30" selection-end-line="86" selection-end-column="30" />
               <folding>
                 <element signature="e#125#190#0#PHP" expanded="true" />
-                <marker date="1526248353935" expanded="true" signature="8151:8259" ph="SELECT p FRO... AppBundle" />
-                <marker date="1526248353935" expanded="true" signature="9046:9097" ph="SELECT p FRO... AppBundle" />
+                <marker date="1526251973156" expanded="true" signature="8234:8342" ph="SELECT p FRO... AppBundle" />
+                <marker date="1526251973156" expanded="true" signature="9129:9180" ph="SELECT p FRO... AppBundle" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProcessCheckerCommand.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProcessCheckerCommand.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-11">
-              <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="278">
+              <caret line="55" column="25" lean-forward="true" selection-start-line="55" selection-start-column="25" selection-end-line="55" selection-end-column="25" />
               <folding>
                 <element signature="e#125#190#0#PHP" expanded="true" />
               </folding>
@@ -157,13 +153,13 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
         <option value="$PROJECT_DIR$/web/app_dev.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerData.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/export/csv-template.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
-        <option value="$PROJECT_DIR$/web/assets/ajax/main.js" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" />
+        <option value="$PROJECT_DIR$/web/assets/ajax/main.js" />
+        <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
       </list>
     </option>
@@ -292,28 +288,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dropship-hunter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dropship-hunter" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AppBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Command" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -377,6 +351,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="export" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dropship-hunter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dropship-hunter" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -490,19 +490,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1526228337236</updated>
-      <workItem from="1526228338650" duration="19252000" />
+      <workItem from="1526228338650" duration="22888000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19252000" />
+    <option name="totallyTimeSpent" value="22888000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17715959" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19033675" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -602,54 +602,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <element signature="e#125#190#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="22" column="75" lean-forward="false" selection-start-line="22" selection-start-column="75" selection-end-line="22" selection-end-column="75" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/ajax/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="192" column="66" lean-forward="false" selection-start-line="192" selection-start-column="66" selection-end-line="192" selection-end-column="66" />
-          <folding>
-            <element signature="e#129#175#0#PHP" expanded="true" />
-            <marker date="1526247643238" expanded="true" signature="2715:2756" ph="DELETE FROM " />
-            <marker date="1526247643238" expanded="true" signature="2841:2887" ph="DELETE FROM " />
-            <marker date="1526247643238" expanded="true" signature="2972:3012" ph="DELETE FROM " />
-            <marker date="1526247643238" expanded="true" signature="4862:4901" ph="DELETE FROM " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -661,23 +618,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="127" column="9" lean-forward="false" selection-start-line="127" selection-start-column="9" selection-end-line="127" selection-end-column="9" />
-          <folding>
-            <element signature="e#125#190#0#PHP" expanded="true" />
-            <marker date="1526248337220" expanded="true" signature="6079:6155" ph="SELECT p FRO... AppBundle" />
-            <marker date="1526248337220" expanded="true" signature="6079:6188" ph="SELECT p FRO... AppBundle" />
-            <marker date="1526248337220" expanded="true" signature="6912:6963" ph="SELECT p FRO... AppBundle" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="83" column="9" lean-forward="false" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
+        <state relative-caret-position="397">
+          <caret line="50" column="26" lean-forward="true" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
           <folding>
             <element signature="e#125#190#0#PHP" expanded="true" />
             <marker date="1526248344473" expanded="true" signature="4094:4208" ph="SELECT p FRO... AppBundle" />
@@ -686,14 +630,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="166" column="8" lean-forward="false" selection-start-line="166" selection-start-column="8" selection-end-line="166" selection-end-column="8" />
+        <state relative-caret-position="-544">
+          <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/ajax/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="26" column="11" lean-forward="false" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="50" column="51" lean-forward="true" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
+          <folding>
+            <element signature="e#129#175#0#PHP" expanded="true" />
+            <marker date="1526249443667" expanded="true" signature="2715:2756" ph="DELETE FROM " />
+            <marker date="1526249443667" expanded="true" signature="2841:2887" ph="DELETE FROM " />
+            <marker date="1526249443667" expanded="true" signature="2972:3012" ph="DELETE FROM " />
+            <marker date="1526249443667" expanded="true" signature="4862:4901" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1090">
+          <caret line="93" column="25" lean-forward="true" selection-start-line="93" selection-start-column="25" selection-end-line="93" selection-end-column="25" />
           <folding>
             <element signature="e#125#190#0#PHP" expanded="true" />
-            <marker date="1526248353935" expanded="true" signature="8151:8259" ph="SELECT p FRO... AppBundle" />
-            <marker date="1526248353935" expanded="true" signature="9046:9097" ph="SELECT p FRO... AppBundle" />
+            <marker date="1526250776293" expanded="true" signature="6432:6508" ph="SELECT p FRO... AppBundle" />
+            <marker date="1526250776293" expanded="true" signature="6432:6541" ph="SELECT p FRO... AppBundle" />
+            <marker date="1526250776293" expanded="true" signature="7265:7316" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="86" column="30" lean-forward="true" selection-start-line="86" selection-start-column="30" selection-end-line="86" selection-end-column="30" />
+          <folding>
+            <element signature="e#125#190#0#PHP" expanded="true" />
+            <marker date="1526251973156" expanded="true" signature="8234:8342" ph="SELECT p FRO... AppBundle" />
+            <marker date="1526251973156" expanded="true" signature="9129:9180" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="55" column="25" lean-forward="true" selection-start-line="55" selection-start-column="25" selection-end-line="55" selection-end-column="25" />
+          <folding>
+            <element signature="e#125#190#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

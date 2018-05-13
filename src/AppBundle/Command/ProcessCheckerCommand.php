@@ -51,6 +51,7 @@ class ProcessCheckerCommand extends  ContainerAwareCommand
                 if($entityLinks){
                     for($y = 0; $y < count($entityLinks); $y++){
                         if($entityLinks[$y]->getStatus() == 'complete'){
+                            $output->writeln([$entityLinks[$y]->getProductListId(), 'complete']);
                             $completeCount++;
                         }
                     }

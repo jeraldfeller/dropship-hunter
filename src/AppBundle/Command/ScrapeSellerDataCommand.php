@@ -61,7 +61,7 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                         $html = str_get_html($htmlData['html']);
                         $location = $html->find('.mem_loc', 0);
                         $userInfo = $html->find('#user_info', 0);
-                        $memberSince = $html->find('.bio', 0);
+                        $memberSince = $html->find('.member_info', 0);
                         $score = $html->find('.score');
                         $sellCount = $html->find('.sell_count', 0);
                         $sellerPage = $html->find('.store_lk', 0);
@@ -82,6 +82,7 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                         }
 
                         if($memberSince){
+                            $memberSince = $memberSince->find('.info', 5);
                             $memberSince = trim(substr($memberSince->plaintext, strpos($memberSince->plaintext, "since") + 5));
                         }else{
                             $memberSince = '';
