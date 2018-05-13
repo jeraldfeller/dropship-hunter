@@ -1,0 +1,33 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProxyList
+ *
+ * @ORM\Table(name="proxy_list")
+ * @ORM\Entity
+ */
+class ProxyList
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="proxy", type="string", length=60, nullable=true)
+     */
+    private $proxy;
+
+
+}
+
