@@ -37,6 +37,40 @@ class MainController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/main/get")
+     */
+    public function getProductListAction(){
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:ProductList')->findAll();
+        $data = array();
+        $totalCount = count($entity);
+        $completeCount = 0;
+        $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
+        if($entity){
+            for($x = 0; $x < count($entity); $x++){
+                if($entity[$x]->getStatus() == 'complete'){
+                    $completeCount++;
+                }
+                $data[] = array(
+                  'id' => $entity[$x]->getId(),
+                    'title' => $entity[$x]->getProductTitle(),
+                    'status' => $entity[$x]->getStatus()
+                );
+            }
+        }
+
+        return new Response(
+          json_encode(
+              array(
+                  'isActive' => $processEntity->getIsActive(),
+                  'totalCount' => $totalCount,
+                  'completeCount' => $completeCount,
+                  'data' => $data
+              )
+          )
+        );
+    }
 
     /**
      * @Route("/main/import")
@@ -57,6 +91,18 @@ class MainController extends Controller
         ");
         $query->execute();
 
+        $query = $em->createQuery("
+        DELETE
+        FROM AppBundle:ProductListLinks
+        ");
+        $query->execute();
+
+        $query = $em->createQuery("
+        DELETE
+        FROM AppBundle:SellerData
+        ");
+        $query->execute();
+
         // import new list;
 
         $spreadsheet_url = json_decode($_POST['param'], true);
@@ -66,8 +112,8 @@ class MainController extends Controller
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if($i > 0 ){
                     $entity = new ProductList();
-                    $entity->setProductTitle($data);
-                    $entity->setStatus(0);
+                    $entity->setProductTitle($data[0]);
+                    $entity->setStatus('active');
                     $entity->setTimestamp(new \DateTime($date));
                     $em->persist($entity);
 
@@ -131,5 +177,44 @@ class MainController extends Controller
         $em->flush();
 
         return new Response(json_encode(true));
+    }
+
+    /**
+     * @Route("/main/export")
+     */
+    public function exportSellerDataAction(){
+        $em = $this->getDoctrine()->getManager();
+        $file = 'Seller_Data_'.time().'.csv';
+        $entity = $em->getRepository('AppBundle:SellerData')->findAll();
+        $data = array();
+        if($entity){
+            for($x = 0; $x < count($entity); $x++){
+                $data[] = array(
+                    'sellerId' => trim($entity[$x]->getSellerId()),
+                    'sellerLocation' => $entity[$x]->getSellerLocation(),
+                    'sellerRank' => $entity[$x]->getSellersRank(),
+                    'memberSince' => '"'.$entity[$x]->getMemberSince().'"',
+                    'positive' => $entity[$x]->getPositive(),
+                    'neutral' => $entity[$x]->getNeutral(),
+                    'negative' => $entity[$x]->getNegative(),
+                    'itemsForSale' => $entity[$x]->getItemsForSale(),
+                    'sellerPage' => $entity[$x]->getSellerPage()
+                );
+            }
+        }
+
+        $response = $this->render('export/csv-template.html.twig', array('data' => $data));
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Description', 'Submissions Export');
+        $response->headers->set('Content-Disposition', 'attachment; filename='.$file);
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+
+
+        return $response;
     }
 }

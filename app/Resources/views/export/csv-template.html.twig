@@ -1,0 +1,6 @@
+{% autoescape false %}
+Seller ID, Seller's Location, Seller's Rank, Member Since, Positive, Neutral, Negative, Items For Sale, Seller's Page
+{% for row in data %}
+{{ row.sellerId }},{{ row.sellerLocation }},{{ row.sellerRank }},{{ row.memberSince }},{{ row.positive }},{{ row.neutral }},{{ row.negative }},{{ row.itemsForSale }},{{ row.sellerPage }}
+{% endfor %}
+{% endautoescape %}
