@@ -29,5 +29,38 @@ class ProxyList
     private $proxy;
 
 
-}
 
+    /**
+     * Set proxy
+     *
+     * @param string $proxy
+     *
+     * @return ProxyList
+     */
+    public function setProxy($proxy)
+    {
+        $this->proxy = $proxy;
+
+        return $this;
+    }
+
+    /**
+     * Get proxy
+     *
+     * @return string
+     */
+    public function getProxy()
+    {
+        return $this->proxy;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

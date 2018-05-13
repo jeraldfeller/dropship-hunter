@@ -9,9 +9,9 @@
                 <h4>Import CSV File</h4>
             </div>
             <div class="col-md-12" style="margin-top: 25px;"></div>
-            <form id="importFile" class="form-inline col-md-12">
+
                 <div class="col-md-12">
-                    <input style="width: 100%;" type="text" class="form-control text-url" name="url" placeholder="published csv url">
+                    <input style="width: 100%;" type="text" class="form-control text-url" id="productUrl" name="url" placeholder="published csv url">
                 </div>
                 <div class="col-md-12 progress-container" style="display: none; margin-top: 12px;">
                     <div class="progress">
@@ -29,7 +29,7 @@
                     <button type="submit" class="btn btn-primary" id="submitBtn"><i class="fa fa-upload"></i> IMPORT</button>
                 </div>
 
-            </form>
+
             <div class="col-md-12 text-center" style="margin-top: 12px;">
                 <button class="btn btn-primary" id="downloadtBtn"><i class="fa fa-download"></i> DOWNLOAD</button>
             </div>
@@ -48,6 +48,31 @@
 
     <script>
         $(document).ready(function(){
+
+
+          // Import Product List
+
+          $('#submitBtn').click(function(){
+            $url = $('#productUrl').val();
+            var txt;
+            if($url != ''){
+              var r = confirm("By pressing Ok, this will cancel the current process!");
+              if (r == true) {
+                $(this).html('<i class="fa fa-spinner fa-spin"></i>');
+                $data = {
+                  url: encodeURI($url)
+                }
+
+                importProductList($data);
+              }
+            }else{
+              alert('Please input product url');
+            }
+
+          });
+
+
+          // Proxy Add/Update
           $('#updateProxyBtn').click(function(){
             $(this).html('<i class="fa fa-spinner fa-spin"></i>');
             var urlSet = [];

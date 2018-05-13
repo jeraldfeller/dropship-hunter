@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use AppBundle\Entity\ProxyList;
+use AppBundle\Entity\ProductList;
+use AppBundle\Entity\ProcessStatus;
 
 class MainController extends Controller
 {
@@ -33,6 +35,58 @@ class MainController extends Controller
             'proxyList' => $proxyList,
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ]);
+    }
+
+
+    /**
+     * @Route("/main/import")
+     */
+    public function importProductListAction(){
+        $em = $this->getDoctrine()->getManager();
+
+        // turn off process
+        $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
+        $processEntity->setIsActive(0);
+        $em->flush();
+
+        // clear list;
+        $query = $em->createQuery("
+        DELETE
+        FROM AppBundle:ProductList
+        ");
+        $query->execute();
+
+        // import new list;
+
+        $spreadsheet_url = json_decode($_POST['param'], true);
+        if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
+        $i = 0;
+        if (($handle = fopen($spreadsheet_url['url'], "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if($i > 0 ){
+                    $entity = new ProductList();
+                    $entity->setProductTitle($data);
+                    $entity->setStatus(0);
+                    $em->persist($entity);
+
+                    if(($i % 100) == 0){
+                        $em->flush();
+                    }
+                }
+                $i++;
+            }
+            fclose($handle);
+        }
+
+        $em->flush();
+
+        // active process
+
+        $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
+        $processEntity->setIsActive(1);
+        $em->flush();
+
+        return new Response(json_encode(true));
     }
 
     /**
