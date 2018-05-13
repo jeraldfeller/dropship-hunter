@@ -110,4 +110,3 @@ class ProductList
         return $this->id;
     }
 }
-

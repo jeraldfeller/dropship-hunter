@@ -42,6 +42,7 @@ class MainController extends Controller
      * @Route("/main/import")
      */
     public function importProductListAction(){
+        $date = date('Y-m-d H:i:s');
         $em = $this->getDoctrine()->getManager();
 
         // turn off process
@@ -67,6 +68,7 @@ class MainController extends Controller
                     $entity = new ProductList();
                     $entity->setProductTitle($data);
                     $entity->setStatus(0);
+                    $entity->setTimestamp(new \DateTime($date));
                     $em->persist($entity);
 
                     if(($i % 100) == 0){
