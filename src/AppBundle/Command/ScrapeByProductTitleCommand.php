@@ -68,61 +68,57 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
 
                     $htmlData = $this->curlTo($url, $proxy);
                     if ($htmlData['html']) {
-                        //    $epoch = time().mt_rand(1, 10);;
-                        //   $htmlNew = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->delete_all_between('<head>', '</head>', trim($htmlData['html'])));
-                        //  $myfile = fopen('/var/www/html/dsh/dropship-hunter/web/tmp/tmp-'.$epoch.'.html', "w+") or die("Unable to open file!");
-                        // fwrite($myfile, $htmlNew);
-                        //fclose($myfile);
+                        if(is_bool($htmlData['html']) === false){
+                            $html = str_get_html($htmlData['html']);
+                            // main content
+                            $matchCountContainer = $html->find('.rcnt', 0);
+                            if ($matchCountContainer) {
+                                $matchCount = $matchCountContainer->plaintext;
+                            } else {
+                                $matchCount = 0;
+                            }
+                            // get product list
+                            $productList = $html->find('.lvtitle');
+                            if ($productList) {
+                                $titleMatch = 0;
+                                for ($i = 0; $i < $matchCount; $i++) {
+                                    if (isset($productList[$i])) {
+                                        $titleContainer = $productList[$i]->find('a', 0);
+                                        if ($titleContainer) {
+                                            $title = strtolower(trim($titleContainer->plaintext));
 
-                        //$htmlNew = file_get_contents('/var/www/html/dsh/dropship-hunter/web/tmp/tmp-'.$epoch.'.html');
+                                            if ($title == $productTitle) {
+                                                $titleMatch++;
+                                                $titleLink = $titleContainer->getAttribute('href');
 
-                        // deleted after
-                        //unlink('web/tmp/tmp-'.$epoch.'.html');
-                        $html = str_get_html($htmlData['html']);
-                        // main content
-                        $matchCountContainer = $html->find('.rcnt', 0);
-                        if ($matchCountContainer) {
-                            $matchCount = $matchCountContainer->plaintext;
-                        } else {
-                            $matchCount = 0;
-                        }
-                        // get product list
-                        $productList = $html->find('.lvtitle');
-                        if ($productList) {
-                            $titleMatch = 0;
-                            for ($i = 0; $i < $matchCount; $i++) {
-                                if (isset($productList[$i])) {
-                                    $titleContainer = $productList[$i]->find('a', 0);
-                                    if ($titleContainer) {
-                                        $title = strtolower(trim($titleContainer->plaintext));
-
-                                        if ($title == $productTitle) {
-                                            $titleMatch++;
-                                            $titleLink = $titleContainer->getAttribute('href');
-
-                                            $productListLinksEntity = new ProductListLinks();
-                                            $productListLinksEntity->setProductListId($productListId);
-                                            $productListLinksEntity->setProductUrl($titleLink);
-                                            $productListLinksEntity->setStatus('active');
-                                            $em->persist($productListLinksEntity);
-                                            if(($i % 100) == 0){
-                                                $em->flush();
+                                                $productListLinksEntity = new ProductListLinks();
+                                                $productListLinksEntity->setProductListId($productListId);
+                                                $productListLinksEntity->setProductUrl($titleLink);
+                                                $productListLinksEntity->setStatus('active');
+                                                $em->persist($productListLinksEntity);
+                                                if(($i % 100) == 0){
+                                                    $em->flush();
+                                                }
+                                            } else {
                                             }
-                                        } else {
                                         }
                                     }
                                 }
-                            }
 
-                            $em->flush();
-                        }
-                        if ($titleMatch == 0) {
+                                $em->flush();
+                            }
+                            if ($titleMatch == 0) {
+                                $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
+                                if ($productListEntity) {
+                                    $productListEntity->setStatus('complete');
+                                }
+                            }
+                        }else {
                             $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                             if ($productListEntity) {
                                 $productListEntity->setStatus('complete');
                             }
                         }
-
                     } else {
                         $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                         if ($productListEntity) {

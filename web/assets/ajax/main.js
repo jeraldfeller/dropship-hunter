@@ -66,7 +66,7 @@ function importProductList($data){
         var response =  $.parseJSON(XMLHttpRequestObject.responseText);
         $('#submitBtn').html('Import');
         alert('Import success.');
-        exec();
+        checkProcess();
       }
       if (XMLHttpRequestObject.status == 500){
         alert('Something went wrong, please try again');
