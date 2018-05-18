@@ -7,6 +7,7 @@
  */
 
 namespace AppBundle\Controller;
+
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,57 +34,53 @@ class MainController extends Controller
 
         return $this->render('default/index.html.twig', [
             'proxyList' => $proxyList,
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
         ]);
     }
 
     /**
      * @Route("/main/get")
      */
-    public function getProductListAction(){
+    public function getProductListAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:ProductList')->findAll();
         $data = array();
         $totalCount = count($entity);
         $completeCount = 0;
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-	$status = true;
-	try{
-            if($entity){
-                for($x = 0; $x < count($entity); $x++){
-                    if($entity[$x]->getStatus() == 'complete'){
+        $status = true;
+        try {
+            if ($entity) {
+                for ($x = 0; $x < count($entity); $x++) {
+                    if ($entity[$x]->getStatus() == 'complete') {
                         $completeCount++;
                     }
-                    /*
-                    $data[] = array(
-                        'id' => $entity[$x]->getId(),
-                        'title' => $entity[$x]->getProductTitle(),
-                        'status' => $entity[$x]->getStatus()
-                    );
-                    */
+
                 }
             }
             //$status = true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $status = false;
         }
         return new Response(
-          json_encode(
-              array(
-                  'isActive' => $processEntity->getIsActive(),
-                  'totalCount' => $totalCount,
-                  'completeCount' => $completeCount,
-                  'data' => $data,
-		  'status' => $status
-              )
-          )
+            json_encode(
+                array(
+                    'isActive' => $processEntity->getIsActive(),
+                    'totalCount' => $totalCount,
+                    'completeCount' => $completeCount,
+                    'data' => $data,
+                    'status' => $status
+                )
+            )
         );
     }
 
     /**
      * @Route("/main/import")
      */
-    public function importProductListAction(){
+    public function importProductListAction()
+    {
         $date = date('Y-m-d H:i:s');
         $em = $this->getDoctrine()->getManager();
 
@@ -114,18 +111,18 @@ class MainController extends Controller
         // import new list;
 
         $spreadsheet_url = json_decode($_POST['param'], true);
-        if(!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
+        if (!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
         $i = 0;
         if (($handle = fopen($spreadsheet_url['url'], "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                if($i > 0 ){
+                if ($i > 0) {
                     $entity = new ProductList();
                     $entity->setProductTitle($data[0]);
                     $entity->setStatus('active');
                     $entity->setTimestamp(new \DateTime($date));
                     $em->persist($entity);
 
-                    if(($i % 100) == 0){
+                    if (($i % 100) == 0) {
                         $em->flush();
                     }
                 }
@@ -148,12 +145,13 @@ class MainController extends Controller
     /**
      * @Route("/proxy/get")
      */
-    public function getProxyAction(){
+    public function getProxyAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:ProxyList')->findAll();
         $proxyList = array();
-        if($entity){
-            for($x = 0; $x < count($entity); $x++){
+        if ($entity) {
+            for ($x = 0; $x < count($entity); $x++) {
                 $proxyList[] = array('ip' => $entity[$x]->getProxy());
             }
         }
@@ -167,7 +165,8 @@ class MainController extends Controller
     /**
      * @Route("/proxy/update")
      */
-    public function updateProxyAction(){
+    public function updateProxyAction()
+    {
         $data = json_decode($_POST['param'], true);
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery("
@@ -177,7 +176,7 @@ class MainController extends Controller
         $query->execute();
 
 
-        for($x = 0; $x < count($data['proxy']); $x++){
+        for ($x = 0; $x < count($data['proxy']); $x++) {
             $entity = new ProxyList();
             $entity->setProxy($data['proxy'][$x]);
             $em->persist($entity);
@@ -190,26 +189,27 @@ class MainController extends Controller
     /**
      * @Route("/main/export")
      */
-    public function exportSellerDataAction(){
+    public function exportSellerDataAction()
+    {
         $em = $this->getDoctrine()->getManager();
-        $file = 'Seller_Data_'.time().'.csv';
+        $file = 'Seller_Data_' . time() . '.csv';
         $entity = $em->getRepository('AppBundle:SellerData')->findAll();
         $data = array();
 
-        if($entity){
-            for($x = 0; $x < count($entity); $x++){
+        if ($entity) {
+            for ($x = 0; $x < count($entity); $x++) {
                 $data[] = array(
                     'sellerId' => trim($entity[$x]->getSellerId()),
                     'sellerLocation' => $entity[$x]->getSellerLocation(),
                     'sellerRank' => $entity[$x]->getSellersRank(),
-                    'memberSince' => '"'.$entity[$x]->getMemberSince().'"',
+                    'memberSince' => '"' . $entity[$x]->getMemberSince() . '"',
                     'positive' => $entity[$x]->getPositive(),
                     'neutral' => $entity[$x]->getNeutral(),
                     'negative' => $entity[$x]->getNegative(),
                     'itemsForSale' => $entity[$x]->getItemsForSale(),
-			'sellerPage' => 'https://www.ebay.com/usr/'.trim($entity[$x]->getSellerId()),
-                    'sellerStorePage' => $entity[$x]->getSellerPage()                
-);
+                    'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
+                    'sellerStorePage' => $entity[$x]->getSellerPage()
+                );
             }
         }
 
@@ -218,11 +218,10 @@ class MainController extends Controller
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Description', 'Submissions Export');
-        $response->headers->set('Content-Disposition', 'attachment; filename='.$file);
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $file);
         $response->headers->set('Content-Transfer-Encoding', 'binary');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', '0');
-
 
 
         return $response;

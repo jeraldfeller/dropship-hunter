@@ -59,16 +59,22 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                     if($htmlData['html']){
                         if(is_bool($htmlData['html']) === false){
                             $html = str_get_html($htmlData['html']);
-                            $mbgLink = $html->find('#mbgLink', 0);
-                            if($mbgLink){
-                                $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => trim($mbgLink->plaintext)));
-                                if(!$entity){
-                                    $entity = new SellerData();
-                                    $entity->setProductListId($productListId);
-                                    $entity->setProductListLinksId($id);
-                                    $entity->setSellerId(trim($mbgLink->plaintext));
-                                    $entity->setStatus('active');
-                                    $em->persist($entity);
+                            if(is_bool($html) === false){
+                                $mbgLink = $html->find('#mbgLink', 0);
+                                if($mbgLink){
+                                    $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => trim($mbgLink->plaintext)));
+                                    if(!$entity){
+                                        $entity = new SellerData();
+                                        $entity->setProductListId($productListId);
+                                        $entity->setProductListLinksId($id);
+                                        $entity->setSellerId(trim($mbgLink->plaintext));
+                                        $entity->setStatus('active');
+                                        $em->persist($entity);
+                                    }else{
+                                        $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
+                                        $productLinkEntity->setStatus('complete');
+                                        $em->flush();
+                                    }
                                 }else{
                                     $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
                                     $productLinkEntity->setStatus('complete');

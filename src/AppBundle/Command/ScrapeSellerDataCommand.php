@@ -71,105 +71,116 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                     if ($htmlData['html']) {
                         if(is_bool($htmlData['html']) === false){
                             $html = str_get_html($htmlData['html']);
-                            $location = $html->find('.mem_loc', 0);
-                            $userInfo = $html->find('#user_info', 0);
-                            $memberSince = $html->find('.mem_info', 0);
-                            $score = $html->find('.score');
-                            $sellCount = $html->find('.sell_count', 0);
-                            $sellerPage = $html->find('.store_lk', 0);
-                            if ($location) {
-                                $location = $location->plaintext;
-                            } else {
-                                $location = '';
-                            }
-                            if ($userInfo) {
-                                $sellerRank = $userInfo->find('a', 1);
-                                if ($sellerRank) {
-                                    $sellerRank = preg_replace("/[^0-9,.]/", "", $sellerRank->plaintext);
+                            if(is_bool($html) === false){
+                                $location = $html->find('.mem_loc', 0);
+                                $userInfo = $html->find('#user_info', 0);
+                                $memberSince = $html->find('.mem_info', 0);
+                                $score = $html->find('.score');
+                                $sellCount = $html->find('.sell_count', 0);
+                                $sellerPage = $html->find('.store_lk', 0);
+                                if ($location) {
+                                    $location = $location->plaintext;
+                                } else {
+                                    $location = '';
+                                }
+                                if ($userInfo) {
+                                    $sellerRank = $userInfo->find('a', 1);
+                                    if ($sellerRank) {
+                                        $sellerRank = preg_replace("/[^0-9,.]/", "", $sellerRank->plaintext);
+                                    } else {
+                                        $sellerRank = 0;
+                                    }
                                 } else {
                                     $sellerRank = 0;
                                 }
-                            } else {
-                                $sellerRank = 0;
-                            }
 
-                            if ($memberSince) {
-                                $memberSinceCont = $memberSince->find('.info');
-                                for ($a = 0; $a < count($memberSinceCont); $a++) {
-                                    if ($a == 0) {
-                                        $memberSince = $memberSinceCont[$a]->plaintext;
-                                    }
-                                }
-
-                            } else {
-                                $memberSince = '';
-                            }
-                            if ($score) {
-                                for ($s = 0; $s < count($score); $s++) {
-                                    $numScore = $score[$s]->find('.num', 0);
-                                    $txtScore = $score[$s]->find('.txt', 0);
-                                    if ($numScore) {
-                                        $numScore = trim($numScore->plaintext);
-                                        $txtScore = trim(strtolower($txtScore->plaintext));
-                                        switch ($txtScore) {
-                                            case 'positive':
-                                                $positive = intval(preg_replace('/[^\d.]/', '', $numScore));
-                                                break;
-                                            case 'neutral':
-                                                $neutral = intval(preg_replace('/[^\d.]/', '', $numScore));
-                                                break;
-                                            case 'negative':
-                                                $negative = intval(preg_replace('/[^\d.]/', '', $numScore));
-                                                break;
+                                if ($memberSince) {
+                                    $memberSinceCont = $memberSince->find('.info');
+                                    for ($a = 0; $a < count($memberSinceCont); $a++) {
+                                        if ($a == 0) {
+                                            $memberSince = $memberSinceCont[$a]->plaintext;
                                         }
-                                    } else {
-                                        $positive = 0;
-                                        $neutral = 0;
-                                        $negative = 0;
                                     }
-                                }
-                            } else {
-                                $positive = 0;
-                                $neutral = 0;
-                                $negative = 0;
-                            }
 
-                            if ($sellCount) {
-                                $sellCount = $sellCount->find('a', 0);
+                                } else {
+                                    $memberSince = '';
+                                }
+                                if ($score) {
+                                    for ($s = 0; $s < count($score); $s++) {
+                                        $numScore = $score[$s]->find('.num', 0);
+                                        $txtScore = $score[$s]->find('.txt', 0);
+                                        if ($numScore) {
+                                            $numScore = trim($numScore->plaintext);
+                                            $txtScore = trim(strtolower($txtScore->plaintext));
+                                            switch ($txtScore) {
+                                                case 'positive':
+                                                    $positive = intval(preg_replace('/[^\d.]/', '', $numScore));
+                                                    break;
+                                                case 'neutral':
+                                                    $neutral = intval(preg_replace('/[^\d.]/', '', $numScore));
+                                                    break;
+                                                case 'negative':
+                                                    $negative = intval(preg_replace('/[^\d.]/', '', $numScore));
+                                                    break;
+                                            }
+                                        } else {
+                                            $positive = 0;
+                                            $neutral = 0;
+                                            $negative = 0;
+                                        }
+                                    }
+                                } else {
+                                    $positive = 0;
+                                    $neutral = 0;
+                                    $negative = 0;
+                                }
+
                                 if ($sellCount) {
-                                    $sellCount = trim($sellCount->plaintext);
+                                    $sellCount = $sellCount->find('a', 0);
+                                    if ($sellCount) {
+                                        $sellCount = trim($sellCount->plaintext);
+                                    }
+                                } else {
+                                    $sellCount = 0;
                                 }
-                            } else {
-                                $sellCount = 0;
-                            }
 
-                            if ($sellerPage) {
-                                $sellerPage = $sellerPage->find('a', 0);
                                 if ($sellerPage) {
-                                    $sellerPage = $sellerPage->getAttribute('href');
+                                    $sellerPage = $sellerPage->find('a', 0);
+                                    if ($sellerPage) {
+                                        $sellerPage = $sellerPage->getAttribute('href');
+                                    } else {
+                                        $sellerPage = '';
+                                    }
                                 } else {
                                     $sellerPage = '';
                                 }
-                            } else {
-                                $sellerPage = '';
-                            }
 
-                            $entity = $em->getRepository('AppBundle:SellerData')->find($id);
-                            if ($entity) {
-                                $output->writeln([$sellerId]);
-                                $entity->setSellerLocation($location);
-                                $entity->setSellersRank($sellerRank);
-                                $entity->setMemberSince($memberSince);
-                                $entity->setPositive($positive);
-                                $entity->setNeutral($neutral);
-                                $entity->setNegative($negative);
-                                $entity->setItemsForSale($sellCount);
-                                $entity->setSellerPage($sellerPage);
-                                $entity->setStatus('complete');
-                                $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
-                                $productLinkEntity->setStatus('complete');
+                                $entity = $em->getRepository('AppBundle:SellerData')->find($id);
+                                if ($entity) {
+                                    $output->writeln([$sellerId]);
+                                    $entity->setSellerLocation($location);
+                                    $entity->setSellersRank($sellerRank);
+                                    $entity->setMemberSince($memberSince);
+                                    $entity->setPositive($positive);
+                                    $entity->setNeutral($neutral);
+                                    $entity->setNegative($negative);
+                                    $entity->setItemsForSale($sellCount);
+                                    $entity->setSellerPage($sellerPage);
+                                    $entity->setStatus('complete');
+                                    $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
+                                    $productLinkEntity->setStatus('complete');
 
-                                $em->flush();
+                                    $em->flush();
+                                }
+                            }else{
+                                $entity = $em->getRepository('AppBundle:SellerData')->find($id);
+                                if ($entity) {
+                                    $entity->setStatus('complete');
+                                    $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
+                                    $productLinkEntity->setStatus('complete');
+
+                                    $em->flush();
+                                }
                             }
                         }else{
                             $entity = $em->getRepository('AppBundle:SellerData')->find($id);

@@ -1,32 +1,30 @@
-function checkProcess(){
+function checkProcess() {
   $dfd = $.Deferred();
-  if(XMLHttpRequestObject)
-  {
+  if (XMLHttpRequestObject) {
 
     XMLHttpRequestObject.open("POST", "/main/get");
 
 
-    XMLHttpRequestObject.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    XMLHttpRequestObject.onreadystatechange = function()
-    {
-      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200)
-      {
-        var response =  $.parseJSON(XMLHttpRequestObject.responseText);
-        if(response.isActive == true){
-		if(response.status = true){
-          $('.progress-container').css('display', 'inline');
-          $progWidth = (response.completeCount) * 100 / response.totalCount;
-          $('.progress-bar').attr('aria-valuenow', (response.completeCount));
-          $('.progress-bar').css('width', $progWidth+'%');
-          $('.current_index').text(response.completeCount);
-          $('.total_count').text(response.totalCount);
-
-          if(response.totalCount == response.completeCount){
+    XMLHttpRequestObject.onreadystatechange = function () {
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        var response = $.parseJSON(XMLHttpRequestObject.responseText);
+        if (response.isActive == true) {
+          if (response.status = true) {
+            if(response.totalCount > 0){
+              $('.progress-container').css('display', 'inline');
+              $progWidth = (response.completeCount) * 100 / response.totalCount;
+              $('.progress-bar').attr('aria-valuenow', (response.completeCount));
+              $('.progress-bar').css('width', $progWidth + '%');
+              $('.current_index').text(response.completeCount);
+              $('.total_count').text(response.totalCount);
+            }
+            if (response.totalCount == response.completeCount) {
               $('.success-message').css('display', 'block');
+            }
           }
-}
-        }else{
+        } else {
           $('.progress-container').css('display', 'none');
           $('.progress-bar').attr('aria-valuenow', 0);
           $('.progress-bar').css('width', 0);
@@ -36,8 +34,8 @@ function checkProcess(){
         console.log(response);
         $dfd.resolve(response);
       }
-      if (XMLHttpRequestObject.status == 408 || XMLHttpRequestObject.status == 503 || XMLHttpRequestObject.status == 500){
-       // alert('Something went wrong, please try again');
+      if (XMLHttpRequestObject.status == 408 || XMLHttpRequestObject.status == 503 || XMLHttpRequestObject.status == 500) {
+        // alert('Something went wrong, please try again');
         $dfd.resolve(false);
       }
     }
@@ -49,30 +47,27 @@ function checkProcess(){
   return $dfd.promise();
 }
 
-function importProductList($data){
+function importProductList($data) {
 
-  if(XMLHttpRequestObject)
-  {
+  if (XMLHttpRequestObject) {
 
     XMLHttpRequestObject.open("POST", "/main/import");
 
 
-    XMLHttpRequestObject.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    XMLHttpRequestObject.onreadystatechange = function()
-    {
-      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200)
-      {
-        var response =  $.parseJSON(XMLHttpRequestObject.responseText);
+    XMLHttpRequestObject.onreadystatechange = function () {
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#submitBtn').html('Import');
         alert('Import success.');
         checkProcess();
       }
-      if (XMLHttpRequestObject.status == 500){
+      if (XMLHttpRequestObject.status == 500) {
         alert('Something went wrong, please try again');
       }
     }
-    XMLHttpRequestObject.send("param= "+ JSON.stringify($data));
+    XMLHttpRequestObject.send("param= " + JSON.stringify($data));
 
 
   }
@@ -81,39 +76,36 @@ function importProductList($data){
 }
 
 
-function updateProxy($proxy){
+function updateProxy($proxy) {
 
-  if(XMLHttpRequestObject)
-  {
+  if (XMLHttpRequestObject) {
 
     XMLHttpRequestObject.open("POST", "/proxy/update");
 
 
-    XMLHttpRequestObject.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    XMLHttpRequestObject.onreadystatechange = function()
-    {
-      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200)
-      {
-        var response =  $.parseJSON(XMLHttpRequestObject.responseText);
+    XMLHttpRequestObject.onreadystatechange = function () {
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#updateProxyBtn').html('Update Proxy List');
         alert('Proxy List Updated');
         exec();
       }
-      if (XMLHttpRequestObject.status == 408 || XMLHttpRequestObject.status == 503 || XMLHttpRequestObject.status == 500){
+      if (XMLHttpRequestObject.status == 408 || XMLHttpRequestObject.status == 503 || XMLHttpRequestObject.status == 500) {
         alert('Something went wrong, please try again');
       }
     }
-    XMLHttpRequestObject.send("param= "+ JSON.stringify({proxy: $proxy}));
+    XMLHttpRequestObject.send("param= " + JSON.stringify({proxy: $proxy}));
 
 
   }
 
   return false
 }
-  
-function exec(){
-  setInterval(function(){
+
+function exec() {
+  setInterval(function () {
     checkProcess();
   }, 60000);
 }
