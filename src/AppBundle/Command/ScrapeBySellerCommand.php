@@ -60,8 +60,6 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                         $html = str_get_html($htmlData['html']);
                         $mbgLink = $html->find('#mbgLink', 0);
                         if($mbgLink){
-  //                          $output->writeln([$mbgLink->plaintext]);
-                            // check if seller exist
                             $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => trim($mbgLink->plaintext)));
                             if(!$entity){
                                 $entity = new SellerData();
@@ -70,22 +68,25 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                 $entity->setSellerId(trim($mbgLink->plaintext));
                                 $entity->setStatus('active');
                                 $em->persist($entity);
-                                $em->flush();
                             }else{
                                 $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
                                 $productLinkEntity->setStatus('complete');
+                                $em->flush();
                             }
                         }else{
                             $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
                             $productLinkEntity->setStatus('complete');
+                            $em->flush();
                         }
                     }else{
                         $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
                         $productLinkEntity->setStatus('complete');
+                        $em->flush();
                     }
- $em->flush();
+
                 }
-		}
+              $em->flush();
+		    }
         }
 
     }
@@ -100,7 +101,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
             'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
 
         );
-	$curl = curl_init();
+	    $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         if ($proxy != NULL) {
             curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0,count($proxy) - 1)]);
@@ -109,7 +110,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
 	//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);        
-$contents = curl_exec($curl);
+    $contents = curl_exec($curl);
         curl_close($curl);
         return array('html' => $contents);
     }
@@ -132,7 +133,7 @@ $contents = curl_exec($curl);
                 FROM AppBundle:ProductListLinks p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(1);
+        )->setMaxResults(50);
         $result = $sql->getResult();
 
         $lists = array();

@@ -7,6 +7,7 @@
  */
 
 namespace AppBundle\Command;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,24 +23,34 @@ use AppBundle\Entity\ProxyList;
 use AppBundle\Entity\ProcessStatus;
 use AppBundle\Entity\SellerData;
 
-class ScrapeSellerDataCommand extends  ContainerAwareCommand
+class ScrapeSellerDataCommand extends ContainerAwareCommand
 {
+    public function delete_all_between($beginning, $end, $string)
+    {
+        $beginningPos = strpos($string, $beginning);
+        $endPos = strpos($string, $end);
+        if ($beginningPos === false || $endPos === false) {
+            return $string;
+        }
+
+        $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+
+        return str_replace($textToDelete, '', $string);
+    }
+
     protected function configure()
     {
         $this
             // the name of the command (the part after "bin/console")
             ->setName('execute:scrape-seller-data')
-
             // the short description shown while running "php bin/console list"
             ->setDescription('search for seller in ebay')
-
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('')
-
-            //   ->addArgument('action', InputArgument::REQUIRED, 'What type of action do you want to execute?')
+            ->setHelp('')//   ->addArgument('action', InputArgument::REQUIRED, 'What type of action do you want to execute?')
         ;
     }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
@@ -48,16 +59,16 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
             $proxy = $this->getProxy($em);
             $sellers = $this->getSellerData($em);
             $ebayUrlTemplate = 'https://www.ebay.com/usr/';
-            if($sellers){
-                for($x = 0; $x < count($sellers); $x++) {
+            if ($sellers) {
+                for ($x = 0; $x < count($sellers); $x++) {
                     $productListId = $sellers[$x]['productListId'];
                     $productListLinksId = $sellers[$x]['productListLinksId'];
-			$sellerId = trim($sellers[$x]['sellerId']);
+                    $sellerId = trim($sellers[$x]['sellerId']);
                     $id = $sellers[$x]['id'];
-                    $url = $ebayUrlTemplate.$sellerId;
+                    $url = $ebayUrlTemplate . $sellerId;
                     $output->writeln([$sellerId]);
                     $htmlData = $this->curlTo($url, $proxy);
-                    if($htmlData['html']) {
+                    if ($htmlData['html']) {
 
                         $html = str_get_html($htmlData['html']);
                         $location = $html->find('.mem_loc', 0);
@@ -66,49 +77,49 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                         $score = $html->find('.score');
                         $sellCount = $html->find('.sell_count', 0);
                         $sellerPage = $html->find('.store_lk', 0);
-                        if($location){
+                        if ($location) {
                             $location = $location->plaintext;
-                        }else{
+                        } else {
                             $location = '';
                         }
-                        if($userInfo){
+                        if ($userInfo) {
                             $sellerRank = $userInfo->find('a', 1);
-                            if($sellerRank){
-                                $sellerRank = preg_replace("/[^0-9,.]/", "", $sellerRank->plaintext );
-                            }else{
+                            if ($sellerRank) {
+                                $sellerRank = preg_replace("/[^0-9,.]/", "", $sellerRank->plaintext);
+                            } else {
                                 $sellerRank = 0;
                             }
-                        }else{
+                        } else {
                             $sellerRank = 0;
                         }
 
-                        if($memberSince){
-$output->writeln([$sellerId]);
-$memberSinceCont = $memberSince->find('.info');
+                        if ($memberSince) {
+                            $output->writeln([$sellerId]);
+                            $memberSinceCont = $memberSince->find('.info');
 
 //$memberSince = $memberSince->find('.info');
-                           // $memberSince = $memberSince->find('.info', 5)->plaintext;
-                           // $memberSince = trim(substr($memberSince->plaintext, strpos($memberSince->plaintext, "since") + 5));
-for($a = 0; $a < count($memberSinceCont); $a++){
-                                if($a == 0){
-$memberSince = $memberSinceCont[$a]->plaintext;
-                                //$output->writeln([$memberSince[$a]->plaintext]);
-}
+                            // $memberSince = $memberSince->find('.info', 5)->plaintext;
+                            // $memberSince = trim(substr($memberSince->plaintext, strpos($memberSince->plaintext, "since") + 5));
+                            for ($a = 0; $a < count($memberSinceCont); $a++) {
+                                if ($a == 0) {
+                                    $memberSince = $memberSinceCont[$a]->plaintext;
+                                    //$output->writeln([$memberSince[$a]->plaintext]);
+                                }
                             }
-                            
-                        }else{
+
+                        } else {
                             $memberSince = '';
                         }
-			//$output->writeln([$memberSince]);
+                        //$output->writeln([$memberSince]);
 
-                        if($score){
-                            for($s = 0; $s < count($score); $s++){
+                        if ($score) {
+                            for ($s = 0; $s < count($score); $s++) {
                                 $numScore = $score[$s]->find('.num', 0);
                                 $txtScore = $score[$s]->find('.txt', 0);
-                                if($numScore){
+                                if ($numScore) {
                                     $numScore = trim($numScore->plaintext);
                                     $txtScore = trim(strtolower($txtScore->plaintext));
-                                    switch ($txtScore){
+                                    switch ($txtScore) {
                                         case 'positive':
                                             $positive = intval(preg_replace('/[^\d.]/', '', $numScore));
                                             break;
@@ -119,40 +130,40 @@ $memberSince = $memberSinceCont[$a]->plaintext;
                                             $negative = intval(preg_replace('/[^\d.]/', '', $numScore));
                                             break;
                                     }
-                                }else{
+                                } else {
                                     $positive = 0;
                                     $neutral = 0;
                                     $negative = 0;
                                 }
                             }
-                        }else{
+                        } else {
                             $positive = 0;
                             $neutral = 0;
                             $negative = 0;
                         }
 
-                        if($sellCount){
+                        if ($sellCount) {
                             $sellCount = $sellCount->find('a', 0);
-                            if($sellCount){
+                            if ($sellCount) {
                                 $sellCount = trim($sellCount->plaintext);
                             }
-                        }else{
+                        } else {
                             $sellCount = 0;
                         }
 
-                        if($sellerPage){
+                        if ($sellerPage) {
                             $sellerPage = $sellerPage->find('a', 0);
-                            if($sellerPage){
+                            if ($sellerPage) {
                                 $sellerPage = $sellerPage->getAttribute('href');
-                            }else{
+                            } else {
                                 $sellerPage = '';
                             }
-                        }else{
+                        } else {
                             $sellerPage = '';
                         }
 
                         $entity = $em->getRepository('AppBundle:SellerData')->find($id);
-                        if($entity){
+                        if ($entity) {
 
                             $entity->setSellerLocation($location);
                             $entity->setSellersRank($sellerRank);
@@ -176,54 +187,38 @@ $memberSince = $memberSinceCont[$a]->plaintext;
         }
     }
 
-
-    public function curlTo($url, $proxy){
-     //   $proxy = null;
-        $agents = array(
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
-            'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
-            'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
-            'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
-
+    public function getProxy($em)
+    {
+        $sql = $em->createQuery(
+            "SELECT p
+                FROM AppBundle:ProxyList p
+                "
         );
-	$curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        if ($proxy != NULL) {
-            curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0,count($proxy) - 1)]);
-        }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);
-        $contents = curl_exec($curl);
-        curl_close($curl);
-        return array('html' => $contents);
-    }
+        $result = $sql->getResult();
 
-    public function delete_all_between($beginning, $end, $string) {
-        $beginningPos = strpos($string, $beginning);
-        $endPos = strpos($string, $end);
-        if ($beginningPos === false || $endPos === false) {
-            return $string;
+        $lists = array();
+        if ($result) {
+            for ($x = 0; $x < count($result); $x++) {
+                $lists[] = $result[$x]->getProxy();
+            }
         }
 
-        $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
-
-        return str_replace($textToDelete, '', $string);
+        return $lists;
     }
 
-    public function getSellerData($em){
+    public function getSellerData($em)
+    {
         $sql = $em->createQuery(
             "SELECT p
                 FROM AppBundle:SellerData p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(1);
+        )->setMaxResults(50);
         $result = $sql->getResult();
 
         $lists = array();
-        if($result){
-            for($x = 0; $x < count($result); $x++){
+        if ($result) {
+            for ($x = 0; $x < count($result); $x++) {
                 // update status of product list
 
                 $entity = $em->getRepository('AppBundle:SellerData')->find($result[$x]->getId());
@@ -233,7 +228,7 @@ $memberSince = $memberSinceCont[$a]->plaintext;
                 $lists[] = array(
                     'id' => $result[$x]->getId(),
                     'productListLinksId' => $result[$x]->getProductListLinksId(),
-			'productListId' => $result[$x]->getProductListId(),
+                    'productListId' => $result[$x]->getProductListId(),
                     'sellerId' => $result[$x]->getSellerId()
                 );
             }
@@ -242,21 +237,27 @@ $memberSince = $memberSinceCont[$a]->plaintext;
         return $lists;
     }
 
-    public function getProxy($em){
-        $sql = $em->createQuery(
-            "SELECT p
-                FROM AppBundle:ProxyList p
-                "
+    public function curlTo($url, $proxy)
+    {
+        //   $proxy = null;
+        $agents = array(
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
+            'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
+            'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
+            'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
+
         );
-        $result = $sql->getResult();
-
-        $lists = array();
-        if($result){
-            for($x = 0; $x < count($result); $x++){
-                $lists[] = $result[$x]->getProxy();
-            }
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        if ($proxy != NULL) {
+            curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0, count($proxy) - 1)]);
         }
-
-        return $lists;
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);
+        $contents = curl_exec($curl);
+        curl_close($curl);
+        return array('html' => $contents);
     }
 }
