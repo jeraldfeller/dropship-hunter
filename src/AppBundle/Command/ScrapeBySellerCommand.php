@@ -49,40 +49,58 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
             $products = $this->getProductListLink($em);
             $ebayUrlTemplate = 'https://www.ebay.com/usr/';
             if($products){
-                for($x = 0; $x < count($products); $x++) {
+            for($x = 0; $x < count($products); $x++) {
                     $productListId = $products[$x]['productListId'];
                     $productUrl = trim($products[$x]['productUrl']);
-
+//                    $output->writeln([$productUrl]);
+                    $id = $products[$x]['id'];
                     $htmlData = $this->curlTo($productUrl, $proxy);
+
                     if($htmlData['html']){
                         $html = str_get_html($htmlData['html']);
                         $mbgLink = $html->find('#mbgLink', 0);
                         if($mbgLink){
-                            $output->writeln([$mbgLink->plaintext]);
+  //                          $output->writeln([$mbgLink->plaintext]);
                             // check if seller exist
                             $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => trim($mbgLink->plaintext)));
                             if(!$entity){
                                 $entity = new SellerData();
                                 $entity->setProductListId($productListId);
+                                $entity->setProductListLinksId($id);
                                 $entity->setSellerId(trim($mbgLink->plaintext));
                                 $entity->setStatus('active');
                                 $em->persist($entity);
                                 $em->flush();
+                            }else{
+                                $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
+                                $productLinkEntity->setStatus('complete');
                             }
+                        }else{
+                            $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
+                            $productLinkEntity->setStatus('complete');
                         }
-
-
+                    }else{
+                        $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
+                        $productLinkEntity->setStatus('complete');
                     }
+ $em->flush();
                 }
-            }
+		}
         }
 
     }
 
 
     public function curlTo($url, $proxy){
-       // $proxy = null;
-        $curl = curl_init();
+        //$proxy = null;
+       $agents = array(
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
+            'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
+            'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
+            'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
+
+        );
+	$curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         if ($proxy != NULL) {
             curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0,count($proxy) - 1)]);
@@ -90,7 +108,8 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        $contents = curl_exec($curl);
+	//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);        
+$contents = curl_exec($curl);
         curl_close($curl);
         return array('html' => $contents);
     }
@@ -113,7 +132,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                 FROM AppBundle:ProductListLinks p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(10);
+        )->setMaxResults(1);
         $result = $sql->getResult();
 
         $lists = array();
@@ -126,6 +145,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                 $em->flush();
 
                 $lists[] = array(
+			 'id' => $result[$x]->getId(),
                     'productListId' => $result[$x]->getProductListId(),
                     'productUrl' => $result[$x]->getProductUrl()
                 );

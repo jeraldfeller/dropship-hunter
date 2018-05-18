@@ -14,7 +14,7 @@ function checkProcess(){
       {
         var response =  $.parseJSON(XMLHttpRequestObject.responseText);
         if(response.isActive == true){
-
+		if(response.status = true){
           $('.progress-container').css('display', 'inline');
           $progWidth = (response.completeCount) * 100 / response.totalCount;
           $('.progress-bar').attr('aria-valuenow', (response.completeCount));
@@ -25,7 +25,7 @@ function checkProcess(){
           if(response.totalCount == response.completeCount){
               $('.success-message').css('display', 'block');
           }
-
+}
         }else{
           $('.progress-container').css('display', 'none');
           $('.progress-bar').attr('aria-valuenow', 0);
@@ -111,9 +111,10 @@ function updateProxy($proxy){
 
   return false
 }
-
+  
 function exec(){
-  checkProcess().done(function(){
-    exec();
-  });
+  setInterval(function(){
+    checkProcess();
+  }, 60000);
 }
+

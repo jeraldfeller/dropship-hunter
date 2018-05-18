@@ -9,6 +9,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="productListLinksId" type="integer" column="product_list_links_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="sellerId" type="string" column="seller_id" length="60" nullable="true">
       <options>
         <option name="fixed"/>

@@ -55,9 +55,10 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
 
             if($products){
                 for($x = 0; $x < count($products); $x++) {
+			$titleMatch = 0;
                     $productListId = $products[$x]['id'];
                     $productTitle = strtolower(trim($products[$x]['productTitle']));
-                    $output->writeln([$productTitle]);
+                    //$output->writeln([$productTitle]);
                     // check first the strlen of the title
                     if(strlen($productTitle) > 80){
                         while(strlen($productTitle) > 80){
@@ -67,23 +68,23 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
 
                     $url = $ebayUrlTemplate.str_replace(' ', '+', $productTitle);
 
-                    $output->writeln([$productTitle]);
+//                    $output->writeln([$productTitle]);
 
 
                     $htmlData = $this->curlTo($url, $proxy);
-
+//var_dump('proxy success');
                     if($htmlData['html']){
-                        $epoch = time();
-                        $htmlNew = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->delete_all_between('<head>', '</head>', trim($htmlData['html'])));
-                        $myfile = fopen('web/tmp/tmp-'.$epoch.'.html', "w") or die("Unable to open file!");
-                        fwrite($myfile, $htmlNew);
-                        fclose($myfile);
+                    //    $epoch = time().mt_rand(1, 10);;
+                     //   $htmlNew = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->delete_all_between('<head>', '</head>', trim($htmlData['html'])));
+                      //  $myfile = fopen('/var/www/html/dsh/dropship-hunter/web/tmp/tmp-'.$epoch.'.html', "w+") or die("Unable to open file!");
+                       // fwrite($myfile, $htmlNew);
+                        //fclose($myfile);
 
-                        $htmlNew = file_get_contents('web/tmp/tmp-'.$epoch.'.html');
+                        //$htmlNew = file_get_contents('/var/www/html/dsh/dropship-hunter/web/tmp/tmp-'.$epoch.'.html');
 
                         // deleted after
-                        unlink('web/tmp/tmp-'.$epoch.'.html');
-                        $html = str_get_html($htmlNew);
+                        //unlink('web/tmp/tmp-'.$epoch.'.html');
+                        $html = str_get_html($htmlData['html']);
 
                         // main content
                         $matchCountContainer = $html->find('.rcnt', 0);
@@ -92,9 +93,11 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
                         }else{
                             $matchCount = 0;
                         }
+//var_dump($matchCount);
                         // get product list
                         $productList = $html->find('.lvtitle');
                         if($productList){
+$titleMatch = 0;
                             for($i = 0; $i < $matchCount; $i++){
                                 if(isset($productList[$i])){
                                     $titleContainer = $productList[$i]->find('a', 0);
@@ -102,7 +105,8 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
                                         $title = strtolower(trim($titleContainer->plaintext));
 
                                         if($title == $productTitle){
-                                            $titleLink = $titleContainer->getAttribute('href');
+$titleMatch++;                                         
+   $titleLink = $titleContainer->getAttribute('href');
 
                                             $productListLinksEntity = new ProductListLinks();
                                             $productListLinksEntity->setProductListId($productListId);
@@ -110,18 +114,29 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
                                             $productListLinksEntity->setStatus('active');
                                             $em->persist($productListLinksEntity);
                                             $em->flush();
-                                            $output->writeln([$title]);
-                                            $output->writeln(['match']);
+                                            //$output->writeln([$title]);
+                                            //$output->writeln(['match']);
                                         }else{
-                                            $output->writeln(['notmatch']);
+                                            //$output->writeln(['notmatch']);
                                         }
                                     }
                                 }
                             }
                         }
+if($titleMatch == 0){
+                                $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
+                                if($productListEntity){
+                                    $productListEntity->setStatus('complete');
+                                }
+                            }
 
 
 
+                    }else{
+                        $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
+                        if($productListEntity){
+                            $productListEntity->setStatus('complete');
+                        }
                     }
 
                 }
@@ -131,7 +146,14 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
     }
 
     public function curlTo($url, $proxy){
-       // $proxy = null;
+        //$proxy = null;
+        $agents = array(
+	'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
+	'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
+	'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
+	'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
+ 
+);
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         if ($proxy != NULL) {
@@ -140,6 +162,7 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+	//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);
         $contents = curl_exec($curl);
         curl_close($curl);
         return array('html' => $contents);
@@ -163,7 +186,7 @@ class ScrapeByProductTitleCommand  extends  ContainerAwareCommand
                 FROM AppBundle:ProductList p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(10);
+        )->setMaxResults(1);
         $result = $sql->getResult();
 
         $lists = array();

@@ -51,7 +51,8 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
             if($sellers){
                 for($x = 0; $x < count($sellers); $x++) {
                     $productListId = $sellers[$x]['productListId'];
-                    $sellerId = trim($sellers[$x]['sellerId']);
+                    $productListLinksId = $sellers[$x]['productListLinksId'];
+			$sellerId = trim($sellers[$x]['sellerId']);
                     $id = $sellers[$x]['id'];
                     $url = $ebayUrlTemplate.$sellerId;
                     $output->writeln([$sellerId]);
@@ -61,7 +62,7 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                         $html = str_get_html($htmlData['html']);
                         $location = $html->find('.mem_loc', 0);
                         $userInfo = $html->find('#user_info', 0);
-                        $memberSince = $html->find('.member_info', 0);
+                        $memberSince = $html->find('.mem_info', 0);
                         $score = $html->find('.score');
                         $sellCount = $html->find('.sell_count', 0);
                         $sellerPage = $html->find('.store_lk', 0);
@@ -82,11 +83,23 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                         }
 
                         if($memberSince){
-                            $memberSince = $memberSince->find('.info', 5);
-                            $memberSince = trim(substr($memberSince->plaintext, strpos($memberSince->plaintext, "since") + 5));
+$output->writeln([$sellerId]);
+$memberSinceCont = $memberSince->find('.info');
+
+//$memberSince = $memberSince->find('.info');
+                           // $memberSince = $memberSince->find('.info', 5)->plaintext;
+                           // $memberSince = trim(substr($memberSince->plaintext, strpos($memberSince->plaintext, "since") + 5));
+for($a = 0; $a < count($memberSinceCont); $a++){
+                                if($a == 0){
+$memberSince = $memberSinceCont[$a]->plaintext;
+                                //$output->writeln([$memberSince[$a]->plaintext]);
+}
+                            }
+                            
                         }else{
                             $memberSince = '';
                         }
+			//$output->writeln([$memberSince]);
 
                         if($score){
                             for($s = 0; $s < count($score); $s++){
@@ -150,7 +163,7 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                             $entity->setItemsForSale($sellCount);
                             $entity->setSellerPage($sellerPage);
                             $entity->setStatus('complete');
-                            $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->findOneBy(array('productListId' => $productListId));
+                            $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
                             $productLinkEntity->setStatus('complete');
 
                             $em->flush();
@@ -165,8 +178,15 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
 
 
     public function curlTo($url, $proxy){
-      //  $proxy = null;
-        $curl = curl_init();
+     //   $proxy = null;
+        $agents = array(
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
+            'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
+            'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
+            'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
+
+        );
+	$curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         if ($proxy != NULL) {
             curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0,count($proxy) - 1)]);
@@ -174,6 +194,7 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);
         $contents = curl_exec($curl);
         curl_close($curl);
         return array('html' => $contents);
@@ -197,7 +218,7 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
                 FROM AppBundle:SellerData p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(10);
+        )->setMaxResults(1);
         $result = $sql->getResult();
 
         $lists = array();
@@ -211,7 +232,8 @@ class ScrapeSellerDataCommand extends  ContainerAwareCommand
 
                 $lists[] = array(
                     'id' => $result[$x]->getId(),
-                    'productListId' => $result[$x]->getProductListId(),
+                    'productListLinksId' => $result[$x]->getProductListLinksId(),
+			'productListId' => $result[$x]->getProductListId(),
                     'sellerId' => $result[$x]->getSellerId()
                 );
             }

@@ -47,26 +47,34 @@ class MainController extends Controller
         $totalCount = count($entity);
         $completeCount = 0;
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-        if($entity){
-            for($x = 0; $x < count($entity); $x++){
-                if($entity[$x]->getStatus() == 'complete'){
-                    $completeCount++;
+	$status = true;
+	try{
+            if($entity){
+                for($x = 0; $x < count($entity); $x++){
+                    if($entity[$x]->getStatus() == 'complete'){
+                        $completeCount++;
+                    }
+                    /*
+                    $data[] = array(
+                        'id' => $entity[$x]->getId(),
+                        'title' => $entity[$x]->getProductTitle(),
+                        'status' => $entity[$x]->getStatus()
+                    );
+                    */
                 }
-                $data[] = array(
-                  'id' => $entity[$x]->getId(),
-                    'title' => $entity[$x]->getProductTitle(),
-                    'status' => $entity[$x]->getStatus()
-                );
             }
+            //$status = true;
+        }catch (\Exception $e){
+            $status = false;
         }
-
         return new Response(
           json_encode(
               array(
                   'isActive' => $processEntity->getIsActive(),
                   'totalCount' => $totalCount,
                   'completeCount' => $completeCount,
-                  'data' => $data
+                  'data' => $data,
+		  'status' => $status
               )
           )
         );
@@ -199,8 +207,9 @@ class MainController extends Controller
                     'neutral' => $entity[$x]->getNeutral(),
                     'negative' => $entity[$x]->getNegative(),
                     'itemsForSale' => $entity[$x]->getItemsForSale(),
-                    'sellerPage' => $entity[$x]->getSellerPage()
-                );
+			'sellerPage' => 'https://www.ebay.com/usr/'.trim($entity[$x]->getSellerId()),
+                    'sellerStorePage' => $entity[$x]->getSellerPage()                
+);
             }
         }
 
