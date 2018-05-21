@@ -46,7 +46,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
 
         // check if process status is active
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-        $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->finOneBy(array('action' => 'by_title'));
+        $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_title'));
         if($scrapeStatus->getIsActive() == 1){
             if ($processEntity->getIsActive() == 1) {
 
@@ -190,7 +190,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                 FROM AppBundle:ProductList p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(1);
+        )->setMaxResults(50);
         $result = $sql->getResult();
 
         $lists = array();

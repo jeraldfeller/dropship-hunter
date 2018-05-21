@@ -55,7 +55,7 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-        $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->finOneBy(array('action' => 'seller_data'));
+        $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'seller_data'));
         if($scrapeStatus->getIsActive() == 1){
             if ($processEntity->getIsActive() == 1) {
                 $proxy = $this->getProxy($em);
