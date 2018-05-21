@@ -137,7 +137,7 @@ class MainController extends Controller
 
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
         $processEntity->setIsActive(1);
-        $actionEntity = $em->getRepository('AppBundle:ActionStatus')->findAll();
+        $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findAll();
         for($a = 0; $a < count($actionEntity); $a++){
             $actionEntity[$a]->setIsActive(1);
         }
