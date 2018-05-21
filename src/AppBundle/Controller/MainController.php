@@ -137,6 +137,10 @@ class MainController extends Controller
 
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
         $processEntity->setIsActive(1);
+        $actionEntity = $em->getRepository('AppBundle:ActionStatus')->findAll();
+        for($a = 0; $a < count($actionEntity); $a++){
+            $actionEntity[$a]->setIsActive(1);
+        }
         $em->flush();
 
         return new Response(json_encode(true));

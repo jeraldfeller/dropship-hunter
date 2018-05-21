@@ -1,0 +1,84 @@
+<?php
+
+namespace AppBundle\Entity;
+
+/**
+ * ScrapeStatuses
+ */
+class ScrapeStatuses
+{
+    /**
+     * @var string
+     */
+    private $action;
+
+    /**
+     * @var boolean
+     */
+    private $isActive;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     *
+     * @return ScrapeStatuses
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return ScrapeStatuses
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

@@ -21,6 +21,7 @@ use AppBundle\Entity\ProductList;
 use AppBundle\Entity\ProductListLinks;
 use AppBundle\Entity\ProxyList;
 use AppBundle\Entity\ProcessStatus;
+use AppBundle\Entity\ScrapeStatuses;
 
 include('simple_html_dom_node.php');
 
@@ -45,102 +46,104 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
 
         // check if process status is active
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-        if ($processEntity->getIsActive() == 1) {
+        $scrapeStatus = $em->getRepository('AppBundle:ProcessStatus')->finOneBy(array('action' => 'by_title'));
+        if($scrapeStatus->getIsActive() == 1){
+            if ($processEntity->getIsActive() == 1) {
 
-            // get proxy list
-            $proxy = $this->getProxy($em);
-            $products = $this->getProductList($em);
-            $ebayUrlTemplate = 'https://www.ebay.com/sch/i.html?_nkw=';
+                // get proxy list
+                $proxy = $this->getProxy($em);
+                $products = $this->getProductList($em);
+                $ebayUrlTemplate = 'https://www.ebay.com/sch/i.html?_nkw=';
 
-            if ($products) {
-                for ($x = 0; $x < count($products); $x++) {
-                    $titleMatch = 0;
-                    $productListId = $products[$x]['id'];
-                    $productTitle = strtolower(trim($products[$x]['productTitle']));
-                    //$output->writeln([$productTitle]);
-                    // check first the strlen of the title
-                    if (strlen($productTitle) > 80) {
-                        while (strlen($productTitle) > 80) {
-                            $productTitle = preg_replace('/\W\w+\s*(\W*)$/', '$1', $productTitle);
+                if ($products) {
+                    for ($x = 0; $x < count($products); $x++) {
+                        $titleMatch = 0;
+                        $productListId = $products[$x]['id'];
+                        $productTitle = strtolower(trim($products[$x]['productTitle']));
+                        //$output->writeln([$productTitle]);
+                        // check first the strlen of the title
+                        if (strlen($productTitle) > 80) {
+                            while (strlen($productTitle) > 80) {
+                                $productTitle = preg_replace('/\W\w+\s*(\W*)$/', '$1', $productTitle);
+                            }
                         }
-                    }
-                    $url = $ebayUrlTemplate . str_replace(' ', '+', $productTitle);
+                        $url = $ebayUrlTemplate . str_replace(' ', '+', $productTitle);
 
-                    $htmlData = $this->curlTo($url, $proxy);
-                    if ($htmlData['html']) {
-                        if(is_bool($htmlData['html']) === false){
-                            $html = str_get_html($htmlData['html']);
-                            if(is_bool($html) === false){
-                                // main content
-                                $matchCountContainer = $html->find('.rcnt', 0);
-                                if ($matchCountContainer) {
-                                    $matchCount = $matchCountContainer->plaintext;
-                                } else {
-                                    $matchCount = 0;
-                                }
-                                // get product list
-                                $productList = $html->find('.lvtitle');
-                                if ($productList) {
-                                    $titleMatch = 0;
-                                    for ($i = 0; $i < $matchCount; $i++) {
-                                        if (isset($productList[$i])) {
-                                            $titleContainer = $productList[$i]->find('a', 0);
-                                            if ($titleContainer) {
-                                                $title = strtolower(trim($titleContainer->plaintext));
+                        $htmlData = $this->curlTo($url, $proxy);
+                        if ($htmlData['html']) {
+                            if(is_bool($htmlData['html']) === false){
+                                $html = str_get_html($htmlData['html']);
+                                if(is_bool($html) === false){
+                                    // main content
+                                    $matchCountContainer = $html->find('.rcnt', 0);
+                                    if ($matchCountContainer) {
+                                        $matchCount = $matchCountContainer->plaintext;
+                                    } else {
+                                        $matchCount = 0;
+                                    }
+                                    // get product list
+                                    $productList = $html->find('.lvtitle');
+                                    if ($productList) {
+                                        $titleMatch = 0;
+                                        for ($i = 0; $i < $matchCount; $i++) {
+                                            if (isset($productList[$i])) {
+                                                $titleContainer = $productList[$i]->find('a', 0);
+                                                if ($titleContainer) {
+                                                    $title = strtolower(trim($titleContainer->plaintext));
 
-                                                if ($title == $productTitle) {
-                                                    $titleMatch++;
-                                                    $titleLink = $titleContainer->getAttribute('href');
+                                                    if ($title == $productTitle) {
+                                                        $titleMatch++;
+                                                        $titleLink = $titleContainer->getAttribute('href');
 
-                                                    $productListLinksEntity = new ProductListLinks();
-                                                    $productListLinksEntity->setProductListId($productListId);
-                                                    $productListLinksEntity->setProductUrl($titleLink);
-                                                    $productListLinksEntity->setStatus('active');
-                                                    $em->persist($productListLinksEntity);
-                                                    if(($i % 100) == 0){
-                                                        $em->flush();
+                                                        $productListLinksEntity = new ProductListLinks();
+                                                        $productListLinksEntity->setProductListId($productListId);
+                                                        $productListLinksEntity->setProductUrl($titleLink);
+                                                        $productListLinksEntity->setStatus('active');
+                                                        $em->persist($productListLinksEntity);
+                                                        if(($i % 100) == 0){
+                                                            $em->flush();
+                                                        }
+                                                    } else {
                                                     }
-                                                } else {
                                                 }
                                             }
                                         }
-                                    }
 
-                                    $em->flush();
-                                }
-                                if ($titleMatch == 0) {
+                                        $em->flush();
+                                    }
+                                    if ($titleMatch == 0) {
+                                        $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
+                                        if ($productListEntity) {
+                                            $productListEntity->setStatus('complete');
+                                        }
+                                    }
+                                }else{
                                     $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                                     if ($productListEntity) {
                                         $productListEntity->setStatus('complete');
                                     }
                                 }
-                            }else{
+
+                            }else {
                                 $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                                 if ($productListEntity) {
                                     $productListEntity->setStatus('complete');
                                 }
                             }
-
-                        }else {
+                        } else {
                             $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                             if ($productListEntity) {
                                 $productListEntity->setStatus('complete');
                             }
                         }
-                    } else {
-                        $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
-                        if ($productListEntity) {
-                            $productListEntity->setStatus('complete');
-                        }
+
                     }
 
+                    $em->flush();
+                    $em->clear();
                 }
-
-                $em->flush();
-                $em->clear();
             }
         }
-
     }
 
     public function curlTo($url, $proxy)

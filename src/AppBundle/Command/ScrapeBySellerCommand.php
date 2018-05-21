@@ -44,32 +44,39 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-        if($processEntity->getIsActive() == 1){
-            $proxy = $this->getProxy($em);
-            $products = $this->getProductListLink($em);
-            $ebayUrlTemplate = 'https://www.ebay.com/usr/';
-            if($products){
-            for($x = 0; $x < count($products); $x++) {
-                    $productListId = $products[$x]['productListId'];
-                    $productUrl = trim($products[$x]['productUrl']);
+        $scrapeStatus = $em->getRepository('AppBundle:ProcessStatus')->finOneBy(array('action' => 'by_seller'));
+        if($scrapeStatus->getIsActive() == 1){
+            if($processEntity->getIsActive() == 1){
+                $proxy = $this->getProxy($em);
+                $products = $this->getProductListLink($em);
+                $ebayUrlTemplate = 'https://www.ebay.com/usr/';
+                if($products){
+                    for($x = 0; $x < count($products); $x++) {
+                        $productListId = $products[$x]['productListId'];
+                        $productUrl = trim($products[$x]['productUrl']);
 //                    $output->writeln([$productUrl]);
-                    $id = $products[$x]['id'];
-                    $htmlData = $this->curlTo($productUrl, $proxy);
+                        $id = $products[$x]['id'];
+                        $htmlData = $this->curlTo($productUrl, $proxy);
 
-                    if($htmlData['html']){
-                        if(is_bool($htmlData['html']) === false){
-                            $html = str_get_html($htmlData['html']);
-                            if(is_bool($html) === false){
-                                $mbgLink = $html->find('#mbgLink', 0);
-                                if($mbgLink){
-                                    $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => trim($mbgLink->plaintext)));
-                                    if(!$entity){
-                                        $entity = new SellerData();
-                                        $entity->setProductListId($productListId);
-                                        $entity->setProductListLinksId($id);
-                                        $entity->setSellerId(trim($mbgLink->plaintext));
-                                        $entity->setStatus('active');
-                                        $em->persist($entity);
+                        if($htmlData['html']){
+                            if(is_bool($htmlData['html']) === false){
+                                $html = str_get_html($htmlData['html']);
+                                if(is_bool($html) === false){
+                                    $mbgLink = $html->find('#mbgLink', 0);
+                                    if($mbgLink){
+                                        $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => trim($mbgLink->plaintext)));
+                                        if(!$entity){
+                                            $entity = new SellerData();
+                                            $entity->setProductListId($productListId);
+                                            $entity->setProductListLinksId($id);
+                                            $entity->setSellerId(trim($mbgLink->plaintext));
+                                            $entity->setStatus('active');
+                                            $em->persist($entity);
+                                        }else{
+                                            $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
+                                            $productLinkEntity->setStatus('complete');
+                                            $em->flush();
+                                        }
                                     }else{
                                         $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
                                         $productLinkEntity->setStatus('complete');
@@ -85,23 +92,18 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                 $productLinkEntity->setStatus('complete');
                                 $em->flush();
                             }
+
                         }else{
                             $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
                             $productLinkEntity->setStatus('complete');
                             $em->flush();
                         }
 
-                    }else{
-                        $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
-                        $productLinkEntity->setStatus('complete');
-                        $em->flush();
                     }
-
+                    $em->flush();
                 }
-              $em->flush();
-		    }
+            }
         }
-
     }
 
 

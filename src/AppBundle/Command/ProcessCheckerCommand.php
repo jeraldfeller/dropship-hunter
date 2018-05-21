@@ -51,7 +51,6 @@ class ProcessCheckerCommand extends  ContainerAwareCommand
                 if($entityLinks){
                     for($y = 0; $y < count($entityLinks); $y++){
                         if($entityLinks[$y]->getStatus() == 'complete'){
-                            $output->writeln([count($entityLinks), $completeCount]);
                             $completeCount++;
                         }
                     }
@@ -63,6 +62,23 @@ class ProcessCheckerCommand extends  ContainerAwareCommand
                 }
 
             }
+        }
+
+        // check by action
+        $entity = $em->getRepository('AppBundle:ProductList')->findBy(array('status' => 'active'));
+        if(!$entity){
+            $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_title'));
+            $actionEntity->setIsActive(0);
+        }
+        $entity = $em->getRepository('AppBundle:ProductListLinks')->findBy(array('status' => 'active'));
+        if(!$entity){
+            $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_seller'));
+            $actionEntity->setIsActive(0);
+        }
+        $entity = $em->getRepository('AppBundle:SellerData')->findBy(array('status' => 'active'));
+        if(!$entity){
+            $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'seller_data'));
+            $actionEntity->setIsActive(0);
         }
     }
 }

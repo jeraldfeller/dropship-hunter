@@ -341,4 +341,33 @@ class SellerData
     {
         return $this->status;
     }
+    /**
+     * @var integer
+     */
+    private $productListLinksId;
+
+
+    /**
+     * Set productListLinksId
+     *
+     * @param integer $productListLinksId
+     *
+     * @return SellerData
+     */
+    public function setProductListLinksId($productListLinksId)
+    {
+        $this->productListLinksId = $productListLinksId;
+
+        return $this;
+    }
+
+    /**
+     * Get productListLinksId
+     *
+     * @return integer
+     */
+    public function getProductListLinksId()
+    {
+        return $this->productListLinksId;
+    }
 }
