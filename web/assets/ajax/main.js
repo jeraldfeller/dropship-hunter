@@ -75,6 +75,33 @@ function importProductList($data) {
   return false
 }
 
+function reRun() {
+
+  if (XMLHttpRequestObject) {
+
+    XMLHttpRequestObject.open("POST", "/main/rerun");
+
+
+    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    XMLHttpRequestObject.onreadystatechange = function () {
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        var response = $.parseJSON(XMLHttpRequestObject.responseText);
+        $('#submitBtn').html('<i class="fa fa-refresh"></i> Re-run');
+        alert('Re-run success.');
+      }
+      if (XMLHttpRequestObject.status == 500) {
+        alert('Something went wrong, please try again');
+      }
+    }
+    XMLHttpRequestObject.send("param= 1");
+
+
+  }
+
+  return false
+}
+
 
 function updateProxy($proxy) {
 

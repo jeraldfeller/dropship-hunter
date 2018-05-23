@@ -65,7 +65,7 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                     for ($x = 0; $x < count($sellers); $x++) {
                         $productListId = $sellers[$x]['productListId'];
                         $productListLinksId = $sellers[$x]['productListLinksId'];
-                        $sellerId = strtolower(str_replace(' ', '', trim($sellers[$x]['sellerId'])));
+                        $sellerId = str_replace(' ', '', trim($sellers[$x]['sellerId']));
                         $id = $sellers[$x]['id'];
                         $url = $ebayUrlTemplate . $sellerId;
                         $htmlData = $this->curlTo($url, $proxy);

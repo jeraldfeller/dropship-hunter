@@ -90,6 +90,7 @@ class MainController extends Controller
         $em->flush();
 
         // clear list;
+        /*
         $query = $em->createQuery("
         DELETE
         FROM AppBundle:ProductList
@@ -107,6 +108,7 @@ class MainController extends Controller
         FROM AppBundle:SellerData
         ");
         $query->execute();
+        */
 
         // import new list;
 
@@ -115,12 +117,19 @@ class MainController extends Controller
         $i = 0;
         if (($handle = fopen($spreadsheet_url['url'], "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
                 if ($i > 0) {
-                    $entity = new ProductList();
-                    $entity->setProductTitle($data[0]);
-                    $entity->setStatus('active');
-                    $entity->setTimestamp(new \DateTime($date));
-                    $em->persist($entity);
+                    $entity = $em->getRepository('AppBundle:ProductList')->findOneBy(array('productTitle' => $data[0]));
+                    if(!$entity){
+                        $entity = new ProductList();
+                        $entity->setProductTitle($data[0]);
+                        $entity->setStatus('active');
+                        $entity->setTimestamp(new \DateTime($date));
+                        $em->persist($entity);
+                    }else{
+                        $entity->setStatus('active');
+                    }
+
 
                     if (($i % 100) == 0) {
                         $em->flush();
@@ -143,6 +152,29 @@ class MainController extends Controller
         }
         $em->flush();
 
+        return new Response(json_encode(true));
+    }
+
+    /**
+     * @Route("/main/rerun")
+     */
+    public function rerunAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery("
+        DELETE
+        FROM AppBundle:ProductListLinks
+        ");
+
+        $query->execute();
+
+
+        $query = $em->createQuery("
+        UPDATE AppBundle:ProductList p
+        SET p.status = 'active'
+        ");
+
+        $query->execute();
         return new Response(json_encode(true));
     }
 
@@ -199,7 +231,7 @@ class MainController extends Controller
         $file = 'Seller_Data_' . time() . '.csv';
         $entity = $em->getRepository('AppBundle:SellerData')->findAll();
         $data = array();
-
+        $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {
             for ($x = 0; $x < count($entity); $x++) {
                 $data[] = array(
@@ -212,7 +244,8 @@ class MainController extends Controller
                     'negative' => $entity[$x]->getNegative(),
                     'itemsForSale' => $entity[$x]->getItemsForSale(),
                     'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
-                    'sellerStorePage' => $entity[$x]->getSellerPage()
+                    'sellerStorePage' => $entity[$x]->getSellerPage(),
+                    'timeStamp' => $timeStamp
                 );
             }
         }
