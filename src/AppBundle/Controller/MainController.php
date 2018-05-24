@@ -29,14 +29,20 @@ class MainController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $proxyList = json_decode($this->getProxyAction()->getContent(), true);
-        // replace this example code with whatever you need
-
-        return $this->render('default/index.html.twig', [
-            'proxyList' => $proxyList,
-            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
-        ]);
+        $isLoggedIn = $this->get('session')->get('isLoggedIn');
+        if ($isLoggedIn) {
+            $proxyList = json_decode($this->getProxyAction()->getContent(), true);
+            // replace this example code with whatever you need
+            return $this->render('default/index.html.twig', [
+                'proxyList' => $proxyList,
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
+            ]);
+        }else{
+            return $this->redirect('/login');
+        }
     }
+
+
 
     /**
      * @Route("/main/get")

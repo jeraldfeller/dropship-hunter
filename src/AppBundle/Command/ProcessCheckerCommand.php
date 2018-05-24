@@ -42,7 +42,7 @@ class ProcessCheckerCommand extends  ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $entity = $em->getRepository('AppBundle:ProductList')->findAll();
+        $entity = $em->getRepository('AppBundle:ProductList')->findBy(array('status' => 'processing'));
         if($entity){
             for($x = 0; $x < count($entity); $x++){
                 $productListId = $entity[$x]->getId();
