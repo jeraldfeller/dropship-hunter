@@ -1,27 +1,68 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-
+<style>
+    .bs-glyphicons a{
+        color: #000;
+    }
+    .bs-glyphicons li {
+        float: left;
+        width: 25%;
+        height: 115px;
+        padding: 10px;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: center;
+        background-color: #e9e9e9;
+        border: 1px solid #fff;
+        list-style: none;
+        font-size: 2em;
+        cursor: pointer;
+    }
+    .bs-glyphicons li:hover{
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .list-title{
+        display: block;
+        text-align: center;
+        word-wrap: break-word;
+        font-size: .8em;
+    }
+</style>
 {% endblock %}
 {% block body %}
 <div class="container container-fluid">
+    <div class="row">
+        <div class="col-md-12 text-right" style="float: right; margin-top: 12px;">
+            <a href="/logout" title="logout"><i class="fa fa-power-off"></i></a>
+        </div>
+    </div>
     <div class="row" style="margin-top: 25px; text-align: center">
+
         <div class="col-md-12 text-center">
             <h4>Admin</h4>
         </div>
         <div class="col-md-12">
                 <div class="col-md-12 text-center" style="margin-top: 12px;">
-                    <div class="col-md-6 offset-md-3">
-                        <input type="text" name="_username" value="{{ user.username }}" class="form-control username" placeholder="Username" style="width: 100%;">
-                    </div>
+                    <div class="bs-glyphicons">
+                        <ul class="bs-glyphicons-list">
+                            <a href="/find-seller">
+                                <li>
 
-                </div>
-                <div class="col-md-12" style="margin-top: 12px;">
-                    <div class="col-md-6 offset-md-3">
-                        <input type="text" name="_password" value="{{ user.password }}" class="form-control password" placeholder="Password" style="width: 100%;">
+                                        <span class="fa fa-binoculars"></span>
+                                        <span class="list-title">Find Seller</span>
+
+                                </li>
+                            </a>
+                            <a href="http://149.28.204.93/ebay/eby-scp/index.php">
+                                <li>
+                                    <span class="fa fa-link"></span>
+                                    <span class="list-title">Live Link Checker</span>
+                                </li>
+                            </a>
+                        </ul>
                     </div>
-                </div>
-                <div class="col-md-12" style="text-align: center; margin-top: 12px;">
-                    <button class="btn btn-primary btnSubmit"> Update </button>
                 </div>
         </div>
 

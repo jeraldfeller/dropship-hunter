@@ -25,7 +25,7 @@ use AppBundle\Entity\ProcessStatus;
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/find-seller", name="homepage")
      */
     public function indexAction(Request $request)
     {
@@ -37,6 +37,22 @@ class MainController extends Controller
                 'proxyList' => $proxyList,
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
             ]);
+        }else{
+            return $this->redirect('/login');
+        }
+    }
+
+
+    /**
+     * @Route("/", name="adminPanel")
+     */
+    public function adminPanelAction()
+    {
+        $isLoggedIn = $this->get('session')->get('isLoggedIn');
+        if ($isLoggedIn) {
+            $proxyList = json_decode($this->getProxyAction()->getContent(), true);
+            // replace this example code with whatever you need
+            return $this->render('admin/admin.html.twig');
         }else{
             return $this->redirect('/login');
         }
