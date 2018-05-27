@@ -65,7 +65,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                     $mbgLink = $html->find('#mbgLink', 0);
                                     if($mbgLink){
                                         $sellerId = strtolower(trim($mbgLink->plaintext));
-                                        $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => $sellerId));
+                                        $entity = $em->getRepository('AppBundle:SellerData')->findBy(array('sellerId' => $sellerId));
                                         if(!$entity){
                                             $entity = new SellerData();
                                             $entity->setProductListId($productListId);
@@ -74,10 +74,12 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                             $entity->setStatus('active');
                                             $em->persist($entity);
                                         }else{
-                                            $entity->setProductListId($productListId);
-                                            $entity->setProductListLinksId($id);
-                                            $entity->setStatus('active');
-                                            $em->flush();
+                                            for($p = 0; $p < count($entity); $p++){
+                                                $entity[$p]->setProductListId($productListId);
+                                                $entity[$p]->setProductListLinksId($id);
+                                                $entity[$p]->setStatus('active');
+                                                $em->flush();
+                                            }
                                         }
                                     }else{
                                         $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
