@@ -64,5 +64,6 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="toExport" type="boolean" column="to_export" nullable="true"/>
   </entity>
 </doctrine-mapping>

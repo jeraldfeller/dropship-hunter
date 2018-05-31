@@ -81,4 +81,3 @@ class ScrapeStatuses
         return $this->id;
     }
 }
-

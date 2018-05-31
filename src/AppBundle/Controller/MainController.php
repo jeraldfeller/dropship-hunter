@@ -251,7 +251,7 @@ class MainController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $file = 'Seller_Data_' . time() . '.csv';
-        $entity = $em->getRepository('AppBundle:SellerData')->findAll();
+        $entity = $em->getRepository('AppBundle:SellerData')->findBy(array('toExport' => true));
         $data = array();
         $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {

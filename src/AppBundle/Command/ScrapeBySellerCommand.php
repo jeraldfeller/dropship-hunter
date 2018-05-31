@@ -63,21 +63,31 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                 $html = str_get_html($htmlData['html']);
                                 if(is_bool($html) === false){
                                     $mbgLink = $html->find('#mbgLink', 0);
+                                    $itemCondition = $html->find('#vi-itm-cond', 0);
+                                    $topRatedPlus = $html->find('#topratedplusimage', 0);
+
                                     if($mbgLink){
                                         $sellerId = strtolower(trim($mbgLink->plaintext));
                                         $entity = $em->getRepository('AppBundle:SellerData')->findBy(array('sellerId' => $sellerId));
+
                                         if(!$entity){
                                             $entity = new SellerData();
                                             $entity->setProductListId($productListId);
                                             $entity->setProductListLinksId($id);
                                             $entity->setSellerId($sellerId);
                                             $entity->setStatus('active');
+                                            if($itemCondition->plaintext == 'Used' || $topRatedPlus != false){
+                                                $entity->setToExport(0);
+                                            }
                                             $em->persist($entity);
                                         }else{
                                             for($p = 0; $p < count($entity); $p++){
                                                 $entity[$p]->setProductListId($productListId);
                                                 $entity[$p]->setProductListLinksId($id);
                                                 $entity[$p]->setStatus('active');
+                                                if($itemCondition->plaintext == 'Used' || $topRatedPlus != false){
+                                                    $entity[$p]->setToExport(0);
+                                                }
                                                 $em->flush();
                                             }
                                         }

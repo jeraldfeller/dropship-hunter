@@ -370,4 +370,33 @@ class SellerData
     {
         return $this->productListLinksId;
     }
+    /**
+     * @var boolean
+     */
+    private $toExport;
+
+
+    /**
+     * Set toExport
+     *
+     * @param boolean $toExport
+     *
+     * @return SellerData
+     */
+    public function setToExport($toExport)
+    {
+        $this->toExport = $toExport;
+
+        return $this;
+    }
+
+    /**
+     * Get toExport
+     *
+     * @return boolean
+     */
+    public function getToExport()
+    {
+        return $this->toExport;
+    }
 }
