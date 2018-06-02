@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c81426f0-0fad-4302-97eb-5d63f840fed5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/AppActivity.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/AppActivity.orm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/ajax/main.js" afterPath="$PROJECT_DIR$/web/assets/ajax/main.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,24 +18,24 @@
       <file leaf-file-name="MainController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="212" column="11" lean-forward="false" selection-start-line="212" selection-start-column="11" selection-end-line="212" selection-end-column="11" />
+            <state relative-caret-position="343">
+              <caret line="39" column="56" lean-forward="false" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
               <folding>
                 <element signature="e#130#176#0#PHP" expanded="true" />
-                <marker date="1527944826029" expanded="true" signature="1931:1991" ph="..." />
-                <marker date="1527944826029" expanded="true" signature="3426:3467" ph="DELETE FROM " />
-                <marker date="1527944826029" expanded="true" signature="3552:3598" ph="DELETE FROM " />
-                <marker date="1527944826029" expanded="true" signature="3683:3723" ph="DELETE FROM " />
-                <marker date="1527944826029" expanded="true" signature="5520:5566" ph="DELETE FROM " />
-                <marker date="1527944826029" expanded="true" signature="5653:5715" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="5660:5681" ph="DELETE FROM " />
-                <marker date="1527944826029" expanded="true" signature="6050:6105" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="6050:6126" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="6050:6144" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="6050:6161" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="6050:6170" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="6050:6430" ph="UPDATE AppBu... " />
-                <marker date="1527944826029" expanded="true" signature="6991:7030" ph="DELETE FROM " />
+                <marker date="1527946020962" expanded="true" signature="2140:2200" ph="..." />
+                <marker date="1527946020962" expanded="true" signature="3635:3676" ph="DELETE FROM " />
+                <marker date="1527946020962" expanded="true" signature="3761:3807" ph="DELETE FROM " />
+                <marker date="1527946020962" expanded="true" signature="3892:3932" ph="DELETE FROM " />
+                <marker date="1527946020962" expanded="true" signature="5729:5775" ph="DELETE FROM " />
+                <marker date="1527946020962" expanded="true" signature="5862:5924" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="5869:5890" ph="DELETE FROM " />
+                <marker date="1527946020962" expanded="true" signature="6259:6314" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="6259:6335" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="6259:6353" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="6259:6370" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="6259:6379" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="6259:6639" ph="UPDATE AppBu... " />
+                <marker date="1527946020962" expanded="true" signature="7200:7239" ph="DELETE FROM " />
               </folding>
             </state>
           </provider>
@@ -66,12 +57,12 @@
       <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="69" column="48" lean-forward="false" selection-start-line="69" selection-start-column="48" selection-end-line="69" selection-end-column="48" />
+            <state relative-caret-position="221">
+              <caret line="35" column="122" lean-forward="false" selection-start-line="35" selection-start-column="122" selection-end-line="35" selection-end-column="122" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <marker date="1527945196969" expanded="true" signature="2868:2887" ph="..." />
-                <marker date="1527945196969" expanded="true" signature="3101:3120" ph="..." />
+                <marker date="1527946123968" expanded="true" signature="3119:3138" ph="..." />
+                <marker date="1527946123968" expanded="true" signature="3352:3371" ph="..." />
               </folding>
             </state>
           </provider>
@@ -90,8 +81,8 @@
       <file leaf-file-name="ScrapeBySellerCommand.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="122" column="13" lean-forward="false" selection-start-line="122" selection-start-column="13" selection-end-line="122" selection-end-column="13" />
+            <state relative-caret-position="74">
+              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding>
                 <element signature="e#125#190#0#PHP" expanded="true" />
                 <marker date="1527944952223" expanded="true" signature="7969:8083" ph="SELECT p FRO... AppBundle" />
@@ -187,12 +178,12 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UsersController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/admin.html.twig" />
         <option value="$PROJECT_DIR$/web/assets/ajax/main.js" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
       </list>
     </option>
@@ -504,15 +495,16 @@
       <workItem from="1527562957938" duration="22000" />
       <workItem from="1527733997521" duration="1764000" />
       <workItem from="1527807681361" duration="37000" />
-      <workItem from="1527807900086" duration="2920000" />
+      <workItem from="1527807900086" duration="3836000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64944000" />
+    <option name="totallyTimeSpent" value="65860000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2796486" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -571,8 +563,8 @@
           <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1527945196969" expanded="true" signature="2868:2887" ph="..." />
-            <marker date="1527945196969" expanded="true" signature="3101:3120" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3119:3138" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3352:3371" ph="..." />
           </folding>
         </state>
       </provider>
@@ -641,20 +633,20 @@
           <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
           <folding>
             <element signature="e#130#176#0#PHP" expanded="true" />
-            <marker date="1527944826029" expanded="true" signature="1931:1991" ph="..." />
-            <marker date="1527944826029" expanded="true" signature="3426:3467" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="3552:3598" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="3683:3723" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="5520:5566" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="5653:5715" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="5660:5681" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="6050:6105" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6126" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6144" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6161" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6170" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6430" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6991:7030" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="2140:2200" ph="..." />
+            <marker date="1527946020962" expanded="true" signature="3635:3676" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="3761:3807" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="3892:3932" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="5729:5775" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="5862:5924" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="5869:5890" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="6259:6314" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6335" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6353" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6370" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6379" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6639" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="7200:7239" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -672,8 +664,8 @@
           <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1527945196969" expanded="true" signature="2868:2887" ph="..." />
-            <marker date="1527945196969" expanded="true" signature="3101:3120" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3119:3138" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3352:3371" ph="..." />
           </folding>
         </state>
       </provider>
@@ -812,20 +804,20 @@
           <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
           <folding>
             <element signature="e#130#176#0#PHP" expanded="true" />
-            <marker date="1527944826029" expanded="true" signature="1931:1991" ph="..." />
-            <marker date="1527944826029" expanded="true" signature="3426:3467" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="3552:3598" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="3683:3723" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="5520:5566" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="5653:5715" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="5660:5681" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="6050:6105" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6126" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6144" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6161" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6170" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6430" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6991:7030" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="2140:2200" ph="..." />
+            <marker date="1527946020962" expanded="true" signature="3635:3676" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="3761:3807" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="3892:3932" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="5729:5775" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="5862:5924" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="5869:5890" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="6259:6314" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6335" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6353" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6370" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6379" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6639" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="7200:7239" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -836,8 +828,8 @@
           <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1527945196969" expanded="true" signature="2868:2887" ph="..." />
-            <marker date="1527945196969" expanded="true" signature="3101:3120" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3119:3138" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3352:3371" ph="..." />
           </folding>
         </state>
       </provider>
@@ -979,30 +971,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="212" column="11" lean-forward="false" selection-start-line="212" selection-start-column="11" selection-end-line="212" selection-end-column="11" />
-          <folding>
-            <element signature="e#130#176#0#PHP" expanded="true" />
-            <marker date="1527944826029" expanded="true" signature="1931:1991" ph="..." />
-            <marker date="1527944826029" expanded="true" signature="3426:3467" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="3552:3598" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="3683:3723" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="5520:5566" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="5653:5715" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="5660:5681" ph="DELETE FROM " />
-            <marker date="1527944826029" expanded="true" signature="6050:6105" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6126" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6144" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6161" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6170" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6050:6430" ph="UPDATE AppBu... " />
-            <marker date="1527944826029" expanded="true" signature="6991:7030" ph="DELETE FROM " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
@@ -1010,18 +978,6 @@
           <folding>
             <marker date="1527944968143" expanded="true" signature="11785:11836" ph="SELECT p FRO... AppBundle" />
             <marker date="1527944968143" expanded="true" signature="12205:12313" ph="SELECT p FRO... AppBundle" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="122" column="13" lean-forward="false" selection-start-line="122" selection-start-column="13" selection-end-line="122" selection-end-column="13" />
-          <folding>
-            <element signature="e#125#190#0#PHP" expanded="true" />
-            <marker date="1527944952223" expanded="true" signature="7969:8083" ph="SELECT p FRO... AppBundle" />
-            <marker date="1527944952223" expanded="true" signature="8864:8915" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -1053,14 +1009,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#125#190#0#PHP" expanded="true" />
+            <marker date="1527944952223" expanded="true" signature="7969:8083" ph="SELECT p FRO... AppBundle" />
+            <marker date="1527944952223" expanded="true" signature="8864:8915" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="39" column="56" lean-forward="false" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+          <folding>
+            <element signature="e#130#176#0#PHP" expanded="true" />
+            <marker date="1527946020962" expanded="true" signature="2140:2200" ph="..." />
+            <marker date="1527946020962" expanded="true" signature="3635:3676" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="3761:3807" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="3892:3932" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="5729:5775" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="5862:5924" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="5869:5890" ph="DELETE FROM " />
+            <marker date="1527946020962" expanded="true" signature="6259:6314" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6335" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6353" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6370" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6379" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="6259:6639" ph="UPDATE AppBu... " />
+            <marker date="1527946020962" expanded="true" signature="7200:7239" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="69" column="48" lean-forward="false" selection-start-line="69" selection-start-column="48" selection-end-line="69" selection-end-column="48" />
+        <state relative-caret-position="221">
+          <caret line="35" column="122" lean-forward="false" selection-start-line="35" selection-start-column="122" selection-end-line="35" selection-end-column="122" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1527945196969" expanded="true" signature="2868:2887" ph="..." />
-            <marker date="1527945196969" expanded="true" signature="3101:3120" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3119:3138" ph="..." />
+            <marker date="1527946123968" expanded="true" signature="3352:3371" ph="..." />
           </folding>
         </state>
       </provider>

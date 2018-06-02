@@ -25,16 +25,19 @@ use AppBundle\Entity\ProcessStatus;
 class MainController extends Controller
 {
     /**
-     * @Route("/find-seller", name="homepage")
+     * @Route("/find-seller")
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $isLoggedIn = $this->get('session')->get('isLoggedIn');
         if ($isLoggedIn) {
             $proxyList = json_decode($this->getProxyAction()->getContent(), true);
+            $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_seller'));
             // replace this example code with whatever you need
             return $this->render('default/index.html.twig', [
                 'proxyList' => $proxyList,
+                'activity' => $scrapeStatus['activity'],
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
             ]);
         }else{
