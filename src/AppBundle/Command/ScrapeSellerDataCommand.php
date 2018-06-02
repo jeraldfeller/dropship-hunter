@@ -57,7 +57,7 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
 
         $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
 
-        if($appActivity['activity'] == 'start'){
+        if($appActivity->getActivity() == 'start'){
             $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
             $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'seller_data'));
             if($scrapeStatus->getIsActive() == 1){

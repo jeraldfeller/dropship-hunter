@@ -33,11 +33,11 @@ class MainController extends Controller
         $isLoggedIn = $this->get('session')->get('isLoggedIn');
         if ($isLoggedIn) {
             $proxyList = json_decode($this->getProxyAction()->getContent(), true);
-            $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_seller'));
+            $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
             // replace this example code with whatever you need
             return $this->render('default/index.html.twig', [
                 'proxyList' => $proxyList,
-                'activity' => $scrapeStatus['activity'],
+                'activity' => $appActivity->getActivity(),
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
             ]);
         }else{

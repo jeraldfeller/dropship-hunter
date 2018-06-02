@@ -45,7 +45,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
 
-        if($appActivity['activity'] == 'start'){
+        if($appActivity->getActivity() == 'start'){
 // check if process status is active
             $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
             $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_title'));

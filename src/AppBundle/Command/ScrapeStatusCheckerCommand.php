@@ -45,7 +45,7 @@ class ScrapeStatusCheckerCommand extends  ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
 
-        if($appActivity['activity'] == 'start'){
+        if($appActivity->getActivity() == 'start'){
             // check by action
             $entity = $em->getRepository('AppBundle:ProductList')->findBy(array('status' => 'active'));
             if(count($entity) == 0){
