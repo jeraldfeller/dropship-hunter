@@ -133,6 +133,34 @@ function updateProxy($proxy) {
   return false
 }
 
+
+function setActivity($data) {
+
+  if (XMLHttpRequestObject) {
+
+    XMLHttpRequestObject.open("POST", "/app/activity");
+
+
+    XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    XMLHttpRequestObject.onreadystatechange = function () {
+      if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+        var response = $.parseJSON(XMLHttpRequestObject.responseText);
+
+      }
+      if (XMLHttpRequestObject.status == 408 || XMLHttpRequestObject.status == 503 || XMLHttpRequestObject.status == 500) {
+        alert('Something went wrong, please try again');
+      }
+    }
+    XMLHttpRequestObject.send("param= " + JSON.stringify($data));
+
+
+  }
+
+  return false
+}
+
+
 function exec() {
   setInterval(function () {
     checkProcess();

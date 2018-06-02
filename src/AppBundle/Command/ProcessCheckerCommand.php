@@ -42,26 +42,31 @@ class ProcessCheckerCommand extends  ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $entity = $em->getRepository('AppBundle:ProductList')->findBy(array('status' => 'processing'));
-        if($entity){
-            for($x = 0; $x < count($entity); $x++){
-                $productListId = $entity[$x]->getId();
-                $completeCount = 0;
-                $entityLinks = $em->getRepository('AppBundle:ProductListLinks')->findBy(array('productListId' => $productListId));
-                if($entityLinks){
-                    for($y = 0; $y < count($entityLinks); $y++){
-                        if($entityLinks[$y]->getStatus() == 'complete'){
-                            $completeCount++;
+        $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
+
+        if($appActivity['activity'] == 'start'){
+            $entity = $em->getRepository('AppBundle:ProductList')->findBy(array('status' => 'processing'));
+            if($entity){
+                for($x = 0; $x < count($entity); $x++){
+                    $productListId = $entity[$x]->getId();
+                    $completeCount = 0;
+                    $entityLinks = $em->getRepository('AppBundle:ProductListLinks')->findBy(array('productListId' => $productListId));
+                    if($entityLinks){
+                        for($y = 0; $y < count($entityLinks); $y++){
+                            if($entityLinks[$y]->getStatus() == 'complete'){
+                                $completeCount++;
+                            }
+                        }
+
+                        if($completeCount == count($entityLinks)){
+                            $entity[$x]->setStatus('complete');
+                            $em->flush();
                         }
                     }
 
-                    if($completeCount == count($entityLinks)){
-                        $entity[$x]->setStatus('complete');
-                        $em->flush();
-                    }
                 }
-
             }
         }
+
     }
 }

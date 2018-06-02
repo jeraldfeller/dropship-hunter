@@ -30,6 +30,7 @@
                     <button type="submit" class="btn btn-primary" id="submitBtn"><i class="fa fa-upload"></i> IMPORT</button>
                     <button class="btn btn-primary" id="downloadtBtn"><i class="fa fa-download"></i> DOWNLOAD</button>
                     <button class="btn btn-primary" id="rerunBtn"><i class="fa fa-refresh"></i> Re-run</button>
+                    <button class="btn btn-primary" data-action="pause" id="prBtn"><i class="fa fa-pause"></i> Pause</button>
                 </div>
 
 
@@ -55,6 +56,23 @@
           // check status
           checkProcess();
           exec();
+
+
+          $('#prBtn').click(function(){
+            $action = $(this).attr('data-action');
+            if($action == 'pause'){
+              $(this).html('<i class="fa fa-play"></i> Play');
+              $(this).attr('data-action', 'play');
+              $('.success-message').html('<span style="text-align: center;">Paused...</span>');
+
+            }else{
+              $(this).html('<i class="fa fa-pause"></i> Pause');
+              $(this).attr('data-action', 'pause');
+              $('.success-message').html('<span style="text-align: center;">Resumed...</span>');
+            }
+
+            setActivity({app: 'app_2', action: $action});
+          });
 
 
           $('#downloadtBtn').click(function(){
@@ -102,7 +120,7 @@
               }
             }
 
-            updateProxy(proxy);
+                updateProxy(proxy);
           });
         });
     </script>

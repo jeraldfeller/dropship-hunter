@@ -201,6 +201,21 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/app/activity")
+     */
+    public function updateAppActivity()
+    {
+        $data = json_decode($_POST['param'], true);
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery("
+        UPDATE AppBundle:AppActivity p
+        SET p.activity = '".$data['action']. "' WHERE p.app = '".$data['app']."'
+        ");
+        $query->execute();
+        return new Response(json_encode(true));
+    }
+
+    /**
      * @Route("/proxy/get")
      */
     public function getProxyAction()

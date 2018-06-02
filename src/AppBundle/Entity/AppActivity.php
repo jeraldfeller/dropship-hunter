@@ -3,19 +3,19 @@
 namespace AppBundle\Entity;
 
 /**
- * Users
+ * AppActivity
  */
-class Users
+class AppActivity
 {
     /**
      * @var string
      */
-    private $userName;
+    private $app;
 
     /**
      * @var string
      */
-    private $password;
+    private $activity;
 
     /**
      * @var integer
@@ -24,51 +24,51 @@ class Users
 
 
     /**
-     * Set userName
+     * Set app
      *
-     * @param string $userName
+     * @param string $app
      *
-     * @return Users
+     * @return AppActivity
      */
-    public function setUserName($userName)
+    public function setApp($app)
     {
-        $this->userName = $userName;
+        $this->app = $app;
 
         return $this;
     }
 
     /**
-     * Get userName
+     * Get app
      *
      * @return string
      */
-    public function getUserName()
+    public function getApp()
     {
-        return $this->userName;
+        return $this->app;
     }
 
     /**
-     * Set password
+     * Set activity
      *
-     * @param string $password
+     * @param string $activity
      *
-     * @return Users
+     * @return AppActivity
      */
-    public function setPassword($password)
+    public function setActivity($activity)
     {
-        $this->password = $password;
+        $this->activity = $activity;
 
         return $this;
     }
 
     /**
-     * Get password
+     * Get activity
      *
      * @return string
      */
-    public function getPassword()
+    public function getActivity()
     {
-        return $this->password;
+        return $this->activity;
     }
 
     /**
@@ -81,3 +81,4 @@ class Users
         return $this->id;
     }
 }
+
