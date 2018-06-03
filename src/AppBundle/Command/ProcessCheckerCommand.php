@@ -44,7 +44,7 @@ class ProcessCheckerCommand extends  ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
 
-        if($appActivity->getActivity() == 'start'){
+        if($appActivity->getActivity() == 'play'){
             $entity = $em->getRepository('AppBundle:ProductList')->findBy(array('status' => 'processing'));
             if($entity){
                 for($x = 0; $x < count($entity); $x++){
