@@ -79,10 +79,17 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                                 $entity->setProductListLinksId($id);
                                                 $entity->setSellerId($sellerId);
                                                 $entity->setStatus('active');
-                                                if($itemCondition->plaintext == 'Used' || $topRatedPlus != false){
-                                                    $entity->setToExport(0);
+                                                if($itemCondition){
+                                                    if($itemCondition->plaintext == 'Used' || $topRatedPlus != false){
+                                                        $entity->setToExport(0);
+                                                    }
+                                                }else{
+                                                    if($topRatedPlus != false){
+                                                        $entity->setToExport(0);
+                                                    }
                                                 }
                                                 $em->persist($entity);
+                                                $em->flush();
                                             }else{
                                                 for($p = 0; $p < count($entity); $p++){
                                                     $entity[$p]->setProductListId($productListId);
