@@ -64,6 +64,15 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="toExport" type="boolean" column="to_export" nullable="true"/>
+    <field name="toExport" type="boolean" column="to_export" nullable="true">
+      <options>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="usedCount" type="integer" column="used_count" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

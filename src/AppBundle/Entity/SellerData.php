@@ -399,4 +399,33 @@ class SellerData
     {
         return $this->toExport;
     }
+    /**
+     * @var integer
+     */
+    private $usedCount;
+
+
+    /**
+     * Set usedCount
+     *
+     * @param integer $usedCount
+     *
+     * @return SellerData
+     */
+    public function setUsedCount($usedCount)
+    {
+        $this->usedCount = $usedCount;
+
+        return $this;
+    }
+
+    /**
+     * Get usedCount
+     *
+     * @return integer
+     */
+    public function getUsedCount()
+    {
+        return $this->usedCount;
+    }
 }

@@ -71,7 +71,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
 
                                         if($mbgLink){
                                             $sellerId = strtolower(trim($mbgLink->plaintext));
-                                            $entity = $em->getRepository('AppBundle:SellerData')->findBy(array('sellerId' => $sellerId));
+                                            $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => $sellerId));
 
                                             if(!$entity){
                                                 $entity = new SellerData();
@@ -80,32 +80,41 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                                 $entity->setSellerId($sellerId);
                                                 $entity->setStatus('active');
                                                 if($itemCondition){
-                                                    if($itemCondition->plaintext == 'Used' || $topRatedPlus != false){
-                                                        $entity->setToExport(0);
+                                                    if($itemCondition->plaintext != 'New'){
+                                                        //$entity->setToExport(0);
+                                                        $entity->setUsedCount(1);
+                                                    }else{
+                                                        //$entity->setToExport(1);
+                                                        $entity->setUsedCount(0);
                                                     }
                                                 }else{
-                                                    if($topRatedPlus != false){
-                                                        $entity->setToExport(0);
-                                                    }
+                                                    $entity->setUsedCount(0);
                                                 }
+                                                if($topRatedPlus != false){
+                                                        $entity->setToExport(0);
+                                                        //$entity->setUsedCount(0);
+                                                }else{
+                                                        $entity->setToExport(1);
+                                                        //$entity->setUsedCount(0);
+                                                }
+
                                                 $em->persist($entity);
                                                 $em->flush();
                                             }else{
-                                                for($p = 0; $p < count($entity); $p++){
-                                                    $entity[$p]->setProductListId($productListId);
-                                                    $entity[$p]->setProductListLinksId($id);
-                                                    $entity[$p]->setStatus('active');
-                                                    if($itemCondition){
-                                                        if($itemCondition->plaintext == 'Used' || $topRatedPlus != false){
-                                                            $entity[$p]->setToExport(0);
-                                                        }
-                                                    }else{
-                                                        if($topRatedPlus != false){
-                                                            $entity[$p]->setToExport(0);
-                                                        }
+                                                $usedCount = $entity->getUsedCount();
+                                                if($itemCondition){
+                                                    if($itemCondition->plaintext != 'New'){
+                                                        $entity->setUsedCount($usedCount + 1);
                                                     }
-                                                    $em->flush();
                                                 }
+                                                if($topRatedPlus != false){
+                                                    $entity->setToExport(0);
+                                                }
+
+                                                $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);
+                                                $productLinkEntity->setStatus('complete');
+
+                                                $em->flush();
                                             }
                                         }else{
                                             $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($id);

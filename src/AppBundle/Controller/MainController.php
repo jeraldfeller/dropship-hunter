@@ -193,6 +193,13 @@ class MainController extends Controller
 
         $query->execute();
 
+        $query = $em->createQuery("
+        DELETE
+        FROM AppBundle:SellerData
+        ");
+
+        $query->execute();
+
 
         $query = $em->createQuery("
         UPDATE AppBundle:ProductList p
@@ -274,19 +281,22 @@ class MainController extends Controller
         $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {
             for ($x = 0; $x < count($entity); $x++) {
-                $data[] = array(
-                    'sellerId' => trim($entity[$x]->getSellerId()),
-                    'sellerLocation' => $entity[$x]->getSellerLocation(),
-                    'sellerRank' => $entity[$x]->getSellersRank(),
-                    'memberSince' => '"' . $entity[$x]->getMemberSince() . '"',
-                    'positive' => $entity[$x]->getPositive(),
-                    'neutral' => $entity[$x]->getNeutral(),
-                    'negative' => $entity[$x]->getNegative(),
-                    'itemsForSale' => $entity[$x]->getItemsForSale(),
-                    'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
-                    'sellerStorePage' => $entity[$x]->getSellerPage(),
-                    'timeStamp' => $timeStamp
-                );
+                $usedCount = $entity->getUsedCount();
+                if($usedCount <= 30){
+                    $data[] = array(
+                        'sellerId' => trim($entity[$x]->getSellerId()),
+                        'sellerLocation' => $entity[$x]->getSellerLocation(),
+                        'sellerRank' => $entity[$x]->getSellersRank(),
+                        'memberSince' => '"' . $entity[$x]->getMemberSince() . '"',
+                        'positive' => $entity[$x]->getPositive(),
+                        'neutral' => $entity[$x]->getNeutral(),
+                        'negative' => $entity[$x]->getNegative(),
+                        'itemsForSale' => $entity[$x]->getItemsForSale(),
+                        'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
+                        'sellerStorePage' => $entity[$x]->getSellerPage(),
+                        'timeStamp' => $timeStamp
+                    );
+                }
             }
         }
 
