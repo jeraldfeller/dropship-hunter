@@ -1,6 +1,6 @@
 {% autoescape false %}
-Seller ID, Seller's Location, Seller's Rank, Member Since, Positive, Neutral, Negative, Items For Sale, Seller's Page, Seller's Store Page, Timestamp
+Seller ID, Seller's Location, Seller's Rank, Member Since, Positive, Neutral, Negative, Items For Sale, Seller's Page, Seller's Store Page, Used, New, Timestamp
 {% for row in data %}
-{{ row.sellerId }},{{ row.sellerLocation }},{{ row.sellerRank }},{{ row.memberSince }},{{ row.positive }},{{ row.neutral }},{{ row.negative }},{{ row.itemsForSale }},{{ row.sellerPage }}, {{ row.sellerStorePage }}, {{ row.timeStamp }}
+{{ row.sellerId }},{{ row.sellerLocation }},{{ row.sellerRank }},{{ row.memberSince }},{{ row.positive }},{{ row.neutral }},{{ row.negative }},{{ row.itemsForSale }},{{ row.sellerPage }}, {{ row.sellerStorePage }}, {{ row.usedItem }}, {{ row.newItem }}, {{ row.timeStamp }}
 {% endfor %}
 {% endautoescape %}

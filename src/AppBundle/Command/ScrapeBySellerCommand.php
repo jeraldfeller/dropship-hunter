@@ -79,17 +79,6 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                                 $entity->setProductListLinksId($id);
                                                 $entity->setSellerId($sellerId);
                                                 $entity->setStatus('active');
-                                                if($itemCondition){
-                                                    if($itemCondition->plaintext != 'New'){
-                                                        //$entity->setToExport(0);
-                                                        $entity->setUsedCount(1);
-                                                    }else{
-                                                        //$entity->setToExport(1);
-                                                        $entity->setUsedCount(0);
-                                                    }
-                                                }else{
-                                                    $entity->setUsedCount(0);
-                                                }
                                                 if($topRatedPlus != false){
                                                         $entity->setToExport(0);
                                                         //$entity->setUsedCount(0);
@@ -101,12 +90,6 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                                 $em->persist($entity);
                                                 $em->flush();
                                             }else{
-                                                $usedCount = $entity->getUsedCount();
-                                                if($itemCondition){
-                                                    if($itemCondition->plaintext != 'New'){
-                                                        $entity->setUsedCount($usedCount + 1);
-                                                    }
-                                                }
                                                 if($topRatedPlus != false){
                                                     $entity->setToExport(0);
                                                 }

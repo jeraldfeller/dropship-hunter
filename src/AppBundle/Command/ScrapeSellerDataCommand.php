@@ -65,6 +65,7 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                     $proxy = $this->getProxy($em);
                     $sellers = $this->getSellerData($em);
                     $ebayUrlTemplate = 'https://www.ebay.com/usr/';
+
                     if ($sellers) {
                         for ($x = 0; $x < count($sellers); $x++) {
                             $productListId = $sellers[$x]['productListId'];
@@ -73,10 +74,11 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                             $id = $sellers[$x]['id'];
                             $url = $ebayUrlTemplate . $sellerId;
                             $htmlData = $this->curlTo($url, $proxy);
-
+                            $allFeedbackUrl = 'https://feedback.ebay.com/ws/eBayISAPI.dll?ViewFeedback2&userid='.$sellerId.'&ftab=AllFeedback';
                             if ($htmlData['html']) {
                                 if(is_bool($htmlData['html']) === false){
                                     $html = str_get_html($htmlData['html']);
+                                    $ifs = str_replace('http', 'https', $html->find('.soi_lk', 0)->find('a', 0)->getAttribute('href'));
                                     if(is_bool($html) === false){
                                         $location = $html->find('.mem_loc', 0);
                                         $userInfo = $html->find('#user_info', 0);
@@ -111,7 +113,36 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                         } else {
                                             $memberSince = '';
                                         }
+
+                                        //Scores
+
                                         if ($score) {
+                                            $htmlScore = $this->curlTo($allFeedbackUrl, $proxy);
+                                            if($htmlScore['html']){
+                                                if(is_bool($htmlScore['html']) === false){
+                                                    $htmlScr = str_get_html($htmlScore['html']);
+                                                    $feedBackTable = $htmlScr->find('#recentFeedbackRatingsTable', 0);
+                                                    $fTr = $feedBackTable->find('.fbsSmallYukon');
+                                                    if($fTr){
+                                                        $positive = trim($fTr[0]->find('td', 2)->plaintext);
+                                                        $neutral = trim($fTr[1]->find('td', 2)->plaintext);
+                                                        $negative = trim($fTr[2]->find('td', 2)->plaintext);
+                                                    }else{
+                                                        $positive = 0;
+                                                        $neutral = 0;
+                                                        $negative = 0;
+                                                    }
+                                                }else{
+                                                    $positive = 0;
+                                                    $neutral = 0;
+                                                    $negative = 0;
+                                                }
+                                            }else{
+                                                $positive = 0;
+                                                $neutral = 0;
+                                                $negative = 0;
+                                            }
+                                            /*
                                             for ($s = 0; $s < count($score); $s++) {
                                                 $numScore = $score[$s]->find('.num', 0);
                                                 $txtScore = $score[$s]->find('.txt', 0);
@@ -135,12 +166,14 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                                     $negative = 0;
                                                 }
                                             }
+                                            */
                                         } else {
                                             $positive = 0;
                                             $neutral = 0;
                                             $negative = 0;
                                         }
 
+                                        // end score
                                         if ($sellCount) {
                                             $sellCount = $sellCount->find('a', 0);
                                             if ($sellCount) {
@@ -161,6 +194,47 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                             $sellerPage = '';
                                         }
 
+
+                                        // get Item Condition Listings
+                                        $htmlListings = $this->curlTo($ifs, $proxy);
+                                        $hasCondPnl = false;
+
+                                        if($htmlListings['html']){
+                                            if(is_bool($htmlListings['html']) === false) {
+                                                $htmlLst = str_get_html($htmlListings['html']);
+                                                $panels = $htmlLst->find('.pnl');
+                                                for($p = 0; $p < count($panels); $p++){
+                                                    $pnlTitle = $panels[$p]->find('h3', 0);
+                                                    if($pnlTitle){
+                                                        if(trim($pnlTitle->plaintext) == 'Condition'){
+                                                            $hasCondPnl = true;
+                                                            $panelB = $panels[$p]->find('.pnl-b', 0);
+                                                            $panelB_a = $panelB->find('a');
+                                                            for($pb = 0; $pb < count($panelB_a); $pb++){
+                                                                $pnlB_t = trim($panelB_a[$pb]->find('span', 0)->plaintext);
+                                                                $pnlB_c = trim($panelB_a[$pb]->find('span', 1)->plaintext);
+                                                                if($pnlB_t == 'New'){
+                                                                    $new = preg_replace("/[^0-9]/", '', $pnlB_c);
+                                                                }else if($pnlB_t == 'Used'){
+                                                                    $used = preg_replace("/[^0-9]/", '', $pnlB_c);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }else{
+                                                $used = 0;
+                                                $new = 0;
+                                            }
+
+                                        }else{
+
+                                        }
+
+                                        if($hasCondPnl == false){
+                                            $used = 0;
+                                            $new = 0;
+                                        }
                                         $entity = $em->getRepository('AppBundle:SellerData')->find($id);
                                         if ($entity) {
                                             $entity->setSellerLocation($location);
@@ -172,6 +246,8 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                             $entity->setItemsForSale($sellCount);
                                             $entity->setSellerPage($sellerPage);
                                             $entity->setStatus('complete');
+                                            $entity->setUsedCount($used);
+                                            $entity->setNewCount($new);
                                             $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
                                             $productLinkEntity->setStatus('complete');
 
@@ -269,7 +345,7 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
 
     public function curlTo($url, $proxy)
     {
-        //   $proxy = null;
+           //$proxy = null;
         $agents = array(
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
             'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',

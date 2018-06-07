@@ -281,8 +281,8 @@ class MainController extends Controller
         $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {
             for ($x = 0; $x < count($entity); $x++) {
-                $usedCount = $entity->getUsedCount();
-                if($usedCount <= 30){
+                $usedCount = $entity[$x]->getUsedCount();
+                if($usedCount <= 20){
                     $data[] = array(
                         'sellerId' => trim($entity[$x]->getSellerId()),
                         'sellerLocation' => $entity[$x]->getSellerLocation(),
@@ -294,6 +294,8 @@ class MainController extends Controller
                         'itemsForSale' => $entity[$x]->getItemsForSale(),
                         'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
                         'sellerStorePage' => $entity[$x]->getSellerPage(),
+                        'usedItem' => $entity[$x]->getUsedCount(),
+                        'newItem' => $entity[$x]->getNewCount(),
                         'timeStamp' => $timeStamp
                     );
                 }

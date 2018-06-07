@@ -428,4 +428,33 @@ class SellerData
     {
         return $this->usedCount;
     }
+    /**
+     * @var integer
+     */
+    private $newCount;
+
+
+    /**
+     * Set newCount
+     *
+     * @param integer $newCount
+     *
+     * @return SellerData
+     */
+    public function setNewCount($newCount)
+    {
+        $this->newCount = $newCount;
+
+        return $this;
+    }
+
+    /**
+     * Get newCount
+     *
+     * @return integer
+     */
+    public function getNewCount()
+    {
+        return $this->newCount;
+    }
 }
