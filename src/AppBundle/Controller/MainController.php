@@ -210,6 +210,21 @@ class MainController extends Controller
         return new Response(json_encode(true));
     }
 
+
+    /**
+     * @Route("/main/remove-titles")
+     */
+    public function removeTitlesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery("
+        DELETE
+        FROM AppBundle:ProductList
+        ");
+        $query->execute();
+        return new Response(json_encode(true));
+    }
+
     /**
      * @Route("/app/activity")
      */
@@ -303,6 +318,39 @@ class MainController extends Controller
         }
 
         $response = $this->render('export/csv-template.html.twig', array('data' => $data));
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Description', 'Submissions Export');
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $file);
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+
+        return $response;
+    }
+
+
+    /**
+     * @Route("/main/export-title")
+     */
+    public function exportTitleAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $file = 'Titles_' . time() . '.csv';
+        $entity = $em->getRepository('AppBundle:ProductList')->findAll();
+        $data = array();
+        $timeStamp = date('Y-m-d H:i:s');
+        if ($entity) {
+            for ($x = 0; $x < count($entity); $x++) {
+                    $data[] = array(
+                        'title' => trim($entity[$x]->getProductTitle())
+                    );
+            }
+        }
+
+        $response = $this->render('export/csv-template-titles.html.twig', array('data' => $data));
 
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv');

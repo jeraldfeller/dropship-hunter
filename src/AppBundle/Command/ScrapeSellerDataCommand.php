@@ -198,7 +198,8 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                         // get Item Condition Listings
                                         $htmlListings = $this->curlTo($ifs, $proxy);
                                         $hasCondPnl = false;
-
+                                        $used = 0;
+                                        $new = 0;
                                         if($htmlListings['html']){
                                             if(is_bool($htmlListings['html']) === false) {
                                                 $htmlLst = str_get_html($htmlListings['html']);
@@ -228,7 +229,8 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                             }
 
                                         }else{
-
+                                            $used = 0;
+                                            $new = 0;
                                         }
 
                                         if($hasCondPnl == false){
