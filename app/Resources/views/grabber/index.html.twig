@@ -62,8 +62,8 @@
       $(document).ready(function(){
 
         // check status
-        checkProcess();
-        exec();
+        checkProcess('app_3');
+        exec('app_3');
 
 
         $('#prBtn').click(function(){
@@ -122,7 +122,7 @@
         // Re Run
         $('#rerunBtn').click(function(){
           $(this).html('<i class="fa fa-spinner fa-spin"></i>');
-          reRun();
+          reRun('app_3');
         });
 
 

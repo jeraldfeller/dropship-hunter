@@ -55,11 +55,10 @@ class ScrapeSellerProductListingCommand extends ContainerAwareCommand
                     for($x = 0; $x < count($sellers); $x++){
                         $sellerId = trim($sellers[$x]['sellerId']);
                         $id = $sellers[$x]['id'];
-                        $entity = $sellers[$x]['entity'];
                         $url = 'https://www.ebay.com/sch/'.$sellerId.'/m.html?_nkw=&_armrs=1&_from=&_ipg=200&_pgn=1';
 
                         while($this->paginateScrape($em, $output, $url, $id, $proxy) == 'next'){
-                            if($page < 3){
+                            if($page < 1){
                                 $page++;
                                 $url = 'https://www.ebay.com/sch/'.$sellerId.'/m.html?_nkw=&_armrs=1&_from=&_ipg=200&_pgn='.$page;
                             }else{
@@ -96,7 +95,7 @@ class ScrapeSellerProductListingCommand extends ContainerAwareCommand
                                         // Start Fetching Titles
                                         for($x = 0; $x < count($list); $x++){
                                             $listing = $list[$x]->find('.vip', 0);
-                                            $prodTitle = htmlspecialchars($listing->plaintext);
+                                            $prodTitle = rtrim(htmlspecialchars($listing->plaintext), '.');
                                             $titleEntity = $em->getRepository('AppBundle:GProductList')->findOneBy(array('productTitle' => $prodTitle));
                                             if(!$titleEntity){
                                                 $titleEntity = new GProductList();

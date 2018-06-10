@@ -172,7 +172,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                 FROM AppBundle:ProductListLinks p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(50);
+        )->setMaxResults(40);
         $result = $sql->getResult();
 
         $lists = array();

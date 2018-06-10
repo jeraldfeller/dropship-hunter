@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\GSellerData;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use AppBundle\Entity\ProxyList;
 use AppBundle\Entity\ProductList;
+use AppBundle\Entity\GFSellerData;
+use AppBundle\Entity\GProductList;
 use AppBundle\Entity\ProcessStatus;
 
 class MainController extends Controller
@@ -90,8 +93,14 @@ class MainController extends Controller
      */
     public function getProductListAction()
     {
+        $data = json_decode($_POST['param'], true);
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:ProductList')->findAll();
+        if($data['app'] == 'app_2'){
+            $entity = $em->getRepository('AppBundle:ProductList')->findAll();
+        }else if($data['app'] == 'app_3'){
+            $entity = $em->getRepository('AppBundle:GProductList')->findAll();
+        }
+
         $data = array();
         $totalCount = count($entity);
         $completeCount = 0;
@@ -132,9 +141,9 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // turn off process
-        $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-        $processEntity->setIsActive(0);
-        $em->flush();
+       // $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
+       // $processEntity->setIsActive(0);
+       // $em->flush();
 
         // clear list;
         /*
@@ -203,32 +212,101 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/main/grabber/import")
+     */
+    public function importGrabberSellerAction()
+    {
+        $date = date('Y-m-d H:i:s');
+        $em = $this->getDoctrine()->getManager();
+
+        // turn off process
+        //$processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
+        //$processEntity->setIsActive(0);
+       // $em->flush();
+
+        // import new list;
+
+        $spreadsheet_url = json_decode($_POST['param'], true);
+        if (!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket timeout -->";
+        $i = 0;
+        if (($handle = fopen($spreadsheet_url['url'], "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
+                if ($i > 0) {
+                    $entity = $em->getRepository('AppBundle:ProductList')->findOneBy(array('productTitle' => $data[0]));
+                    if(!$entity){
+                        $entity = new GSellerData();
+                        $entity->setSellerId($data[0]);
+                        $entity->setStatus('active');
+                        $entity->setTimestamp(new \DateTime($date));
+                        $em->persist($entity);
+                    }else{
+                        $entity->setStatus('active');
+                    }
+                    if (($i % 100) == 0) {
+                        $em->flush();
+                    }
+                }
+                $i++;
+            }
+            fclose($handle);
+        }
+
+        $em->flush();
+
+        // active process
+
+        $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
+        $processEntity->setIsActive(1);
+        $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findAll();
+        for($a = 0; $a < count($actionEntity); $a++){
+            $actionEntity[$a]->setIsActive(1);
+        }
+        $em->flush();
+
+        return new Response(json_encode(true));
+    }
+
+    /**
      * @Route("/main/rerun")
      */
     public function rerunAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery("
-        DELETE
-        FROM AppBundle:ProductListLinks
-        ");
+        $data = json_decode($_POST['param'], true);
 
-        $query->execute();
+        switch ($data['app']){
+            case 'app_2':
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery("
+                DELETE
+                FROM AppBundle:ProductListLinks
+                ");
+                $query->execute();
+                $query = $em->createQuery("
+                DELETE
+                FROM AppBundle:SellerData
+                ");
+                $query->execute();
+                $query = $em->createQuery("
+                UPDATE AppBundle:ProductList p
+                SET p.status = 'active'
+                ");
+                $query->execute();
+            break;
+            case 'app_3':
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery("
+                DELETE
+                FROM AppBundle:GProductListLinks
+                ");
+                $query = $em->createQuery("
+                UPDATE AppBundle:GProductList p
+                SET p.status = 'active'
+                ");
+                $query->execute();
+                break;
+        }
 
-        $query = $em->createQuery("
-        DELETE
-        FROM AppBundle:SellerData
-        ");
-
-        $query->execute();
-
-
-        $query = $em->createQuery("
-        UPDATE AppBundle:ProductList p
-        SET p.status = 'active'
-        ");
-
-        $query->execute();
         return new Response(json_encode(true));
     }
 
@@ -314,6 +392,54 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $file = 'Seller_Data_' . time() . '.csv';
         $entity = $em->getRepository('AppBundle:SellerData')->findBy(array('toExport' => true));
+        $data = array();
+        $timeStamp = date('Y-m-d H:i:s');
+        if ($entity) {
+            for ($x = 0; $x < count($entity); $x++) {
+                $usedCount = $entity[$x]->getUsedCount();
+                if($usedCount <= 20){
+                    $data[] = array(
+                        'sellerId' => trim($entity[$x]->getSellerId()),
+                        'sellerLocation' => '"' . $entity[$x]->getSellerLocation() . '"',
+                        'sellerRank' => $entity[$x]->getSellersRank(),
+                        'memberSince' => '"' . $entity[$x]->getMemberSince() . '"',
+                        'positive' => $entity[$x]->getPositive(),
+                        'neutral' => $entity[$x]->getNeutral(),
+                        'negative' => $entity[$x]->getNegative(),
+                        'itemsForSale' => $entity[$x]->getItemsForSale(),
+                        'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
+                        'sellerStorePage' => $entity[$x]->getSellerPage(),
+                        'usedItem' => $entity[$x]->getUsedCount(),
+                        'newItem' => $entity[$x]->getNewCount(),
+                        'timeStamp' => $timeStamp
+                    );
+                }
+            }
+        }
+
+        $response = $this->render('export/csv-template.html.twig', array('data' => $data));
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Description', 'Submissions Export');
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $file);
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+
+        return $response;
+    }
+
+
+    /**
+     * @Route("/main/grabber/export")
+     */
+    public function exportGrabberSellerDataAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $file = 'Seller_Data_' . time() . '.csv';
+        $entity = $em->getRepository('AppBundle:GFSellerData')->findBy(array('toExport' => true));
         $data = array();
         $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {

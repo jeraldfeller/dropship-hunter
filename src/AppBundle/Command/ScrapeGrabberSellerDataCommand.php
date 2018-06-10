@@ -299,7 +299,7 @@ class ScrapeGrabberSellerDataCommand extends ContainerAwareCommand
                 FROM AppBundle:GFSellerData p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(50);
+        )->setMaxResults(40);
         $result = $sql->getResult();
 
         $lists = array();
@@ -314,7 +314,7 @@ class ScrapeGrabberSellerDataCommand extends ContainerAwareCommand
                 $lists[] = array(
                     'id' => $result[$x]->getId(),
                     'sellerId' => $result[$x]->getSellerId(),
-                    'productListLinksEntity' => $result[$x]->getProductListLinks(),
+                    'productListLinksEntity' => $result[$x]->getGProductListLinks(),
                     'entity' => $entity
                 );
             }

@@ -1,4 +1,4 @@
-function checkProcess() {
+function checkProcess($app) {
   $dfd = $.Deferred();
   if (XMLHttpRequestObject) {
 
@@ -40,7 +40,9 @@ function checkProcess() {
         $dfd.resolve(false);
       }
     }
-    XMLHttpRequestObject.send("param= 1");
+
+
+    XMLHttpRequestObject.send("param= " + JSON.stringify({app: $app}));
 
 
   }
@@ -113,7 +115,7 @@ function importProductList($data) {
         var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#submitBtn').html('<i class="fa fa-upload"></i> IMPORT');
         alert('Import success.');
-        checkProcess();
+        checkProcess('app_2');
       }
       if (XMLHttpRequestObject.status == 500) {
         alert('Something went wrong, please try again');
@@ -142,7 +144,7 @@ function importGrabberSellerList($data) {
         var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#submitBtn').html('<i class="fa fa-upload"></i> IMPORT');
         alert('Import success.');
-        checkAppProcess('app_3');
+        checkProcess('app_3');
       }
       if (XMLHttpRequestObject.status == 500) {
         alert('Something went wrong, please try again');
@@ -156,7 +158,7 @@ function importGrabberSellerList($data) {
   return false
 }
 
-function reRun() {
+function reRun($app) {
 
   if (XMLHttpRequestObject) {
 
@@ -169,7 +171,7 @@ function reRun() {
       if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
         var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#rerunBtn').html('<i class="fa fa-refresh"></i> Re-run');
-        checkProcess();
+        checkProcess($app);
         alert('Re-run success.');
       }
       if (XMLHttpRequestObject.status == 500) {
@@ -198,7 +200,7 @@ function removeTitles() {
       if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
         var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#removeBtn').html('<i class="fa fa-refresh"></i> Remove Titles');
-        checkProcess();
+        checkProcess('app_2');
         alert('Titles remove successfully.');
       }
       if (XMLHttpRequestObject.status == 500) {
@@ -270,9 +272,9 @@ function setActivity($data) {
 }
 
 
-function exec() {
+function exec($app) {
   setInterval(function () {
-    checkProcess();
+    checkProcess($app);
   }, 60000);
 }
 

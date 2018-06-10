@@ -91,12 +91,9 @@ class ScrapeGrabberByTitleCommand extends ContainerAwareCommand
                                                             $titleContainer = $itemInfoContainer->find('.s-item__link', 0);
                                                             if ($titleContainer) {
                                                                 $title = strtolower(trim($titleContainer->plaintext));
-
                                                                 if (strpos($title, $productTitle) !== false) {
-                                                                    $output->writeln([$title]);
                                                                     $titleMatch++;
                                                                     $titleLink = $titleContainer->getAttribute('href');
-
                                                                     $productListLinksEntity = new GProductListLinks();
                                                                     $productListLinksEntity->setGProductList($productListEntity);
                                                                     $productListLinksEntity->setProductUrl($titleLink);
@@ -151,7 +148,7 @@ class ScrapeGrabberByTitleCommand extends ContainerAwareCommand
 
     public function curlTo($url, $proxy)
     {
-        $proxy = null;
+        //$proxy = null;
         $agents = array(
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
             'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
@@ -193,7 +190,7 @@ class ScrapeGrabberByTitleCommand extends ContainerAwareCommand
                 FROM AppBundle:GProductList p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(50);
+        )->setMaxResults(40);
         $result = $sql->getResult();
 
         $lists = array();

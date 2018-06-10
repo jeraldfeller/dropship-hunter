@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c81426f0-0fad-4302-97eb-5d63f840fed5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerGrabberCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/admin/admin.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/admin/admin.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" afterPath="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/ajax/main.js" afterPath="$PROJECT_DIR$/web/assets/ajax/main.js" />
     </list>
@@ -26,149 +28,26 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2805">
-              <caret line="318" column="22" lean-forward="true" selection-start-line="318" selection-start-column="22" selection-end-line="318" selection-end-column="22" />
-              <folding>
-                <element signature="e#130#176#0#PHP" expanded="true" />
-                <marker date="1528585586781" expanded="true" signature="2935:2995" ph="..." />
-                <marker date="1528585586781" expanded="true" signature="4430:4471" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="4556:4602" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="4687:4727" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="6524:6570" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="6656:6696" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="6783:6845" ph="UPDATE AppBu... " />
-                <marker date="1528585586781" expanded="true" signature="6790:6811" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="7136:7177" ph="DELETE FROM " />
-                <marker date="1528585586781" expanded="true" signature="7511:7566" ph="UPDATE AppBu... " />
-                <marker date="1528585586781" expanded="true" signature="7511:7587" ph="UPDATE AppBu... " />
-                <marker date="1528585586781" expanded="true" signature="7511:7605" ph="UPDATE AppBu... " />
-                <marker date="1528585586781" expanded="true" signature="7511:7622" ph="UPDATE AppBu... " />
-                <marker date="1528585586781" expanded="true" signature="7511:7631" ph="UPDATE AppBu... " />
-                <marker date="1528585586781" expanded="true" signature="8452:8491" ph="DELETE FROM " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ScrapeSellerProductListingCommand.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1859">
-              <caret line="98" column="73" lean-forward="false" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="73" />
+            <state relative-caret-position="-291">
+              <caret line="164" column="10" lean-forward="false" selection-start-line="164" selection-start-column="10" selection-end-line="164" selection-end-column="10" />
               <folding>
                 <element signature="e#126#191#0#PHP" expanded="true" />
-                <marker date="1528594437680" expanded="true" signature="8405:8514" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528594437680" expanded="true" signature="9238:9289" ph="SELECT p FRO... AppBundle" />
+                <marker date="1528673947506" expanded="true" signature="8359:8468" ph="SELECT p FRO... AppBundle" />
+                <marker date="1528673947506" expanded="true" signature="9192:9243" ph="SELECT p FRO... AppBundle" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScrapeByProductTitleCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php">
+      <file leaf-file-name="ScrapeStatusCheckerCommand.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="207" column="26" lean-forward="false" selection-start-line="207" selection-start-column="26" selection-end-line="207" selection-end-column="26" />
-              <folding>
-                <element signature="e#6#94#0#PHP" expanded="true" />
-                <element signature="e#126#191#0#PHP" expanded="true" />
-                <marker date="1528598191858" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528598191858" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScrapeGrabberByTitleCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2815">
-              <caret line="205" column="16" lean-forward="false" selection-start-line="205" selection-start-column="16" selection-end-line="205" selection-end-column="16" />
-              <folding>
-                <element signature="e#125#190#0#PHP" expanded="true" />
-                <marker date="1528597040436" expanded="true" signature="9903:10013" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528597040436" expanded="true" signature="10788:10839" ph="SELECT p FRO... AppBundle" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScrapeSellerDataCommand.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="339" column="26" lean-forward="false" selection-start-line="339" selection-start-column="26" selection-end-line="339" selection-end-column="26" />
-              <folding>
-                <marker date="1528598207955" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528598207955" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScrapeGrabberBySellerCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
-              <folding>
-                <element signature="e#126#191#0#PHP" expanded="true" />
-                <marker date="1528597930890" expanded="true" signature="7412:7527" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528597930890" expanded="true" signature="8303:8354" ph="SELECT p FRO... AppBundle" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScrapeGrabberSellerDataCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="28" column="57" lean-forward="false" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
-              <folding>
-                <element signature="e#126#191#0#PHP" expanded="true" />
-                <marker date="1528598183395" expanded="true" signature="16442:16552" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528598183395" expanded="true" signature="17403:17454" ph="SELECT p FRO... AppBundle" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScrapeBySellerCommand.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="174" column="26" lean-forward="false" selection-start-line="174" selection-start-column="26" selection-end-line="174" selection-end-column="26" />
-              <folding>
-                <marker date="1528598201290" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
-                <marker date="1528598201290" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="csv-template-titles.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/export/csv-template-titles.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+            <state relative-caret-position="576">
+              <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1921">
-              <caret line="113" column="33" lean-forward="false" selection-start-line="113" selection-start-column="33" selection-end-line="113" selection-end-column="33" />
-              <folding>
-                <marker date="1528510754072" expanded="true" signature="3275:3294" ph="..." />
-                <marker date="1528510754072" expanded="true" signature="3500:3519" ph="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -191,6 +70,16 @@
       <find>curlTo</find>
       <find>rerun</find>
       <find>export</find>
+      <find>re</find>
+      <find>/main/get</find>
+      <find>checkProcess</find>
+      <find>/main/export</find>
+      <find>/main/rerun</find>
+      <find>/app/activity</find>
+      <find>/main/import</find>
+      <find>rer</find>
+      <find>reRun</find>
+      <find>checkProcesscheckProcess</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -207,22 +96,23 @@
         <option value="$PROJECT_DIR$/app/Resources/views/user/login.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/change-password.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UsersController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/export/csv-template.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/export/csv-template-titles.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/admin.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig" />
-        <option value="$PROJECT_DIR$/web/assets/ajax/main.js" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig" />
+        <option value="$PROJECT_DIR$/web/assets/ajax/main.js" />
+        <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerGrabberCommand.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php" />
       </list>
     </option>
   </component>
@@ -254,7 +144,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -455,6 +344,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -586,12 +476,13 @@
       <workItem from="1528410796675" duration="13581000" />
       <workItem from="1528490502736" duration="3941000" />
       <workItem from="1528506419952" duration="4521000" />
-      <workItem from="1528584726944" duration="11873000" />
+      <workItem from="1528584726944" duration="12471000" />
+      <workItem from="1528668792143" duration="4991000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124584000" />
+    <option name="totallyTimeSpent" value="130173000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -602,12 +493,12 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -648,34 +539,28 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/assets/ajax/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
           <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
           <folding>
-            <element signature="e#130#176#0#PHP" expanded="true" />
-            <marker date="1528585586781" expanded="true" signature="2935:2995" ph="..." />
-            <marker date="1528585586781" expanded="true" signature="4430:4471" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="4556:4602" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="4687:4727" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6524:6570" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6656:6696" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6783:6845" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="6790:6811" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="7136:7177" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="7511:7566" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7587" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7605" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7622" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7631" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="8452:8491" ph="DELETE FROM " />
+            <element signature="e#130#163#0#PHP" expanded="true" />
+            <marker date="1528673851916" expanded="true" signature="3091:3389" ph="..." />
+            <marker date="1528673851916" expanded="true" signature="4766:4807" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="4892:4938" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="5023:5063" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="8928:8982" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9098:9146" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9262:9332" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="9551:9606" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9687:9758" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10098:10139" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="10473:10528" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10549" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10567" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10584" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10593" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="11414:11453" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -692,8 +577,8 @@
         <state relative-caret-position="374">
           <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
           <folding>
-            <marker date="1528362747620" expanded="true" signature="3366:3385" ph="..." />
-            <marker date="1528362747620" expanded="true" signature="3599:3618" ph="..." />
+            <marker date="1528672736783" expanded="true" signature="3380:3399" ph="..." />
+            <marker date="1528672736783" expanded="true" signature="3613:3632" ph="..." />
           </folding>
         </state>
       </provider>
@@ -710,8 +595,8 @@
         <state relative-caret-position="697">
           <caret line="59" column="64" lean-forward="false" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="64" />
           <folding>
-            <marker date="1528598201290" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598201290" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673910663" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673910663" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -721,8 +606,8 @@
         <state relative-caret-position="1139">
           <caret line="85" column="48" lean-forward="false" selection-start-line="85" selection-start-column="48" selection-end-line="85" selection-end-column="48" />
           <folding>
-            <marker date="1528598207955" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598207955" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673935747" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673935747" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -742,8 +627,8 @@
           <folding>
             <element signature="e#6#94#0#PHP" expanded="true" />
             <element signature="e#126#191#0#PHP" expanded="true" />
-            <marker date="1528598191858" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598191858" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673902140" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673902140" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -817,8 +702,8 @@
         <state relative-caret-position="2924">
           <caret line="190" column="58" lean-forward="false" selection-start-line="190" selection-start-column="58" selection-end-line="190" selection-end-column="58" />
           <folding>
-            <marker date="1528598207955" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598207955" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673935747" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673935747" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -828,22 +713,23 @@
         <state relative-caret-position="544">
           <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
           <folding>
-            <element signature="e#130#176#0#PHP" expanded="true" />
-            <marker date="1528585586781" expanded="true" signature="2935:2995" ph="..." />
-            <marker date="1528585586781" expanded="true" signature="4430:4471" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="4556:4602" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="4687:4727" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6524:6570" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6656:6696" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6783:6845" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="6790:6811" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="7136:7177" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="7511:7566" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7587" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7605" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7622" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7631" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="8452:8491" ph="DELETE FROM " />
+            <element signature="e#130#163#0#PHP" expanded="true" />
+            <marker date="1528673851916" expanded="true" signature="3091:3389" ph="..." />
+            <marker date="1528673851916" expanded="true" signature="4766:4807" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="4892:4938" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="5023:5063" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="8928:8982" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9098:9146" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9262:9332" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="9551:9606" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9687:9758" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10098:10139" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="10473:10528" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10549" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10567" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10584" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10593" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="11414:11453" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -853,8 +739,8 @@
         <state relative-caret-position="374">
           <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
           <folding>
-            <marker date="1528362747620" expanded="true" signature="3366:3385" ph="..." />
-            <marker date="1528362747620" expanded="true" signature="3599:3618" ph="..." />
+            <marker date="1528672736783" expanded="true" signature="3380:3399" ph="..." />
+            <marker date="1528672736783" expanded="true" signature="3613:3632" ph="..." />
           </folding>
         </state>
       </provider>
@@ -871,8 +757,8 @@
         <state relative-caret-position="270">
           <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
-            <marker date="1528598201290" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598201290" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673910663" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673910663" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -884,8 +770,8 @@
           <folding>
             <element signature="e#6#94#0#PHP" expanded="true" />
             <element signature="e#126#191#0#PHP" expanded="true" />
-            <marker date="1528598191858" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598191858" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673902140" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673902140" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
@@ -970,14 +856,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="53" column="18" lean-forward="false" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/export/csv-template.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -985,49 +863,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="46" column="47" lean-forward="false" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/ajax/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="144" column="33" lean-forward="false" selection-start-line="144" selection-start-column="33" selection-end-line="144" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <marker date="1528362747620" expanded="true" signature="3366:3385" ph="..." />
-            <marker date="1528362747620" expanded="true" signature="3599:3618" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/admin.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="58" column="51" lean-forward="false" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1921">
-          <caret line="113" column="33" lean-forward="false" selection-start-line="113" selection-start-column="33" selection-end-line="113" selection-end-column="33" />
-          <folding>
-            <marker date="1528510754072" expanded="true" signature="3275:3294" ph="..." />
-            <marker date="1528510754072" expanded="true" signature="3500:3519" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1041,109 +880,166 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MainController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="318" column="22" lean-forward="true" selection-start-line="318" selection-start-column="22" selection-end-line="318" selection-end-column="22" />
+        <state relative-caret-position="233">
+          <caret line="244" column="21" lean-forward="false" selection-start-line="244" selection-start-column="21" selection-end-line="244" selection-end-column="21" />
           <folding>
-            <element signature="e#130#176#0#PHP" expanded="true" />
-            <marker date="1528585586781" expanded="true" signature="2935:2995" ph="..." />
-            <marker date="1528585586781" expanded="true" signature="4430:4471" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="4556:4602" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="4687:4727" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6524:6570" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6656:6696" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="6783:6845" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="6790:6811" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="7136:7177" ph="DELETE FROM " />
-            <marker date="1528585586781" expanded="true" signature="7511:7566" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7587" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7605" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7622" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="7511:7631" ph="UPDATE AppBu... " />
-            <marker date="1528585586781" expanded="true" signature="8452:8491" ph="DELETE FROM " />
+            <element signature="e#130#163#0#PHP" expanded="true" />
+            <marker date="1528673851916" expanded="true" signature="3091:3389" ph="..." />
+            <marker date="1528673851916" expanded="true" signature="4766:4807" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="4892:4938" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="5023:5063" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="8928:8982" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9098:9146" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9262:9332" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="9551:9606" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="9687:9758" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10098:10139" ph="DELETE FROM " />
+            <marker date="1528673851916" expanded="true" signature="10473:10528" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10549" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10567" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10584" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="10473:10593" ph="UPDATE AppBu... " />
+            <marker date="1528673851916" expanded="true" signature="11414:11453" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1859">
-          <caret line="98" column="73" lean-forward="false" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="73" />
+        <state relative-caret-position="372">
+          <caret line="79" column="23" lean-forward="false" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="23" />
           <folding>
-            <element signature="e#126#191#0#PHP" expanded="true" />
-            <marker date="1528594437680" expanded="true" signature="8405:8514" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528594437680" expanded="true" signature="9238:9289" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528672736783" expanded="true" signature="3380:3399" ph="..." />
+            <marker date="1528672736783" expanded="true" signature="3613:3632" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php">
+    <entry file="file://$PROJECT_DIR$/web/assets/ajax/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2815">
-          <caret line="205" column="16" lean-forward="false" selection-start-line="205" selection-start-column="16" selection-end-line="205" selection-end-column="16" />
+        <state relative-caret-position="262">
+          <caret line="136" column="59" lean-forward="false" selection-start-line="136" selection-start-column="39" selection-end-line="136" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="57" column="25" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ProcessCheckerGrabberCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="51" column="112" lean-forward="false" selection-start-line="51" selection-start-column="112" selection-end-line="51" selection-end-column="112" />
           <folding>
             <element signature="e#125#190#0#PHP" expanded="true" />
-            <marker date="1528597040436" expanded="true" signature="9903:10013" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528597040436" expanded="true" signature="10788:10839" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/grabber/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+        <state relative-caret-position="355">
+          <caret line="113" column="37" lean-forward="false" selection-start-line="113" selection-start-column="14" selection-end-line="113" selection-end-column="37" />
           <folding>
-            <element signature="e#126#191#0#PHP" expanded="true" />
-            <marker date="1528597930890" expanded="true" signature="7412:7527" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528597930890" expanded="true" signature="8303:8354" ph="SELECT p FRO... AppBundle" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="28" column="57" lean-forward="false" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
-          <folding>
-            <element signature="e#126#191#0#PHP" expanded="true" />
-            <marker date="1528598183395" expanded="true" signature="16442:16552" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598183395" expanded="true" signature="17403:17454" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528672119569" expanded="true" signature="3289:3308" ph="..." />
+            <marker date="1528672119569" expanded="true" signature="3514:3533" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeByProductTitleCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
+        <state relative-caret-position="855">
           <caret line="207" column="26" lean-forward="false" selection-start-line="207" selection-start-column="26" selection-end-line="207" selection-end-column="26" />
           <folding>
             <element signature="e#6#94#0#PHP" expanded="true" />
             <element signature="e#126#191#0#PHP" expanded="true" />
-            <marker date="1528598191858" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598191858" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673902140" expanded="true" signature="10318:10427" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673902140" expanded="true" signature="11160:11211" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeBySellerCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
+        <state relative-caret-position="862">
           <caret line="174" column="26" lean-forward="false" selection-start-line="174" selection-start-column="26" selection-end-line="174" selection-end-column="26" />
           <folding>
-            <marker date="1528598201290" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598201290" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673910663" expanded="true" signature="8054:8168" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673910663" expanded="true" signature="8965:9016" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberBySellerCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-263">
+          <caret line="122" column="10" lean-forward="false" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+          <folding>
+            <element signature="e#126#191#0#PHP" expanded="true" />
+            <marker date="1528671154692" expanded="true" signature="7412:7527" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528671154692" expanded="true" signature="8303:8354" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberByTitleCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="192" column="27" lean-forward="false" selection-start-line="192" selection-start-column="27" selection-end-line="192" selection-end-column="27" />
+          <folding>
+            <element signature="e#125#190#0#PHP" expanded="true" />
+            <marker date="1528671042708" expanded="true" signature="9807:9917" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528671042708" expanded="true" signature="10692:10743" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeGrabberSellerDataCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-214">
+          <caret line="259" column="10" lean-forward="false" selection-start-line="259" selection-start-column="10" selection-end-line="259" selection-end-column="10" />
+          <folding>
+            <element signature="e#126#191#0#PHP" expanded="true" />
+            <marker date="1528671622830" expanded="true" signature="16442:16552" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528671622830" expanded="true" signature="17404:17455" ph="SELECT p FRO... AppBundle" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerDataCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
+        <state relative-caret-position="-82">
           <caret line="339" column="26" lean-forward="false" selection-start-line="339" selection-start-column="26" selection-end-line="339" selection-end-column="26" />
           <folding>
-            <marker date="1528598207955" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
-            <marker date="1528598207955" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673935747" expanded="true" signature="18148:18199" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673935747" expanded="true" signature="18568:18676" ph="SELECT p FRO... AppBundle" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeSellerProductListingCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-291">
+          <caret line="164" column="10" lean-forward="false" selection-start-line="164" selection-start-column="10" selection-end-line="164" selection-end-column="10" />
+          <folding>
+            <element signature="e#126#191#0#PHP" expanded="true" />
+            <marker date="1528673947506" expanded="true" signature="8359:8468" ph="SELECT p FRO... AppBundle" />
+            <marker date="1528673947506" expanded="true" signature="9192:9243" ph="SELECT p FRO... AppBundle" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Command/ScrapeStatusCheckerCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

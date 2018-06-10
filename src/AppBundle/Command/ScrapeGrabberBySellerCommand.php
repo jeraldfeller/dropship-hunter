@@ -120,7 +120,7 @@ class ScrapeGrabberBySellerCommand extends ContainerAwareCommand
 
     public function curlTo($url, $proxy)
     {
-       // $proxy = null;
+        //$proxy = null;
         $agents = array(
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
             'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
@@ -162,7 +162,7 @@ class ScrapeGrabberBySellerCommand extends ContainerAwareCommand
                 FROM AppBundle:GProductListLinks p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(50);
+        )->setMaxResults(40);
         $result = $sql->getResult();
 
         $lists = array();

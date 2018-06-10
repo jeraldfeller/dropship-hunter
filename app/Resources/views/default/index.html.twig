@@ -60,8 +60,8 @@
         $(document).ready(function(){
 
           // check status
-          checkProcess();
-          exec();
+          checkProcess('app_2');
+          exec('app_2');
 
 
           $('#prBtn').click(function(){
@@ -77,7 +77,7 @@
               $('.success-message').html('<span style="text-align: center;">Resumed...</span>');
             }
 
-            setActivity({app: 'app_2', action: $action});
+            setActivity({app: 'app_3', action: $action});
           });
 
 
@@ -120,7 +120,7 @@
           // Re Run
           $('#rerunBtn').click(function(){
             $(this).html('<i class="fa fa-spinner fa-spin"></i>');
-            reRun();
+            reRun('app_2');
           });
 
 

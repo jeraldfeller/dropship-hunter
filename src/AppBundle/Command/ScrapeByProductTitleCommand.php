@@ -205,7 +205,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                 FROM AppBundle:ProductList p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(50);
+        )->setMaxResults(40);
         $result = $sql->getResult();
 
         $lists = array();

@@ -72,6 +72,45 @@ class ScrapeStatusCheckerCommand extends  ContainerAwareCommand
                 $actionEntity->setIsActive(1);
             }
 
+            $entity = $em->getRepository('AppBundle:GSellerData')->findBy(array('status' => 'active'));
+            if(count($entity) == 0){
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_seller'));
+                $actionEntity->setIsActive(0);
+            }else{
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_seller'));
+                $actionEntity->setIsActive(1);
+            }
+
+
+            $entity = $em->getRepository('AppBundle:GProductList')->findBy(array('status' => 'active'));
+            if(count($entity) == 0){
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_title'));
+                $actionEntity->setIsActive(0);
+            }else{
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_title'));
+                $actionEntity->setIsActive(1);
+            }
+
+
+            $entity = $em->getRepository('AppBundle:GProductListLinks')->findBy(array('status' => 'active'));
+            if(count($entity) == 0){
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_seller'));
+                $actionEntity->setIsActive(0);
+            }else{
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_seller'));
+                $actionEntity->setIsActive(1);
+            }
+
+
+            $entity = $em->getRepository('AppBundle:GFSellerData')->findBy(array('status' => 'active'));
+            if(count($entity) == 0){
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_f_seller_data'));
+                $actionEntity->setIsActive(0);
+            }else{
+                $actionEntity = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_f_seller_data'));
+                $actionEntity->setIsActive(1);
+            }
+
             $em->flush();
         }
 
