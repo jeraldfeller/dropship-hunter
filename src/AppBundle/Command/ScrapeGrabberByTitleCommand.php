@@ -2,12 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: Grabe Grabe
- * Date: 5/14/2018
- * Time: 2:22 AM
+ * Date: 6/10/2018
+ * Time: 9:35 AM
  */
 
 namespace AppBundle\Command;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,23 +14,19 @@ use Symfony\Component\Console\Input\InputArgument;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use AppBundle\Controller\SessionController;
-
-
-use AppBundle\Entity\ProductList;
-use AppBundle\Entity\ProductListLinks;
-use AppBundle\Entity\ProxyList;
-use AppBundle\Entity\ProcessStatus;
+use AppBundle\Entity\GSellerData;
+use AppBundle\Entity\GProductList;
+use AppBundle\Entity\GProductListLinks;
+use AppBundle\Entity\GFSellerData;
 use AppBundle\Entity\ScrapeStatuses;
 
-include('simple_html_dom_node.php');
-
-class ScrapeByProductTitleCommand extends ContainerAwareCommand
+class ScrapeGrabberByTitleCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('execute:scrape-by-title-list')
+            ->setName('execute:scrape-grabber-title')
             // the short description shown while running "php bin/console list"
             ->setDescription('search for product title in ebay')
             // the full command description shown when running the command with
@@ -43,24 +38,22 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
+        $appActivity = $em->getRepository('AppBundle:AppActivity')->findOneBy(array('app' => 'app_3'));
 
-        if($appActivity->getActivity() == 'play'){
-// check if process status is active
+        if($appActivity->getActivity() == 'play') {
             $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-            $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'by_title'));
-            if($scrapeStatus->getIsActive() == 1){
+            $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_by_title'));
+            if ($scrapeStatus->getIsActive() == 1) {
                 if ($processEntity->getIsActive() == 1) {
-
-                    // get proxy list
+// get proxy list
                     $proxy = $this->getProxy($em);
                     $products = $this->getProductList($em);
                     $ebayUrlTemplate = 'https://www.ebay.com/sch/i.html?_from=R40&_nkw=';
-
                     if ($products) {
                         for ($x = 0; $x < count($products); $x++) {
                             $titleMatch = 0;
                             $productListId = $products[$x]['id'];
+                            $productListEntity = $products[$x]['entity'];
                             $productTitle = strtolower(trim($products[$x]['productTitle']));
 
                             //$output->writeln([$productTitle]);
@@ -74,7 +67,6 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                             for($p = 1; $p <= 2; $p++){
                                 $url = $ebayUrlTemplate . str_replace(' ', '+', $productTitle).'&_sacat=0&LH_ItemCondition=3&LH_BIN=1&_pgn='.$p;
                                 $htmlData = $this->curlTo($url, $proxy);
-
                                 if ($htmlData['html']) {
                                     if(is_bool($htmlData['html']) === false){
                                         $html = str_get_html($htmlData['html']);
@@ -101,12 +93,12 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                                                                 $title = strtolower(trim($titleContainer->plaintext));
 
                                                                 if (strpos($title, $productTitle) !== false) {
-
+                                                                    $output->writeln([$title]);
                                                                     $titleMatch++;
                                                                     $titleLink = $titleContainer->getAttribute('href');
 
-                                                                    $productListLinksEntity = new ProductListLinks();
-                                                                    $productListLinksEntity->setProductListId($productListId);
+                                                                    $productListLinksEntity = new GProductListLinks();
+                                                                    $productListLinksEntity->setGProductList($productListEntity);
                                                                     $productListLinksEntity->setProductUrl($titleLink);
                                                                     $productListLinksEntity->setStatus('active');
                                                                     $em->persist($productListLinksEntity);
@@ -124,26 +116,22 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                                             }
 
                                             if ($titleMatch == 0) {
-                                                $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                                                 if ($productListEntity) {
                                                     $productListEntity->setStatus('complete');
                                                 }
                                             }
                                         }else{
-                                            $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                                             if ($productListEntity) {
                                                 $productListEntity->setStatus('complete');
                                             }
                                         }
 
                                     }else {
-                                        $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                                         if ($productListEntity) {
                                             $productListEntity->setStatus('complete');
                                         }
                                     }
                                 } else {
-                                    $productListEntity = $em->getRepository('AppBundle:ProductList')->find($productListId);
                                     if ($productListEntity) {
                                         $productListEntity->setStatus('complete');
                                     }
@@ -163,7 +151,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
 
     public function curlTo($url, $proxy)
     {
-        //$proxy = null;
+        $proxy = null;
         $agents = array(
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
             'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
@@ -202,7 +190,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
     {
         $sql = $em->createQuery(
             "SELECT p
-                FROM AppBundle:ProductList p
+                FROM AppBundle:GProductList p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
         )->setMaxResults(50);
@@ -213,13 +201,14 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
             for ($x = 0; $x < count($result); $x++) {
                 // update status of product list
 
-                $entity = $em->getRepository('AppBundle:ProductList')->find($result[$x]->getId());
+                $entity = $em->getRepository('AppBundle:GProductList')->find($result[$x]->getId());
                 $entity->setStatus('processing');
                 $em->flush();
 
                 $lists[] = array(
                     'id' => $result[$x]->getId(),
-                    'productTitle' => $result[$x]->getProductTitle()
+                    'productTitle' => $result[$x]->getProductTitle(),
+                    'entity' => $entity
                 );
             }
         }
@@ -245,4 +234,5 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
 
         return $lists;
     }
+
 }

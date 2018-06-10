@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+    <div class="container container-fluid">
+        <div class="row" style="margin-top: 25px;">
+            <div class="col-md-12 text-center">
+                <h4>Import CSV File</h4>
+            </div>
+            <div class="col-md-12" style="margin-top: 25px;"></div>
+
+            <div class="col-md-12">
+                <input style="width: 100%;" type="text" class="form-control text-url" id="productUrl" name="url" placeholder="published csv url">
+            </div>
+            <div class="col-md-12 progress-container" style="display: none; margin-top: 12px;">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
+                </div>
+                <div style="text-align: center;">
+                    <span class="current_index"></span> out of <span class="total_count"></span>
+                </div>
+                <div style="text-align: center; display: none;" class="success-message">
+                    <span style="text-align: center;">Process completed...</span>
+                </div>
+
+
+            </div>
+            <div class="col-md-12 text-center" style="margin-top: 12px;">
+                <button type="submit" class="btn btn-primary" id="submitBtn"><i class="fa fa-upload"></i> IMPORT</button>
+                <button class="btn btn-primary" id="downloadtBtn"><i class="fa fa-download"></i> DOWNLOAD</button>
+                <!--
+                <button class="btn btn-primary" id="downloadTitleBtn"><i class="fa fa-download"></i> DOWNLOAD Titles</button>
+                <button class="btn btn-primary" id="removeBtn"><i class="fa fa-times"></i> Remove Titles</button>
+                -->
+                <button class="btn btn-primary" id="rerunBtn"><i class="fa fa-refresh"></i> Re-run</button>
+                {% if activity == 'play' %}
+                    <button class="btn btn-primary" data-action="pause" id="prBtn"><i class="fa fa-pause"></i> Pause</button>
+                {% else %}
+                    <button class="btn btn-primary" data-action="play" id="prBtn"><i class="fa fa-play"></i> Play</button>
+                {% endif %}
+            </div>
+
+
+            <div class="col-md-12 text-center" style="margin-top: 12px;">
+
+            </div>
+
+            <div class="col-md-12" style="margin-top: 12px;">
+                <textarea rows="5" class="form-control ip-proxy">{% for proxy in proxyList %}
+{{ proxy.ip }}
+{% endfor %}</textarea>
+
+            </div>
+            <div class="col-md-12" style="margin-top: 12px;">
+                <button class="btn btn-primary" id="updateProxyBtn">Update Proxy List</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+
+        // check status
+        checkProcess();
+        exec();
+
+
+        $('#prBtn').click(function(){
+          $action = $(this).attr('data-action');
+          if($action == 'pause'){
+            $(this).html('<i class="fa fa-play"></i> Play');
+            $(this).attr('data-action', 'play');
+            $('.success-message').html('<span style="text-align: center;">Paused...</span>');
+
+          }else{
+            $(this).html('<i class="fa fa-pause"></i> Pause');
+            $(this).attr('data-action', 'pause');
+            $('.success-message').html('<span style="text-align: center;">Resumed...</span>');
+          }
+
+          setActivity({app: 'app_3', action: $action});
+        });
+
+
+        $('#downloadtBtn').click(function(){
+          location.href = '/main/grabber/export';
+        });
+
+        $('#downloadTitleBtn').click(function(){
+          location.href = '/main/export-title';
+        });
+
+
+        // Clear Titles
+        $('#removeBtn').click(function(){
+          $(this).html('<i class="fa fa-spinner fa-spin"></i>');
+          removeTitles();
+        });
+
+        // Import Product List
+
+        $('#submitBtn').click(function(){
+          $url = $('#productUrl').val();
+          var txt;
+          if($url != ''){
+            var r = confirm("By pressing Ok, this will cancel the current process!");
+            if (r == true) {
+              $(this).html('<i class="fa fa-spinner fa-spin"></i>');
+              $data = {
+                url: encodeURIComponent($url)
+              }
+
+              importGrabberSellerList($data);
+            }
+          }else{
+            alert('Please input product url');
+          }
+
+        });
+
+        // Re Run
+        $('#rerunBtn').click(function(){
+          $(this).html('<i class="fa fa-spinner fa-spin"></i>');
+          reRun();
+        });
+
+
+        // Proxy Add/Update
+        $('#updateProxyBtn').click(function(){
+          $(this).html('<i class="fa fa-spinner fa-spin"></i>');
+          var urlSet = [];
+          var lines = $('.ip-proxy').val().split(/\n/);
+          var proxy = [];
+          for (var i=0; i < lines.length; i++) {
+            // only push this line if it contains a non whitespace character.
+            if (/\S/.test(lines[i])) {
+              proxy.push($.trim(lines[i]));
+            }
+          }
+
+          updateProxy(proxy);
+        });
+      });
+    </script>
+
+    <!-- AJAX CALLS -->
+    <script src="{{ asset('assets/ajax/main.js') }}" type="text/javascript"></script>
+    <!-- END AJAX CALLS -->
+{% endblock %}
+
+

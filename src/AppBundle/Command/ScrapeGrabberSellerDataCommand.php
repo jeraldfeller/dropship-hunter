@@ -2,12 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: Grabe Grabe
- * Date: 5/14/2018
- * Time: 4:03 AM
+ * Date: 6/10/2018
+ * Time: 10:25 AM
  */
 
 namespace AppBundle\Command;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,36 +14,21 @@ use Symfony\Component\Console\Input\InputArgument;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use AppBundle\Controller\SessionController;
+use AppBundle\Entity\GSellerData;
+use AppBundle\Entity\GProductList;
+use AppBundle\Entity\GProductListLinks;
+use AppBundle\Entity\GFSellerData;
+use AppBundle\Entity\ScrapeStatuses;
 
-
-use AppBundle\Entity\ProductList;
-use AppBundle\Entity\ProductListLinks;
-use AppBundle\Entity\ProxyList;
-use AppBundle\Entity\ProcessStatus;
-use AppBundle\Entity\SellerData;
-
-class ScrapeSellerDataCommand extends ContainerAwareCommand
+class ScrapeGrabberSellerDataCommand extends ContainerAwareCommand
 {
-    public function delete_all_between($beginning, $end, $string)
-    {
-        $beginningPos = strpos($string, $beginning);
-        $endPos = strpos($string, $end);
-        if ($beginningPos === false || $endPos === false) {
-            return $string;
-        }
-
-        $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
-
-        return str_replace($textToDelete, '', $string);
-    }
-
     protected function configure()
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('execute:scrape-seller-data')
+            ->setName('execute:scrape-grabber-seller-data')
             // the short description shown while running "php bin/console list"
-            ->setDescription('search for seller in ebay')
+            ->setDescription('search for product title in ebay')
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp('')//   ->addArgument('action', InputArgument::REQUIRED, 'What type of action do you want to execute?')
@@ -54,13 +38,12 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $appActivity = $em->getRepository('AppBundle:AppActivity')->findOneBy(array('app' => 'app_3'));
 
-        $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
-
-        if($appActivity->getActivity() == 'play'){
+        if($appActivity->getActivity() == 'play') {
             $processEntity = $em->getRepository('AppBundle:ProcessStatus')->find(1);
-            $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'seller_data'));
-            if($scrapeStatus->getIsActive() == 1){
+            $scrapeStatus = $em->getRepository('AppBundle:ScrapeStatuses')->findOneBy(array('action' => 'g_seller_data'));
+            if ($scrapeStatus->getIsActive() == 1) {
                 if ($processEntity->getIsActive() == 1) {
                     $proxy = $this->getProxy($em);
                     $sellers = $this->getSellerData($em);
@@ -68,10 +51,10 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
 
                     if ($sellers) {
                         for ($x = 0; $x < count($sellers); $x++) {
-                            $productListId = $sellers[$x]['productListId'];
-                            $productListLinksId = $sellers[$x]['productListLinksId'];
+                            $productLinkEntity = $sellers[$x]['productListLinksEntity'];
                             $sellerId = str_replace(' ', '', trim($sellers[$x]['sellerId']));
                             $id = $sellers[$x]['id'];
+                            $entity = $sellers[$x]['entity'];
                             $url = $ebayUrlTemplate . $sellerId;
                             $htmlData = $this->curlTo($url, $proxy);
                             $allFeedbackUrl = 'https://feedback.ebay.com/ws/eBayISAPI.dll?ViewFeedback2&userid='.$sellerId.'&ftab=AllFeedback';
@@ -152,31 +135,6 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                                 $neutral = 0;
                                                 $negative = 0;
                                             }
-                                            /*
-                                            for ($s = 0; $s < count($score); $s++) {
-                                                $numScore = $score[$s]->find('.num', 0);
-                                                $txtScore = $score[$s]->find('.txt', 0);
-                                                if ($numScore) {
-                                                    $numScore = trim($numScore->plaintext);
-                                                    $txtScore = trim(strtolower($txtScore->plaintext));
-                                                    switch ($txtScore) {
-                                                        case 'positive':
-                                                            $positive = intval(preg_replace('/[^\d.]/', '', $numScore));
-                                                            break;
-                                                        case 'neutral':
-                                                            $neutral = intval(preg_replace('/[^\d.]/', '', $numScore));
-                                                            break;
-                                                        case 'negative':
-                                                            $negative = intval(preg_replace('/[^\d.]/', '', $numScore));
-                                                            break;
-                                                    }
-                                                } else {
-                                                    $positive = 0;
-                                                    $neutral = 0;
-                                                    $negative = 0;
-                                                }
-                                            }
-                                            */
                                         } else {
                                             $positive = 0;
                                             $neutral = 0;
@@ -252,8 +210,6 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                             $used = 0;
                                             $new = 0;
                                         }
-
-                                        $entity = $em->getRepository('AppBundle:SellerData')->find($id);
                                         if ($entity) {
                                             $entity->setSellerLocation($location);
                                             $entity->setSellersRank($sellerRank);
@@ -266,38 +222,29 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                                             $entity->setStatus('complete');
                                             $entity->setUsedCount($used);
                                             $entity->setNewCount($new);
-                                            $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
                                             $productLinkEntity->setStatus('complete');
-
                                             $em->flush();
                                         }
                                     }else{
-                                        $entity = $em->getRepository('AppBundle:SellerData')->find($id);
                                         if ($entity) {
                                             $entity->setStatus('complete');
-                                            $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
                                             $productLinkEntity->setStatus('complete');
 
                                             $em->flush();
                                         }
                                     }
                                 }else{
-                                    $entity = $em->getRepository('AppBundle:SellerData')->find($id);
                                     if ($entity) {
                                         $entity->setStatus('complete');
-                                        $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
                                         $productLinkEntity->setStatus('complete');
 
                                         $em->flush();
                                     }
                                 }
                             }else{
-                                $entity = $em->getRepository('AppBundle:SellerData')->find($id);
                                 if ($entity) {
                                     $entity->setStatus('complete');
-                                    $productLinkEntity = $em->getRepository('AppBundle:ProductListLinks')->find($productListLinksId);
                                     $productLinkEntity->setStatus('complete');
-
                                     $em->flush();
                                 }
                             }
@@ -306,9 +253,74 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
                 }
             }
         }
+    }
 
+    public function curlTo($url, $proxy)
+    {
+        //$proxy = null;
+        $agents = array(
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
+            'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
+            'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
+            'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
 
+        );
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        if ($proxy != NULL) {
+            curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0, count($proxy) - 1)]);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        //curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);
+        $contents = curl_exec($curl);
+        curl_close($curl);
+        return array('html' => $contents);
+    }
 
+    public function delete_all_between($beginning, $end, $string)
+    {
+        $beginningPos = strpos($string, $beginning);
+        $endPos = strpos($string, $end);
+        if ($beginningPos === false || $endPos === false) {
+            return $string;
+        }
+
+        $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+
+        return str_replace($textToDelete, '', $string);
+    }
+
+    public function getSellerData($em)
+    {
+        $sql = $em->createQuery(
+            "SELECT p
+                FROM AppBundle:GFSellerData p
+                WHERE p.status = 'active' ORDER BY p.id
+                "
+        )->setMaxResults(50);
+        $result = $sql->getResult();
+
+        $lists = array();
+        if ($result) {
+            for ($x = 0; $x < count($result); $x++) {
+                // update status of product list
+
+                $entity = $em->getRepository('AppBundle:GFSellerData')->find($result[$x]->getId());
+                $entity->setStatus('processing');
+                $em->flush();
+
+                $lists[] = array(
+                    'id' => $result[$x]->getId(),
+                    'sellerId' => $result[$x]->getSellerId(),
+                    'productListLinksEntity' => $result[$x]->getProductListLinks(),
+                    'entity' => $entity
+                );
+            }
+        }
+
+        return $lists;
     }
 
     public function getProxy($em)
@@ -328,60 +340,5 @@ class ScrapeSellerDataCommand extends ContainerAwareCommand
         }
 
         return $lists;
-    }
-
-    public function getSellerData($em)
-    {
-        $sql = $em->createQuery(
-            "SELECT p
-                FROM AppBundle:SellerData p
-                WHERE p.status = 'active' ORDER BY p.id
-                "
-        )->setMaxResults(50);
-        $result = $sql->getResult();
-
-        $lists = array();
-        if ($result) {
-            for ($x = 0; $x < count($result); $x++) {
-                // update status of product list
-
-                $entity = $em->getRepository('AppBundle:SellerData')->find($result[$x]->getId());
-                $entity->setStatus('processing');
-                $em->flush();
-
-                $lists[] = array(
-                    'id' => $result[$x]->getId(),
-                    'productListLinksId' => $result[$x]->getProductListLinksId(),
-                    'productListId' => $result[$x]->getProductListId(),
-                    'sellerId' => $result[$x]->getSellerId()
-                );
-            }
-        }
-
-        return $lists;
-    }
-
-    public function curlTo($url, $proxy)
-    {
-           //$proxy = null;
-        $agents = array(
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1',
-            'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100508 SeaMonkey/2.0.4',
-            'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
-            'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; da-dk) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1'
-
-        );
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        if ($proxy != NULL) {
-            curl_setopt($curl, CURLOPT_PROXY, $proxy[mt_rand(0, count($proxy) - 1)]);
-        }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-//curl_setopt($curl,CURLOPT_USERAGENT,$agents[array_rand($agents)]);
-        $contents = curl_exec($curl);
-        curl_close($curl);
-        return array('html' => $contents);
     }
 }

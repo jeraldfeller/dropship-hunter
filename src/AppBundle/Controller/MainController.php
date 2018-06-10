@@ -47,6 +47,28 @@ class MainController extends Controller
 
 
     /**
+     * @Route("/title-grabber")
+     */
+    public function titleGrabberPage()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $isLoggedIn = $this->get('session')->get('isLoggedIn');
+        if ($isLoggedIn) {
+            $proxyList = json_decode($this->getProxyAction()->getContent(), true);
+            $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
+            // replace this example code with whatever you need
+            return $this->render('grabber/index.html.twig', [
+                'proxyList' => $proxyList,
+                'activity' => $appActivity->getActivity(),
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
+            ]);
+        }else{
+            return $this->redirect('/login');
+        }
+    }
+
+
+    /**
      * @Route("/", name="adminPanel")
      */
     public function adminPanelAction()
@@ -300,7 +322,7 @@ class MainController extends Controller
                 if($usedCount <= 20){
                     $data[] = array(
                         'sellerId' => trim($entity[$x]->getSellerId()),
-                        'sellerLocation' => $entity[$x]->getSellerLocation(),
+                        'sellerLocation' => '"' . $entity[$x]->getSellerLocation() . '"',
                         'sellerRank' => $entity[$x]->getSellersRank(),
                         'memberSince' => '"' . $entity[$x]->getMemberSince() . '"',
                         'positive' => $entity[$x]->getPositive(),
