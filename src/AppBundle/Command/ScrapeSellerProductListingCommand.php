@@ -63,9 +63,15 @@ class ScrapeSellerProductListingCommand extends ContainerAwareCommand
                                 $url = 'https://www.ebay.com/sch/'.$sellerId.'/m.html?_nkw=&_armrs=1&_from=&_ipg=200&_pgn='.$page;
                             }else{
                                 break;
-                            }
+                           }
 
                         }
+
+                        $entity = $em->getRepository('AppBundle:GSellerData')->find($id);
+                        $entity->setStatus('complete');
+                        $em->flush();
+
+
 
                     }
 

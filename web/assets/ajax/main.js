@@ -178,7 +178,7 @@ function reRun($app) {
         alert('Something went wrong, please try again');
       }
     }
-    XMLHttpRequestObject.send("param= 1");
+    XMLHttpRequestObject.send("param= " + JSON.stringify({app: $app}));
 
 
   }

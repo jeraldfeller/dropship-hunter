@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\GSellerData;
+
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use AppBundle\Entity\ProxyList;
 use AppBundle\Entity\ProductList;
+use AppBundle\Entity\GSellerData;
 use AppBundle\Entity\GFSellerData;
 use AppBundle\Entity\GProductList;
 use AppBundle\Entity\ProcessStatus;
@@ -98,7 +99,7 @@ class MainController extends Controller
         if($data['app'] == 'app_2'){
             $entity = $em->getRepository('AppBundle:ProductList')->findAll();
         }else if($data['app'] == 'app_3'){
-            $entity = $em->getRepository('AppBundle:GProductList')->findAll();
+            $entity = $em->getRepository('AppBundle:GSellerData')->findAll();
         }
 
         $data = array();
@@ -233,12 +234,11 @@ class MainController extends Controller
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
                 if ($i > 0) {
-                    $entity = $em->getRepository('AppBundle:ProductList')->findOneBy(array('productTitle' => $data[0]));
+                    $entity = $em->getRepository('AppBundle:GSellerData')->findOneBy(array('sellerId' => $data[0]));
                     if(!$entity){
                         $entity = new GSellerData();
                         $entity->setSellerId($data[0]);
                         $entity->setStatus('active');
-                        $entity->setTimestamp(new \DateTime($date));
                         $em->persist($entity);
                     }else{
                         $entity->setStatus('active');
@@ -263,6 +263,12 @@ class MainController extends Controller
             $actionEntity[$a]->setIsActive(1);
         }
         $em->flush();
+
+        $query = $em->createQuery("
+                DELETE
+                FROM AppBundle:GProductListLinks
+                ");
+        $query->execute();
 
         return new Response(json_encode(true));
     }
@@ -299,6 +305,7 @@ class MainController extends Controller
                 DELETE
                 FROM AppBundle:GProductListLinks
                 ");
+                $query->execute();
                 $query = $em->createQuery("
                 UPDATE AppBundle:GProductList p
                 SET p.status = 'active'
@@ -438,34 +445,19 @@ class MainController extends Controller
     public function exportGrabberSellerDataAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $file = 'Seller_Data_' . time() . '.csv';
-        $entity = $em->getRepository('AppBundle:GFSellerData')->findBy(array('toExport' => true));
+        $file = 'Titles_' . time() . '.csv';
+        $entity = $em->getRepository('AppBundle:GProductList')->findAll();
         $data = array();
         $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {
             for ($x = 0; $x < count($entity); $x++) {
-                $usedCount = $entity[$x]->getUsedCount();
-                if($usedCount <= 20){
                     $data[] = array(
-                        'sellerId' => trim($entity[$x]->getSellerId()),
-                        'sellerLocation' => '"' . $entity[$x]->getSellerLocation() . '"',
-                        'sellerRank' => $entity[$x]->getSellersRank(),
-                        'memberSince' => '"' . $entity[$x]->getMemberSince() . '"',
-                        'positive' => $entity[$x]->getPositive(),
-                        'neutral' => $entity[$x]->getNeutral(),
-                        'negative' => $entity[$x]->getNegative(),
-                        'itemsForSale' => $entity[$x]->getItemsForSale(),
-                        'sellerPage' => 'https://www.ebay.com/usr/' . trim($entity[$x]->getSellerId()),
-                        'sellerStorePage' => $entity[$x]->getSellerPage(),
-                        'usedItem' => $entity[$x]->getUsedCount(),
-                        'newItem' => $entity[$x]->getNewCount(),
-                        'timeStamp' => $timeStamp
+                        'title' => '"' . trim($entity[$x]->getProductTitle()) . '"'
                     );
-                }
             }
         }
 
-        $response = $this->render('export/csv-template.html.twig', array('data' => $data));
+        $response = $this->render('export/csv-template-titles.html.twig', array('data' => $data));
 
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv');
