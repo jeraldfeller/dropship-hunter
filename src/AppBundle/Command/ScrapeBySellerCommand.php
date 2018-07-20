@@ -37,7 +37,7 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
             // the "--help" option
             ->setHelp('')
 
-            //   ->addArgument('action', InputArgument::REQUIRED, 'What type of action do you want to execute?')
+            //==   ->addArgument('action', InputArgument::REQUIRED, 'What type of action do you want to execute?')
         ;
     }
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -74,11 +74,47 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
                                             $entity = $em->getRepository('AppBundle:SellerData')->findOneBy(array('sellerId' => $sellerId));
 
                                             if(!$entity){
+
+                                                // check i frame for profitscraper and sales freak
+                                                $isProfitScraper = 0;
+                                                $isSaleFreaks = 0;
+                                                $iframe = $html->find('#desc_ifr',0);
+                                                if($iframe){
+                                                    $iframeSrc = $iframe->getAttribute('src');
+                                                    if($iframeSrc){
+                                                        echo $iframeSrc . '<br>';
+                                                        $ihtml = file_get_html($iframeSrc);
+                                                        if($ihtml){
+                                                            $h1 = $ihtml->find('h1');
+                                                            $img = $ihtml->find('img');
+                                                            if($h1){
+                                                                for($h = 0; $h < count($h1); $h++){
+                                                                    $t = trim($h1[$h]->plaintext);
+                                                                    if($t == 'Thank You For Your Business!'){
+                                                                        $isProfitScraper = 1;
+                                                                    }
+                                                                }
+                                                            }
+                                                            if($img){
+                                                                for($im = 0; $im < count($img); $im++){
+                                                                    $imSrc = trim($img[$im]->getAttribute('src'));
+                                                                    if(strpos($imSrc, 'salefreaks') != -1){
+                                                                        $isSaleFreaks = 1;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+
                                                 $entity = new SellerData();
                                                 $entity->setProductListId($productListId);
                                                 $entity->setProductListLinksId($id);
                                                 $entity->setSellerId($sellerId);
                                                 $entity->setStatus('active');
+                                                $entity->setIsProfitScraper($isProfitScraper);
+                                                $entity->setIsSaleFreaks($isSaleFreaks);
                                                 if($topRatedPlus != false){
                                                         $entity->setToExport(0);
                                                         //$entity->setUsedCount(0);
@@ -167,12 +203,18 @@ class ScrapeBySellerCommand  extends  ContainerAwareCommand
     }
 
     public function getProductListLink($em){
+        $titleEntity = $em->getRepository('AppBundle:ProductList')->findOneBy(array('status' => 'active'));
+        if($titleEntity){
+            $maxResults = 10;
+        }else{
+            $maxResults = 100;
+        }
         $sql = $em->createQuery(
             "SELECT p
                 FROM AppBundle:ProductListLinks p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(40);
+        )->setMaxResults($maxResults);
         $result = $sql->getResult();
 
         $lists = array();

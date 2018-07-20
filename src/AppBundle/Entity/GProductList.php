@@ -110,4 +110,3 @@ class GProductList
         return $this->gSeller;
     }
 }
-

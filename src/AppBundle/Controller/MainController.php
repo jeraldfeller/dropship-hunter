@@ -59,7 +59,7 @@ class MainController extends Controller
         $isLoggedIn = $this->get('session')->get('isLoggedIn');
         if ($isLoggedIn) {
             $proxyList = json_decode($this->getProxyAction()->getContent(), true);
-            $appActivity = $em->getRepository('AppBundle:AppActivity')->find(1);
+            $appActivity = $em->getRepository('AppBundle:AppActivity')->findOneBY(array('app' => 'app_3'));
             // replace this example code with whatever you need
             return $this->render('grabber/index.html.twig', [
                 'proxyList' => $proxyList,
@@ -225,6 +225,12 @@ class MainController extends Controller
         //$processEntity->setIsActive(0);
        // $em->flush();
 
+
+        $query = $em->createQuery("
+                DELETE
+                FROM AppBundle:GSellerData
+                ");
+        $query->execute();
         // import new list;
 
         $spreadsheet_url = json_decode($_POST['param'], true);
@@ -300,15 +306,16 @@ class MainController extends Controller
                 $query->execute();
             break;
             case 'app_3':
+
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery("
-                DELETE
-                FROM AppBundle:GProductListLinks
+                UPDATE AppBundle:GSellerData p
+                SET p.status = 'active'
                 ");
                 $query->execute();
                 $query = $em->createQuery("
-                UPDATE AppBundle:GProductList p
-                SET p.status = 'active'
+                DELETE
+                FROM AppBundle:GProductList
                 ");
                 $query->execute();
                 break;
@@ -418,6 +425,8 @@ class MainController extends Controller
                         'sellerStorePage' => $entity[$x]->getSellerPage(),
                         'usedItem' => $entity[$x]->getUsedCount(),
                         'newItem' => $entity[$x]->getNewCount(),
+                        'isSaleFreaks' => $entity[$x]->isSaleFreaks(),
+                        'isProfitScraper' => $entity[$x]->isProfitScraper(),
                         'timeStamp' => $timeStamp
                     );
                 }
@@ -451,8 +460,9 @@ class MainController extends Controller
         $timeStamp = date('Y-m-d H:i:s');
         if ($entity) {
             for ($x = 0; $x < count($entity); $x++) {
+                    $t = html_entity_decode(htmlspecialchars_decode(trim($entity[$x]->getProductTitle())), ENT_QUOTES);
                     $data[] = array(
-                        'title' => '"' . trim($entity[$x]->getProductTitle()) . '"'
+                        'title' => '"'.str_replace('"', '', $t).'"'
                     );
             }
         }
@@ -466,6 +476,8 @@ class MainController extends Controller
         $response->headers->set('Content-Transfer-Encoding', 'binary');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', '0');
+
+
 
 
         return $response;

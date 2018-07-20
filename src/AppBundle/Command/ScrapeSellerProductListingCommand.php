@@ -101,14 +101,16 @@ class ScrapeSellerProductListingCommand extends ContainerAwareCommand
                                         // Start Fetching Titles
                                         for($x = 0; $x < count($list); $x++){
                                             $listing = $list[$x]->find('.vip', 0);
-                                            $prodTitle = rtrim(htmlspecialchars($listing->plaintext), '.');
-                                            $titleEntity = $em->getRepository('AppBundle:GProductList')->findOneBy(array('productTitle' => $prodTitle));
-                                            if(!$titleEntity){
-                                                $titleEntity = new GProductList();
-                                                $titleEntity->setProductTitle($prodTitle);
-                                                $titleEntity->setStatus('active');
-                                                $titleEntity->setGSeller($entity);
-                                                $em->persist($titleEntity);
+                                            if($listing){
+                                                $prodTitle = rtrim(htmlspecialchars($listing->plaintext), '.');
+                                                $titleEntity = $em->getRepository('AppBundle:GProductList')->findOneBy(array('productTitle' => $prodTitle));
+                                                if(!$titleEntity){
+                                                    $titleEntity = new GProductList();
+                                                    $titleEntity->setProductTitle($prodTitle);
+                                                    $titleEntity->setStatus('active');
+                                                    $titleEntity->setGSeller($entity);
+                                                    $em->persist($titleEntity);
+                                                }
                                             }
                                         }
                                         $em->flush();

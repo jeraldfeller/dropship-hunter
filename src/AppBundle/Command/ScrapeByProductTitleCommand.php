@@ -96,26 +96,29 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                                                     for ($i = 0; $i < count($productList); $i++) {
                                                         if (isset($productList[$i])) {
                                                             $itemInfoContainer = $productList[$i]->find('.s-item__info', 0);
-                                                            $titleContainer = $itemInfoContainer->find('.s-item__link', 0);
-                                                            if ($titleContainer) {
-                                                                $title = strtolower(trim($titleContainer->plaintext));
+                                                            if($itemInfoContainer){
+                                                                $titleContainer = $itemInfoContainer->find('.s-item__link', 0);
+                                                                if ($titleContainer) {
+                                                                    $title = strtolower(trim($titleContainer->plaintext));
 
-                                                                if (strpos($title, $productTitle) !== false) {
+                                                                    if (strpos($title, $productTitle) !== false) {
 
-                                                                    $titleMatch++;
-                                                                    $titleLink = $titleContainer->getAttribute('href');
+                                                                        $titleMatch++;
+                                                                        $titleLink = $titleContainer->getAttribute('href');
 
-                                                                    $productListLinksEntity = new ProductListLinks();
-                                                                    $productListLinksEntity->setProductListId($productListId);
-                                                                    $productListLinksEntity->setProductUrl($titleLink);
-                                                                    $productListLinksEntity->setStatus('active');
-                                                                    $em->persist($productListLinksEntity);
-                                                                    if(($i % 100) == 0){
-                                                                        $em->flush();
+                                                                        $productListLinksEntity = new ProductListLinks();
+                                                                        $productListLinksEntity->setProductListId($productListId);
+                                                                        $productListLinksEntity->setProductUrl($titleLink);
+                                                                        $productListLinksEntity->setStatus('active');
+                                                                        $em->persist($productListLinksEntity);
+                                                                        if(($i % 100) == 0){
+                                                                            $em->flush();
+                                                                        }
+                                                                    } else {
                                                                     }
-                                                                } else {
-                                                                }
+                                                                }else{}
                                                             }
+
                                                         }
                                                     }
 
@@ -205,7 +208,7 @@ class ScrapeByProductTitleCommand extends ContainerAwareCommand
                 FROM AppBundle:ProductList p
                 WHERE p.status = 'active' ORDER BY p.id
                 "
-        )->setMaxResults(40);
+        )->setMaxResults(100);
         $result = $sql->getResult();
 
         $lists = array();

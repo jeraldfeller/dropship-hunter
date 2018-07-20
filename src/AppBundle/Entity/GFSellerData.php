@@ -429,4 +429,3 @@ class GFSellerData
         return $this->gProductListLinks;
     }
 }
-

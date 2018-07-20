@@ -3,14 +3,14 @@
 namespace AppBundle\Entity;
 
 /**
- * GProductListLinks
+ * GProductList
  */
-class GProductListLinks
+class GProductList
 {
     /**
      * @var string
      */
-    private $productUrl;
+    private $productTitle;
 
     /**
      * @var string
@@ -23,33 +23,33 @@ class GProductListLinks
     private $id;
 
     /**
-     * @var \AppBundle\Entity\GProductList
+     * @var \AppBundle\Entity\GSellerData
      */
-    private $gProductList;
+    private $gSeller;
 
 
     /**
-     * Set productUrl
+     * Set productTitle
      *
-     * @param string $productUrl
+     * @param string $productTitle
      *
-     * @return GProductListLinks
+     * @return GProductList
      */
-    public function setProductUrl($productUrl)
+    public function setProductTitle($productTitle)
     {
-        $this->productUrl = $productUrl;
+        $this->productTitle = $productTitle;
 
         return $this;
     }
 
     /**
-     * Get productUrl
+     * Get productTitle
      *
      * @return string
      */
-    public function getProductUrl()
+    public function getProductTitle()
     {
-        return $this->productUrl;
+        return $this->productTitle;
     }
 
     /**
@@ -57,7 +57,7 @@ class GProductListLinks
      *
      * @param string $status
      *
-     * @return GProductListLinks
+     * @return GProductList
      */
     public function setStatus($status)
     {
@@ -87,26 +87,27 @@ class GProductListLinks
     }
 
     /**
-     * Set gProductList
+     * Set gSeller
      *
-     * @param \AppBundle\Entity\GProductList $gProductList
+     * @param \AppBundle\Entity\GSellerData $gSeller
      *
-     * @return GProductListLinks
+     * @return GProductList
      */
-    public function setGProductList(\AppBundle\Entity\GProductList $gProductList = null)
+    public function setGSeller(\AppBundle\Entity\GSellerData $gSeller = null)
     {
-        $this->gProductList = $gProductList;
+        $this->gSeller = $gSeller;
 
         return $this;
     }
 
     /**
-     * Get gProductList
+     * Get gSeller
      *
-     * @return \AppBundle\Entity\GProductList
+     * @return \AppBundle\Entity\GSellerData
      */
-    public function getGProductList()
+    public function getGSeller()
     {
-        return $this->gProductList;
+        return $this->gSeller;
     }
 }
+

@@ -115,10 +115,12 @@ function importProductList($data) {
         var response = $.parseJSON(XMLHttpRequestObject.responseText);
         $('#submitBtn').html('<i class="fa fa-upload"></i> IMPORT');
         alert('Import success.');
-        checkProcess('app_2');
+        $disableCheckProcess = false;
+      //  checkProcess('app_2');
       }
       if (XMLHttpRequestObject.status == 500) {
         alert('Something went wrong, please try again');
+        $disableCheckProcess = false;
       }
     }
     XMLHttpRequestObject.send("param= " + JSON.stringify($data));
@@ -158,7 +160,7 @@ function importGrabberSellerList($data) {
   return false
 }
 
-function reRun($app) {
+function  reRun($app) {
 
   if (XMLHttpRequestObject) {
 
@@ -274,7 +276,9 @@ function setActivity($data) {
 
 function exec($app) {
   setInterval(function () {
-    checkProcess($app);
+    if($disableCheckProcess == false){
+      checkProcess($app);
+    }
   }, 60000);
 }
 

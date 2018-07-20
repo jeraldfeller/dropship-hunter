@@ -1,6 +1,6 @@
 {% autoescape false %}
 Titles
 {% for row in data %}
-{{ row.title }}
+{{ row.title|raw}}
 {% endfor %}
 {% endautoescape %}

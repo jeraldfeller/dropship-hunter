@@ -3,15 +3,10 @@
 namespace AppBundle\Entity;
 
 /**
- * SellerData
+ * GFSellerData
  */
-class SellerData
+class GFSellerData
 {
-    /**
-     * @var integer
-     */
-    private $productListId;
-
     /**
      * @var string
      */
@@ -58,41 +53,42 @@ class SellerData
     private $sellerPage;
 
     /**
+     * @var string
+     */
+    private $status;
+
+    /**
+     * @var boolean
+     */
+    private $toExport = '1';
+
+    /**
+     * @var integer
+     */
+    private $usedCount;
+
+    /**
+     * @var integer
+     */
+    private $newCount;
+
+    /**
      * @var integer
      */
     private $id;
 
-
     /**
-     * Set productListId
-     *
-     * @param integer $productListId
-     *
-     * @return SellerData
+     * @var \AppBundle\Entity\GProductListLinks
      */
-    public function setProductListId($productListId)
-    {
-        $this->productListId = $productListId;
+    private $gProductListLinks;
 
-        return $this;
-    }
-
-    /**
-     * Get productListId
-     *
-     * @return integer
-     */
-    public function getProductListId()
-    {
-        return $this->productListId;
-    }
 
     /**
      * Set sellerId
      *
      * @param string $sellerId
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setSellerId($sellerId)
     {
@@ -116,7 +112,7 @@ class SellerData
      *
      * @param string $sellerLocation
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setSellerLocation($sellerLocation)
     {
@@ -140,7 +136,7 @@ class SellerData
      *
      * @param integer $sellersRank
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setSellersRank($sellersRank)
     {
@@ -164,7 +160,7 @@ class SellerData
      *
      * @param string $memberSince
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setMemberSince($memberSince)
     {
@@ -188,7 +184,7 @@ class SellerData
      *
      * @param integer $positive
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setPositive($positive)
     {
@@ -212,7 +208,7 @@ class SellerData
      *
      * @param integer $neutral
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setNeutral($neutral)
     {
@@ -236,7 +232,7 @@ class SellerData
      *
      * @param integer $negative
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setNegative($negative)
     {
@@ -260,7 +256,7 @@ class SellerData
      *
      * @param integer $itemsForSale
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setItemsForSale($itemsForSale)
     {
@@ -284,7 +280,7 @@ class SellerData
      *
      * @param string $sellerPage
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setSellerPage($sellerPage)
     {
@@ -304,26 +300,11 @@ class SellerData
     }
 
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var string
-     */
-    private $status;
-
-
-    /**
      * Set status
      *
      * @param string $status
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setStatus($status)
     {
@@ -341,47 +322,13 @@ class SellerData
     {
         return $this->status;
     }
-    /**
-     * @var integer
-     */
-    private $productListLinksId;
-
-
-    /**
-     * Set productListLinksId
-     *
-     * @param integer $productListLinksId
-     *
-     * @return SellerData
-     */
-    public function setProductListLinksId($productListLinksId)
-    {
-        $this->productListLinksId = $productListLinksId;
-
-        return $this;
-    }
-
-    /**
-     * Get productListLinksId
-     *
-     * @return integer
-     */
-    public function getProductListLinksId()
-    {
-        return $this->productListLinksId;
-    }
-    /**
-     * @var boolean
-     */
-    private $toExport;
-
 
     /**
      * Set toExport
      *
      * @param boolean $toExport
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setToExport($toExport)
     {
@@ -399,18 +346,13 @@ class SellerData
     {
         return $this->toExport;
     }
-    /**
-     * @var integer
-     */
-    private $usedCount;
-
 
     /**
      * Set usedCount
      *
      * @param integer $usedCount
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setUsedCount($usedCount)
     {
@@ -428,18 +370,13 @@ class SellerData
     {
         return $this->usedCount;
     }
-    /**
-     * @var integer
-     */
-    private $newCount;
-
 
     /**
      * Set newCount
      *
      * @param integer $newCount
      *
-     * @return SellerData
+     * @return GFSellerData
      */
     public function setNewCount($newCount)
     {
@@ -457,62 +394,39 @@ class SellerData
     {
         return $this->newCount;
     }
-    /**
-     * @var boolean
-     */
-    private $isSaleFreaks;
 
     /**
-     * @var boolean
-     */
-    private $isProfitScraper;
-
-
-    /**
-     * Set isSaleFreaks
+     * Get id
      *
-     * @param boolean $isSaleFreaks
-     *
-     * @return SellerData
+     * @return integer
      */
-    public function setIsSaleFreaks($isSaleFreaks)
+    public function getId()
     {
-        $this->isSaleFreaks = $isSaleFreaks;
+        return $this->id;
+    }
+
+    /**
+     * Set gProductListLinks
+     *
+     * @param \AppBundle\Entity\GProductListLinks $gProductListLinks
+     *
+     * @return GFSellerData
+     */
+    public function setGProductListLinks(\AppBundle\Entity\GProductListLinks $gProductListLinks = null)
+    {
+        $this->gProductListLinks = $gProductListLinks;
 
         return $this;
     }
 
     /**
-     * Get isSaleFreaks
+     * Get gProductListLinks
      *
-     * @return boolean
+     * @return \AppBundle\Entity\GProductListLinks
      */
-    public function getIsSaleFreaks()
+    public function getGProductListLinks()
     {
-        return $this->isSaleFreaks;
-    }
-
-    /**
-     * Set isProfitScraper
-     *
-     * @param boolean $isProfitScraper
-     *
-     * @return SellerData
-     */
-    public function setIsProfitScraper($isProfitScraper)
-    {
-        $this->isProfitScraper = $isProfitScraper;
-
-        return $this;
-    }
-
-    /**
-     * Get isProfitScraper
-     *
-     * @return boolean
-     */
-    public function getIsProfitScraper()
-    {
-        return $this->isProfitScraper;
+        return $this->gProductListLinks;
     }
 }
+

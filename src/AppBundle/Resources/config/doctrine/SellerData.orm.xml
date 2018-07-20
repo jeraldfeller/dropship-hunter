@@ -14,7 +14,7 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="sellerId" type="string" column="seller_id" length="60" nullable="true">
+    <field name="sellerId" type="string" column="seller_id" length="200" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
@@ -79,5 +79,7 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="isSaleFreaks" type="boolean" column="is_sale_freaks" nullable="false"/>
+    <field name="isProfitScraper" type="boolean" column="is_profit_scraper" nullable="false"/>
   </entity>
 </doctrine-mapping>
